@@ -1,0 +1,24 @@
++Unidades de información
+	Cliente
+	Venta
+	Usuario
+	Inventario
+	Producto
+	Factura
+	Gasto
+	Reporte
+	
++Modulos o componentes funcionales del sistema
+	Ventas
+	Reportes o analitica de datos
+	Agregar productos al inventario (para los trabajadores)
+	Ingreso de gastos
+	
++Requerimientos funcionales
+	CRUD de Usuario (Administrador, vendedor, cocinero)
+	CRUD de ventas
+	CRUD de gastos
+	Procesamiento y analísis de la información de ventas
+	Procesamiento y analísis de la información de gastos
+	
+	
