@@ -15,7 +15,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        return view('cliente.creado');
+      //
     }
 
     /**
@@ -42,7 +42,7 @@ class ClienteController extends Controller
       $cliente->ciudad    = $request->ciudad;
       $cliente->telefono  = $request->telefono;
       $cliente->save();
-      return redirect()->route('cliente.creado');
+      return redirect()->route('cliente.mostrar');
     }
 
     /**
@@ -54,6 +54,13 @@ class ClienteController extends Controller
     public function show(Cliente $cliente)
     {
         //
+    }
+
+    public function ShowClientelist()
+    {
+      $clientes = Cliente::all();
+
+      return view('cliente.mostrar', compact('clientes'));
     }
 
     /**
