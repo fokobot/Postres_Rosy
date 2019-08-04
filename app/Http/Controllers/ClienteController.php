@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cliente;
+use App\Http\Requests\SaveClienteRequest;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -33,19 +34,13 @@ class ClienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaveClienteRequest $request)
     {
-      $validatedData = $request->validate([
-              'nombre' => 'required|max:255',
-              'direccion' => 'required|max:50',
-              'ciudad' => 'required|max:50',
-              'telefono' => 'required|max:10',
-      ]);
-      $cliente = new Cliente;
-      $cliente->nombre = $request->nombre;
+      $cliente            = new Cliente;
+      $cliente->nombre    = $request->nombre;
       $cliente->direccion = $request->direccion;
-      $cliente->ciudad = $request->ciudad;
-      $cliente->telefono = $request->telefono;
+      $cliente->ciudad    = $request->ciudad;
+      $cliente->telefono  = $request->telefono;
       $cliente->save();
       return redirect()->route('cliente.creado');
     }

@@ -72,38 +72,6 @@
     @yield('content')
 </div>
 <footer class="footer">
-<form method="POST" action="{{ route('clientes.store') }}">
-    <div class="container">
-        <div class="row">
-            <nav class="footer-nav">
-                <ul>
-                  <h5>Nombre</h5>
-                  <div class="form-group has-default">
-                  <input type="text" value="" class="form-control form-control-default" placeholder="Nombre">
-                  </div>
-                  <h5>Dirección</h5>
-                  <div class="form-group has-default">
-                  <input type="text" value="" class="form-control form-control-default" placeholder="Dirección">
-                  </div>
-                  <h5>Ciudad</h5>
-                  <div class="form-group has-default">
-                  <input type="text" value="" class="form-control form-control-default" placeholder="Ciudad">
-                  </div>
-                  <h5>Telefono</h5>
-                  <div class="form-group has-default">
-                  <input type="text" value="" class="form-control form-control-default" placeholder="Telefono">
-                  </div>
-                  <button type="submit" class="btn btn-success">{{ __('Registrar Cliente') }}</button>
-                </ul>
-            </nav>
-            <div class="credits ml-auto">
-                <span class="copyright">
-
-                </span>
-            </div>
-        </div>
-    </div>
-</form>
 </footer>
 
   <!-- Core JS Files -->
