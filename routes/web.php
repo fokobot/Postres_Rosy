@@ -19,6 +19,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 //Route::resource('clientes', 'ClienteController');
+
 Route::get('/clientes', 'ClienteController@create');//->name('crear');
 Route::post('/clientes', 'ClienteController@store')->name('clientes.store');
 Route::get('/clientes/show', 'ClienteController@ShowClientelist')->name('cliente.mostrar');
+
+Route::get('/productos', 'ProductoController@create');//->name('crear');
+Route::post('/productos', 'ProductoController@store')->name('productos.store');
+Route::get('/productos/show', 'ProductoController@ShowProductolist')->name('productos.mostrar');
