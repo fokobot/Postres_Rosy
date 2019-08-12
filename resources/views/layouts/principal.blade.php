@@ -17,7 +17,6 @@
 
   <!-- Custom styles for this template-->
   <link href="{{asset('app/css/sb-admin-2.min.css')}}" rel="stylesheet">
-
 </head>
 
 <body id="page-top">
@@ -389,7 +388,12 @@
 
   <!-- Custom scripts for all pages-->
   <script src="{{asset('app/js/sb-admin-2.min.js')}}"></script>
-
+  <script src="{{asset('app/vendor/notifyjs/notify.min.js')}}"></script>
+  <script>
+    @if(Session::has('success'))
+     $.notify("Producto creado con éxito", "success");
+    @endif
+  </script>
 </body>
 
 </html>

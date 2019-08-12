@@ -42,6 +42,7 @@ class ClienteController extends Controller
       $cliente->ciudad    = $request->ciudad;
       $cliente->telefono  = $request->telefono;
       $cliente->save();
+      session()->flash('success','Item created successfully.');
       return redirect()->route('cliente.mostrar');
     }
 

@@ -41,6 +41,7 @@ class ProductoController extends Controller
       $producto->valordetal    = $request->valordetal;
       $producto->valormayor    = $request->valormayor;
       $producto->save();
+      session()->flash('success','Item created successfully.');
       return redirect()->route('productos.mostrar');
     }
 
