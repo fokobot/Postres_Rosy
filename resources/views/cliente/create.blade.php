@@ -58,3 +58,7 @@
   </div>
 </form>
 @endsection
+{{-- S C R I P T S --}}
+@push('scripts')
+  @include('layouts.error')
+@endpush

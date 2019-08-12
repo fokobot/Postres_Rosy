@@ -389,11 +389,16 @@
   <!-- Custom scripts for all pages-->
   <script src="{{asset('app/js/sb-admin-2.min.js')}}"></script>
   <script src="{{asset('app/vendor/notifyjs/notify.min.js')}}"></script>
-  <script>
-    @if(Session::has('success'))
-     $.notify("Producto creado con éxito", "success");
-    @endif
-  </script>
+  @if(Session::has('success'))
+    <div id="success-message" style="display: none;">
+      {{session('success')}}
+    </div>
+    <script>
+      var successmsg  = document.getElementById('success-message');
+      var message     = successmsg.innerText.trim();
+      $.notify(message, "success");
+    </script>
+  @endif
+  @stack('scripts')
 </body>
-
 </html>
