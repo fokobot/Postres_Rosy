@@ -27,3 +27,7 @@ Route::get('/clientes/show', 'ClienteController@ShowClientelist')->name('cliente
 Route::get('/productos', 'ProductoController@create');//->name('crear');
 Route::post('/productos', 'ProductoController@store')->name('productos.store');
 Route::get('/productos/show', 'ProductoController@ShowProductolist')->name('productos.mostrar');
+
+Route::get('/trabajos', 'TrabajoController@create');//->name('crear');
+Route::post('/trabajos', 'TrabajoController@store')->name('trabajos.store');
+Route::get('/trabajos/show', 'TrabajoController@ShowTrabajolist')->name('trabajos.mostrar');
