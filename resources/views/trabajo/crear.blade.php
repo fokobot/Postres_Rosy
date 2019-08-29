@@ -23,7 +23,7 @@
       </div>
       <div class="row">
         <div class="col-md-6">
-          <label for="costo">Costo del trabjo</label>
+          <label for="costo">Costo del trabajo</label>
           <div class="form-group has-default">
             <input type="text" name="costo" value="{{old('costo')}}" placeholder="$25000"
             class="form-control form-control-default @error('costo') is-invalid @enderror">
