@@ -35,3 +35,7 @@ Route::get('/trabajos/show', 'TrabajoController@ShowTrabajolist')->name('trabajo
 Route::get('/gastos', 'GastoController@create');//->name('crear');
 Route::post('/gastos', 'GastoController@store')->name('gastos.store');
 Route::get('/gastos/show', 'GastoController@ShowGastolist')->name('gastos.mostrar');
+
+Route::get('/ventas', 'VentaController@index')->name('ventas.index');
+Route::post('/ventas', 'VentaController@store')->name('ventas.store');
+Route::get('/ventas/create', 'VentaController@create')->name('ventas.create');

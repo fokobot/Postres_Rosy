@@ -14,7 +14,7 @@ class CreateEstadosVentaTable extends Migration
     public function up()
     {
         Schema::create('estados_venta', function (Blueprint $table) {
-            $table->unsignedInteger('id');
+            $table->increments('id');
             $table->string('nombre', 20);
             $table->string('color', 7);
             $table->timestamps();
