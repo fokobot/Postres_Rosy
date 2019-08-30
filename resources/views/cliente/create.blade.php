@@ -17,6 +17,18 @@
   </div>
   <div class="row">
   	<div class="col-md-6">
+        <label for="apellidos">Apellidos</label>
+        <div class="form-group has-default">
+        	<input type="text" name="apellidos" value="{{old('apellidos')}}" placeholder="Apellidos"
+        		class="form-control form-control-default @error('apellidos') is-invalid @enderror" >
+        </div>
+        @error('apellidos')
+					<div class="alert alert-danger">{{ $message }}</div>
+				@enderror
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-md-6">
         <label for="direccion">Dirección</label>
         <div class="form-group has-default">
         <input type="text" name="direccion" value="{{old('direccion')}}" placeholder="Dirección"

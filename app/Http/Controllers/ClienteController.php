@@ -36,11 +36,12 @@ class ClienteController extends Controller
      */
     public function store(SaveClienteRequest $request)
     {
-      $cliente            = new Cliente;
-      $cliente->nombre    = $request->nombre;
-      $cliente->direccion = $request->direccion;
-      $cliente->ciudad    = $request->ciudad;
-      $cliente->telefono  = $request->telefono;
+      $cliente               = new Cliente;
+      $cliente->nombre       = $request->nombre;
+      $cliente->apellidos    = $request->apellidos;
+      $cliente->direccion    = $request->direccion;
+      $cliente->ciudad       = $request->ciudad;
+      $cliente->telefono     = $request->telefono;
       $cliente->save();
       session()->flash('success', 'Cliente creado con éxito');
       return redirect()->route('cliente.mostrar');

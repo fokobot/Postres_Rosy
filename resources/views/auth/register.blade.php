@@ -12,8 +12,19 @@
                         <div class="form-group row">
                             <label for="nombre" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
                             <div class="col-md-6">
-                                <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="name" value="{{ old('nombre') }}" required autocomplete="Nombre" autofocus>
+                                <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombreapellidos" value="{{ old('nombre') }}" required autocomplete="Nombre" autofocus>
                                 @error('nombre')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="apellidos" class="col-md-4 col-form-label text-md-right">{{ __('Apellidos') }}</label>
+                            <div class="col-md-6">
+                                <input id="apellidos" type="text" class="form-control @error('apellidos') is-invalid @enderror" name="apellidos" value="{{ old('apellidos') }}" required autocomplete="Apellidos" autofocus>
+                                @error('apellidos')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

@@ -13,7 +13,7 @@ class SaveClienteRequest extends FormRequest
      */
     public function authorize()
     {
-        // Esto aquì SOLO debe ser true cuando el usuario actual tiene 
+        // Esto aquì SOLO debe ser true cuando el usuario actual tiene
         // asignados los permisos para crear (o editar)
         return true;
     }
@@ -27,10 +27,11 @@ class SaveClienteRequest extends FormRequest
     {
         // esto debe SIEMPRE coincidir con la longitud máxima en base de datos
         return [
-            'nombre'    => 'required|min:3|max:45',
-            'direccion' => 'required|min:5|max:50',
-            'ciudad'    => 'required|min:3|max:50',
-            'telefono'  => 'required|min:6|max:10'
+            'nombre'       => 'required|min:3|max:30',
+            'apellidos'    => 'required|min:3|max:30',
+            'direccion'    => 'required|min:5|max:50',
+            'ciudad'       => 'required|min:3|max:50',
+            'telefono'     => 'required|min:6|max:10'
         ];
     }
 }
