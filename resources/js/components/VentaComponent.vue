@@ -32,12 +32,19 @@
 		</thead>
 		<tbody>
 			<tr v-for="producto in escogidos">
-				<td>{{producto.nombre}}</td>
+				<td>{{producto.nombre}} {{producto.edition}}</td>
 				<td>$ {{valorProducto(producto)}}</td>
-				<td>{{producto.cantidad}}</td>
+				<td>
+					<input class="form-control" type="number" v-if="edition[producto.id]" v-model="producto.cantidad"/>
+					<span v-else>{{producto.cantidad}}</span>
+				</td>
 				<td>$ {{producto.cantidad * valorProducto(producto)}}</td>
 				<td>
-					<button class="btn btn-sm btn-danger" type="button" v-bind:value="producto.id" v-on:click="eliminarProducto(producto.id)">
+					<button class="btn btn-sm btn-primary" type="button" @click="editarProducto(producto)">
+						<i class="fa fa-edit" v-if="!edition[producto.id]"></i>
+						<i class="fa fa-save" v-else></i>
+					</button>
+					<button class="btn btn-sm btn-danger" type="button" @click="eliminarProducto(producto.id)">
 						<i class="fa fa-trash"></i>
 					</button>
 				</td>
@@ -63,6 +70,7 @@ export default {
 	data: function() { return {
 		productos : [],
 		escogidos: [],
+		edition: [],
 		productoactual: 0,
 		unidades: 0,
 		total: 0.0
@@ -75,10 +83,14 @@ export default {
 	        });
 	        var item = this.productos[index];
 	        item.cantidad = this.unidades;
+	        this.edition[item.id] = false;
 	        this.productos.splice(index, 1);
 	        this.escogidos.push(item);
 	        this.total += item.cantidad * this.valorProducto(item);
 	        this.productoactual = 0;
+		},
+		editarProducto: function(producto){
+			this.$set(this.edition, producto.id, !this.edition[producto.id]);
 		},
 		eliminarProducto: function(id) {
       		var index = this.escogidos.findIndex(function(el) {
@@ -86,6 +98,7 @@ export default {
 	        });
 	        var item = this.escogidos[index];
 	        if (item){
+	        	this.edition[item.id] = false;
 		        this.unidades = item.cantidad;
 		        this.escogidos.splice(index, 1);
 		       	this.total -= item.cantidad * this.valorProducto(item);

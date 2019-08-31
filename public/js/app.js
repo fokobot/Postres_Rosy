@@ -1893,6 +1893,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var _this = this;
@@ -1905,6 +1912,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       productos: [],
       escogidos: [],
+      edition: [],
       productoactual: 0,
       unidades: 0,
       total: 0.0
@@ -1918,10 +1926,14 @@ __webpack_require__.r(__webpack_exports__);
       });
       var item = this.productos[index];
       item.cantidad = this.unidades;
+      this.edition[item.id] = false;
       this.productos.splice(index, 1);
       this.escogidos.push(item);
       this.total += item.cantidad * this.valorProducto(item);
       this.productoactual = 0;
+    },
+    editarProducto: function editarProducto(producto) {
+      this.$set(this.edition, producto.id, !this.edition[producto.id]);
     },
     eliminarProducto: function eliminarProducto(id) {
       var index = this.escogidos.findIndex(function (el) {
@@ -1930,6 +1942,7 @@ __webpack_require__.r(__webpack_exports__);
       var item = this.escogidos[index];
 
       if (item) {
+        this.edition[item.id] = false;
         this.unidades = item.cantidad;
         this.escogidos.splice(index, 1);
         this.total -= item.cantidad * this.valorProducto(item);
@@ -37354,11 +37367,37 @@ var render = function() {
         [
           _vm._l(_vm.escogidos, function(producto) {
             return _c("tr", [
-              _c("td", [_vm._v(_vm._s(producto.nombre))]),
+              _c("td", [
+                _vm._v(_vm._s(producto.nombre) + " " + _vm._s(producto.edition))
+              ]),
               _vm._v(" "),
               _c("td", [_vm._v("$ " + _vm._s(_vm.valorProducto(producto)))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(producto.cantidad))]),
+              _c("td", [
+                _vm.edition[producto.id]
+                  ? _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: producto.cantidad,
+                          expression: "producto.cantidad"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "number" },
+                      domProps: { value: producto.cantidad },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(producto, "cantidad", $event.target.value)
+                        }
+                      }
+                    })
+                  : _c("span", [_vm._v(_vm._s(producto.cantidad))])
+              ]),
               _vm._v(" "),
               _c("td", [
                 _vm._v(
@@ -37370,8 +37409,26 @@ var render = function() {
                 _c(
                   "button",
                   {
+                    staticClass: "btn btn-sm btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.editarProducto(producto)
+                      }
+                    }
+                  },
+                  [
+                    !_vm.edition[producto.id]
+                      ? _c("i", { staticClass: "fa fa-edit" })
+                      : _c("i", { staticClass: "fa fa-save" })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
                     staticClass: "btn btn-sm btn-danger",
-                    attrs: { type: "button", value: producto.id },
+                    attrs: { type: "button" },
                     on: {
                       click: function($event) {
                         return _vm.eliminarProducto(producto.id)
