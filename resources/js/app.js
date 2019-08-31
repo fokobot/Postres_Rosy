@@ -12,7 +12,7 @@ window.axios.defaults.headers.common = {
 
 window.Vue = require('vue');
 
-Vue.component('form-detalleventa', require('./components/VentaComponent.vue').default);
+Vue.component('form-detalleventa', require('./components/DetalleVentaComponent.vue').default);
 
 const app = new Vue({
     el: '#app',

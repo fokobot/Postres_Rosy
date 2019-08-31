@@ -21,7 +21,6 @@
 			</button>
 		</div>
 	</div>
-	{{productoactual}}
 	<table class="table tbl-responsive tbl-stripped">
 		<thead class="thead-light">
 			<th>Producto</th>
