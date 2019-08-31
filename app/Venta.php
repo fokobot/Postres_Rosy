@@ -20,4 +20,9 @@ class Venta extends Model
     {
       return $this->belongsTo('App\EstadoVenta', 'estado_venta_id');
     }
+
+    public function productos()
+    {
+      return $this->hasMany('App\DetalleCompra', 'venta_id');
+    }
 }
