@@ -1,7 +1,7 @@
 @extends('layouts.principal')
 
 @section('content')
-<div class="col-md-9">
+<div id="app" class="col-md-9">
 <div class="card">
   <div class="card-header">
     Nueva Venta
@@ -65,9 +65,10 @@
           @enderror
         </div>
       </div>
+      <form-detalleventa></form-detalleventa>
       <div class="row">
         <div class="col-md-6">
-          <button type="submit" class="btn btn-block btn-success">{{ __('Registrar Producto') }}</button>
+          <button type="submit" class="btn btn-block btn-success">{{ __('Registrar Compra') }}</button>
         </div>
       </div>
     </form>
