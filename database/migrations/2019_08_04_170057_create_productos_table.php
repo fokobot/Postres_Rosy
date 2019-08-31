@@ -18,6 +18,7 @@ class CreateProductosTable extends Migration
             $table->string('nombre');
             $table->string('valordetal');
             $table->string('valormayor');
+            $table->string('minimopormayor');
             $table->timestamps();
         });
     }

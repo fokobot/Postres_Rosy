@@ -24,9 +24,10 @@ class SaveProductoRequest extends FormRequest
     public function rules()
     {
         return [
-          'nombre'        => 'required|min:3|max:35',
-          'valordetal'    => 'required|numeric',
-          'valormayor'    => 'required|numeric',
+          'nombre'            => 'required|min:3|max:35',
+          'valordetal'        => 'required|numeric',
+          'valormayor'        => 'required|numeric',
+          'minimopormayor'    => 'required|numeric',
         ];
     }
 }

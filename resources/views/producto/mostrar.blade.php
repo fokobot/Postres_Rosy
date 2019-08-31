@@ -12,6 +12,7 @@
         <th>Nombre del producto</th>
         <th>Valor al detal</th>
         <th>Valor al por mayor</th>
+        <th>Cantidad min. al por mayor</th>
       </thead>
       <tbody>
         @foreach($productos as $producto)
@@ -19,6 +20,7 @@
           <td>{{$producto->nombre}}</td>
           <td>{{$producto->valordetal}}</td>
           <td>{{$producto->valormayor}}</td>
+          <td>{{$producto->minimopormayor}}</td>
         </tr>
         @endforeach
       </tbody>

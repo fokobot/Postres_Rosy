@@ -36,10 +36,11 @@ class ProductoController extends Controller
      */
     public function store(SaveProductoRequest $request)
     {
-      $producto                = new Producto;
-      $producto->nombre        = $request->nombre;
-      $producto->valordetal    = $request->valordetal;
-      $producto->valormayor    = $request->valormayor;
+      $producto                    = new Producto;
+      $producto->nombre            = $request->nombre;
+      $producto->valordetal        = $request->valordetal;
+      $producto->valormayor        = $request->valormayor;
+      $producto->minimopormayor    = $request->minimopormayor;
       $producto->save();
       session()->flash('success','Producto creado con éxito');
       return redirect()->route('productos.mostrar');

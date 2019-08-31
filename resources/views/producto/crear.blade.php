@@ -47,6 +47,18 @@
       </div>
       <div class="row">
         <div class="col-md-6">
+          <label for="minimopormayor">Cantidad minima al por mayor</label>
+          <div class="form-group has-default">
+            <input type="text" name="minimopormayor" value="{{old('minimopormayor')}}" placeholder="6"
+            class="form-control form-control-default @error('minimopormayor') is-invalid @enderror">
+          </div>
+          @error('minimopormayor')
+          <div class="alert alert-danger">{{ $message }}</div>
+          @enderror
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
           <button type="submit" class="btn btn-block btn-success">{{ __('Registrar Producto') }}</button>
         </div>
       </div>
