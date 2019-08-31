@@ -16,7 +16,7 @@ class CreateGastosTable extends Migration
         Schema::create('gastos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('descripcion');
-            $table->string('valor');
+            $table->double('valor', 8, 2);
             $table->unsignedBigInteger('estado_id');
             $table->dateTime('fecha');
             $table->timestamps();

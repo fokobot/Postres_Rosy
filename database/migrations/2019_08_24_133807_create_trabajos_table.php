@@ -16,7 +16,7 @@ class CreateTrabajosTable extends Migration
         Schema::create('trabajos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nombre');
-            $table->string('costo');
+            $table->double('costo', 10, 2);
             $table->timestamps();
         });
     }
