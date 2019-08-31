@@ -1892,22 +1892,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/productos/').then(function (response) {
+      return _this.productos = response.data;
+    });
+  },
   data: function data() {
     return {
-      productos: [{
-        id: 1,
-        nombre: "A",
-        precio: 10000
-      }, {
-        id: 2,
-        nombre: "B",
-        precio: 20000
-      }, {
-        id: 3,
-        nombre: "C",
-        precio: 30000
-      }],
+      productos: [],
       escogidos: [],
       productoactual: 0,
       unidades: 0,
@@ -1917,17 +1913,15 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addProducto: function addProducto() {
       var pactual = this.productoactual;
-      console.log('Buscando ' + pactual);
       var index = this.productos.findIndex(function (el) {
         return el.id == pactual;
       });
-      console.log(index);
       var item = this.productos[index];
-      console.log(item);
       item.cantidad = this.unidades;
       this.productos.splice(index, 1);
       this.escogidos.push(item);
-      this.total += item.cantidad * item.precio;
+      this.total += item.cantidad * this.valorProducto(item);
+      this.productoactual = 0;
     },
     eliminarProducto: function eliminarProducto(id) {
       var index = this.escogidos.findIndex(function (el) {
@@ -1938,9 +1932,16 @@ __webpack_require__.r(__webpack_exports__);
       if (item) {
         this.unidades = item.cantidad;
         this.escogidos.splice(index, 1);
-        this.total -= item.cantidad * item.precio;
+        this.total -= item.cantidad * this.valorProducto(item);
         delete item['cantidad'];
         this.productos.push(item);
+      }
+    },
+    valorProducto: function valorProducto(producto) {
+      if (this.unidades >= producto.minimopormayor) {
+        return producto.valormayor;
+      } else {
+        return producto.valordetal;
       }
     }
   }
@@ -37290,7 +37291,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group col-md-4" }, [
-        _c("label", [_vm._v("Cantidad ")]),
+        _c("label", [_vm._v("Cantidad")]),
         _vm._v(" "),
         _c("input", {
           directives: [
@@ -37326,7 +37327,13 @@ var render = function() {
           "button",
           {
             staticClass: "btn btn-block btn-sm btn-primary",
-            attrs: { disabled: _vm.productos.length == 0, type: "button" },
+            attrs: {
+              disabled:
+                !_vm.productoactual ||
+                _vm.productos.length == 0 ||
+                _vm.productoactual <= 0,
+              type: "button"
+            },
             on: {
               click: function($event) {
                 $event.preventDefault()
@@ -37338,7 +37345,7 @@ var render = function() {
         )
       ])
     ]),
-    _vm._v(" "),
+    _vm._v("\r\n\t" + _vm._s(_vm.productoactual) + "\r\n\t"),
     _c("table", { staticClass: "table tbl-responsive tbl-stripped" }, [
       _vm._m(1),
       _vm._v(" "),
@@ -37349,12 +37356,14 @@ var render = function() {
             return _c("tr", [
               _c("td", [_vm._v(_vm._s(producto.nombre))]),
               _vm._v(" "),
-              _c("td", [_vm._v("$ " + _vm._s(producto.precio))]),
+              _c("td", [_vm._v("$ " + _vm._s(_vm.valorProducto(producto)))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(producto.cantidad))]),
               _vm._v(" "),
               _c("td", [
-                _vm._v("$ " + _vm._s(producto.cantidad * producto.precio))
+                _vm._v(
+                  "$ " + _vm._s(producto.cantidad * _vm.valorProducto(producto))
+                )
               ]),
               _vm._v(" "),
               _c("td", [
@@ -37406,7 +37415,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Precio Unit.")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Cant.")]),
+      _c("th", [_vm._v("Cantidad")]),
       _vm._v(" "),
       _c("th", [_vm._v("Subtotal")]),
       _vm._v(" "),
@@ -49576,6 +49585,9 @@ module.exports = function(module) {
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+window.axios.defaults.headers.common = {
+  'X-Requested-With': 'XMLHttpRequest'
+};
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 Vue.component('form-detalleventa', __webpack_require__(/*! ./components/VentaComponent.vue */ "./resources/js/components/VentaComponent.vue")["default"]);
 var app = new Vue({

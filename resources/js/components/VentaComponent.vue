@@ -11,30 +11,31 @@
 			</select>
 		</div>
 		<div class="form-group col-md-4">
-			<label>Cantidad&nbsp;</label>
+			<label>Cantidad</label>
 			<input :disabled="productos.length==0" type="number" v-model.number="unidades" class="form-control">
 		</div>
 		<div class="form-group col-md-2">
 			<label style="color: white;">FIX THIS</label>
-			<button :disabled="productos.length==0" type="button" v-on:click.prevent="addProducto" class="btn btn-block btn-sm btn-primary">
+			<button :disabled="!productoactual || productos.length==0 || productoactual <= 0" type="button" v-on:click.prevent="addProducto" class="btn btn-block btn-sm btn-primary">
 				<i class="fa fa-plus"></i>
 			</button>
 		</div>
 	</div>
+	{{productoactual}}
 	<table class="table tbl-responsive tbl-stripped">
 		<thead class="thead-light">
 			<th>Producto</th>
 			<th>Precio Unit.</th>
-			<th>Cant.</th>
+			<th>Cantidad</th>
 			<th>Subtotal</th>
 			<th>Opciones</th>
 		</thead>
 		<tbody>
 			<tr v-for="producto in escogidos">
 				<td>{{producto.nombre}}</td>
-				<td>$ {{producto.precio}}</td>
+				<td>$ {{valorProducto(producto)}}</td>
 				<td>{{producto.cantidad}}</td>
-				<td>$ {{producto.cantidad * producto.precio}}</td>
+				<td>$ {{producto.cantidad * valorProducto(producto)}}</td>
 				<td>
 					<button class="btn btn-sm btn-danger" type="button" v-bind:value="producto.id" v-on:click="eliminarProducto(producto.id)">
 						<i class="fa fa-trash"></i>
@@ -54,12 +55,13 @@
 
 <script>
 export default {
+	mounted () {
+    axios
+      .get('/api/productos/')
+      .then(response => (this.productos = response.data))
+  	},
 	data: function() { return {
-		productos : [
-			{id: 1, nombre: "A", precio: 10000},
-			{id: 2, nombre: "B", precio: 20000},
-			{id: 3, nombre: "C", precio: 30000}
-		],
+		productos : [],
 		escogidos: [],
 		productoactual: 0,
 		unidades: 0,
@@ -68,17 +70,15 @@ export default {
 	methods: {
 		addProducto: function() {
       		var pactual = this.productoactual;
-      		console.log('Buscando ' + pactual )
       		var index = this.productos.findIndex(function(el) {
 	          return el.id == pactual;
 	        });
-	        console.log(index);
 	        var item = this.productos[index];
-	        console.log(item);
 	        item.cantidad = this.unidades;
 	        this.productos.splice(index, 1);
 	        this.escogidos.push(item);
-	        this.total += item.cantidad * item.precio;
+	        this.total += item.cantidad * this.valorProducto(item);
+	        this.productoactual = 0;
 		},
 		eliminarProducto: function(id) {
       		var index = this.escogidos.findIndex(function(el) {
@@ -88,10 +88,17 @@ export default {
 	        if (item){
 		        this.unidades = item.cantidad;
 		        this.escogidos.splice(index, 1);
-		       	this.total -= item.cantidad * item.precio;
+		       	this.total -= item.cantidad * this.valorProducto(item);
 	        	delete item['cantidad'];
 		        this.productos.push(item)
 		   	}
+		},
+		valorProducto: function(producto){
+			if (this.unidades >= producto.minimopormayor){
+				return producto.valormayor;
+			} else {
+				return producto.valordetal;
+			}
 		}
 	}
 }
