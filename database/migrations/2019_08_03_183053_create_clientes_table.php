@@ -17,9 +17,10 @@ class CreateClientesTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre', 30);
             $table->string('apellidos', 30);
-            $table->string('direccion');
-            $table->string('ciudad');
-            $table->string('telefono');
+            $table->string('direccion', 30);
+            $table->string('ciudad', 50;
+            $table->string('telefono', 30);
+            $table->string('celular', 30);
             $table->timestamps();
         });
     }
