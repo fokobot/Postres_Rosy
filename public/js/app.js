@@ -1938,8 +1938,9 @@ __webpack_require__.r(__webpack_exports__);
       if (item) {
         this.unidades = item.cantidad;
         this.escogidos.splice(index, 1);
-        this.productos.push(item);
         this.total -= item.cantidad * item.precio;
+        delete item['cantidad'];
+        this.productos.push(item);
       }
     }
   }
