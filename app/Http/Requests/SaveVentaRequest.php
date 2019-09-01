@@ -24,11 +24,7 @@ class SaveVentaRequest extends FormRequest
     public function rules()
     {
         return [
-          'cliente_id'           => 'required',
-          'valor_total'          => 'required|numeric',
-          'costo_domicilio'      => 'required|numeric',
-          'direccion_domicilio'  => 'required',
-          'fecha'                => 'required|date',
+          
         ];
     }
 }

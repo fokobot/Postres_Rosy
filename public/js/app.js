@@ -1956,6 +1956,11 @@ __webpack_require__.r(__webpack_exports__);
         return producto.valordetal;
       }
     }
+  },
+  watch: {
+    escogidos: function escogidos() {
+      this.$emit("updatedProductos", this.escogidos);
+    }
   }
 });
 
@@ -2041,6 +2046,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      productos: [],
       tipos_de_documento: [],
       tipodedocumento: 0,
       documento: '',
@@ -2054,7 +2060,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     registrarVenta: function registrarVenta() {
-      // validaciones :)
+      var lista = this.productos.map(function (item) {
+        return {
+          id: item.id,
+          cantidad: item.cantidad
+        };
+      });
       var venta = {
         tipo_de_documento: this.tipodedocumento,
         documento: this.documento,
@@ -2063,13 +2074,17 @@ __webpack_require__.r(__webpack_exports__);
         telefono: this.telefono,
         celular: this.celular,
         direccion: this.direccion,
-        ciudad: this.ciudad
+        ciudad: this.ciudad,
+        productos: lista
       };
       axios.post('/api/ventas', venta).then(function (res) {
         console.log(res);
       })["catch"](function (err) {
         console.log(err);
       });
+    },
+    updateProductos: function updateProductos(productos) {
+      this.productos = productos;
     }
   }
 });
@@ -37721,7 +37736,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", placeholder: "Documento" },
                 domProps: { value: _vm.documento },
                 on: {
                   input: function($event) {
@@ -37749,7 +37764,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", placeholder: "Nombre" },
                 domProps: { value: _vm.nombre },
                 on: {
                   input: function($event) {
@@ -37775,7 +37790,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", placeholder: "Apellidos" },
                 domProps: { value: _vm.apellidos },
                 on: {
                   input: function($event) {
@@ -37791,7 +37806,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "form-group col-md-6" }, [
-              _c("label", [_vm._v("Direccion")]),
+              _c("label", [_vm._v("Dirección")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -37803,7 +37818,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", placeholder: "Dirección" },
                 domProps: { value: _vm.direccion },
                 on: {
                   input: function($event) {
@@ -37829,7 +37844,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", placeholder: "Ciudad" },
                 domProps: { value: _vm.ciudad },
                 on: {
                   input: function($event) {
@@ -37857,7 +37872,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", placeholder: "Teléfono" },
                 domProps: { value: _vm.telefono },
                 on: {
                   input: function($event) {
@@ -37883,7 +37898,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", placeholder: "Celular" },
                 domProps: { value: _vm.celular },
                 on: {
                   input: function($event) {
@@ -37897,7 +37912,9 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("form-detalleventa"),
+          _c("form-detalleventa", {
+            on: { updatedProductos: _vm.updateProductos }
+          }),
           _vm._v(" "),
           _vm._m(0)
         ],

@@ -14,40 +14,40 @@
             </div>
             <div class="form-group col-md-6">
                 <label>Documento</label>
-                <input type="text" class="form-control" v-model="documento">
+                <input type="text" placeholder="Documento" class="form-control" v-model="documento">
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-6">
                 <label>Nombre</label>
-                <input type="text" class="form-control" v-model="nombre">
+                <input type="text" placeholder="Nombre" class="form-control" v-model="nombre">
             </div>
             <div class="form-group col-md-6">
                 <label>Apellidos</label>
-                <input type="text" class="form-control" v-model="apellidos">
+                <input type="text" placeholder="Apellidos" class="form-control" v-model="apellidos">
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-6">
-                <label>Direccion</label>
-                <input type="text" class="form-control" v-model="direccion">
+                <label>Dirección</label>
+                <input type="text" placeholder="Dirección" class="form-control" v-model="direccion">
             </div>
             <div class="form-group col-md-6">
                 <label>Ciudad</label>
-                <input type="text" class="form-control" v-model="ciudad">
+                <input type="text" placeholder="Ciudad" class="form-control" v-model="ciudad">
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-6">
                 <label>Teléfono</label>
-                <input type="text" class="form-control" v-model="telefono">
+                <input type="text" placeholder="Teléfono" class="form-control" v-model="telefono">
             </div>
             <div class="form-group col-md-6">
                 <label>Celular</label>
-                <input type="text" class="form-control" v-model="celular">
+                <input type="text" placeholder="Celular" class="form-control" v-model="celular">
             </div>
         </div>
-      <form-detalleventa></form-detalleventa>
+      <form-detalleventa @updatedProductos="updateProductos"></form-detalleventa>
       <div class="row">
         <div class="col-md-6">
           <button type="submit" class="btn btn-block btn-success">Registrar Compra</button>
@@ -67,6 +67,7 @@
             .then(response => (this.tipos_de_documento = response.data))
         },
         data: () => { return {
+            productos: [],
             tipos_de_documento: [],
             tipodedocumento: 0,
             documento: '',
@@ -79,7 +80,10 @@
         }},
         methods: {
             registrarVenta: function(){
-                // validaciones :)
+                let lista = this.productos.map(function(item) {
+                    return {id: item.id, cantidad: item.cantidad};
+                });
+
                 let venta = {
                     tipo_de_documento: this.tipodedocumento,
                     documento: this.documento,
@@ -89,12 +93,15 @@
                     celular: this.celular,
                     direccion: this.direccion,
                     ciudad: this.ciudad,
+                    productos: lista
                 }
                 axios.post('/api/ventas', venta).then(res => {
                     console.log(res)
                 }).catch(err => { 
                     console.log(err)
                 });
+            }, updateProductos(productos){
+                this.productos = productos;
             }
         }
     }

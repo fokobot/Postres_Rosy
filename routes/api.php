@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('tipos_de_documento', 'API\TipoDeDocumentoController@index');
 Route::get('productos', 'API\ProductoController@index');
+Route::post('ventas', 'API\VentaController@store');

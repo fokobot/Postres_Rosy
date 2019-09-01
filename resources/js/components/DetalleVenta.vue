@@ -112,6 +112,11 @@ export default {
 				return producto.valordetal;
 			}
 		}
+	},
+	watch: {
+		escogidos: function() {
+			this.$emit("updatedProductos", this.escogidos);
+		}
 	}
 }
 </script>
