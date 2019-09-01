@@ -23,6 +23,6 @@ class Venta extends Model
 
     public function productos()
     {
-      return $this->hasMany('App\DetalleCompra', 'venta_id');
+      return $this->hasMany('App\ProductoVenta', 'venta_id');
     }
 }

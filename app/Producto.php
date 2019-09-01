@@ -20,8 +20,7 @@ class Producto extends Model
     $producto = static::find($id);
     if($cantidad >= $producto->minimopormayor){
       return $producto->valormayor;
-    }else{
-      return $producto->valordetal;
     }
+    return $producto->valordetal;
   }
 }
