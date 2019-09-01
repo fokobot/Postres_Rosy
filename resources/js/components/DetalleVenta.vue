@@ -90,6 +90,9 @@ export default {
 		},
 		editarProducto: function(producto){
 			this.$set(this.edition, producto.id, !this.edition[producto.id]);
+			this.total= this.escogidos.reduce(function(sum, current, index, vector){
+			  return sum + this.valorProducto(current) * current.cantidad;
+			}.bind(this), 0);
 		},
 		eliminarProducto: function(id) {
       		var index = this.escogidos.findIndex(function(el) {

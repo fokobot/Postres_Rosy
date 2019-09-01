@@ -1933,6 +1933,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     editarProducto: function editarProducto(producto) {
       this.$set(this.edition, producto.id, !this.edition[producto.id]);
+      this.total = this.escogidos.reduce(function (sum, current, index, vector) {
+        return sum + this.valorProducto(current) * current.cantidad;
+      }.bind(this), 0);
     },
     eliminarProducto: function eliminarProducto(id) {
       var index = this.escogidos.findIndex(function (el) {
@@ -1975,6 +1978,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -37916,7 +37920,8 @@ var render = function() {
             on: { updatedProductos: _vm.updateProductos }
           }),
           _vm._v(" "),
-          _vm._m(0)
+          _vm._m(0),
+          _vm._v("\r\n      " + _vm._s(_vm.productos) + "\r\n    ")
         ],
         1
       )
