@@ -25,7 +25,8 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        return view('cliente.create');
+        $tiposdedocumentos = \App\TipoDeDocumento::all();
+        return view('cliente.create', compact('tiposdedocumentos'));
     }
 
     /**
@@ -36,15 +37,15 @@ class ClienteController extends Controller
      */
     public function store(SaveClienteRequest $request)
     {
-      $cliente               = new Cliente;
-      $cliente->tipo_de_documento       = $request->tipo_de_documento;
-      $cliente->documento               = $request->documento;
-      $cliente->nombre                  = $request->nombre;
-      $cliente->apellidos               = $request->apellidos;
-      $cliente->direccion               = $request->direccion;
-      $cliente->ciudad                  = $request->ciudad;
-      $cliente->telefono                = $request->telefono;
-      $cliente->celular                 = $request->celular;
+      $cliente                             = new Cliente;
+      $cliente->tipo_de_documento_id       = $request->tipo_de_documento_id;
+      $cliente->documento                  = $request->documento;
+      $cliente->nombre                     = $request->nombre;
+      $cliente->apellidos                  = $request->apellidos;
+      $cliente->direccion                  = $request->direccion;
+      $cliente->ciudad                     = $request->ciudad;
+      $cliente->telefono                   = $request->telefono;
+      $cliente->celular                    = $request->celular;
       $cliente->save();
       session()->flash('success', 'Cliente creado con éxito');
       return redirect()->route('cliente.mostrar');

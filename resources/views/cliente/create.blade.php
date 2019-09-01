@@ -4,6 +4,31 @@
 <form method="POST" action="{{route('clientes.store')}}" class="col-md-6">
   @csrf
   <div class="row">
+    <div class="col-md-6">
+      <label for="tipo_de_documento_id">Tipo de documento</label>
+      <div class="form-group has-default">
+        <select name="tipo_de_documento_id" class="form-control form-control-default @error('tipo_de_documento_id') is-invalid @enderror">
+          @foreach ($tiposdedocumentos as $tiposdedocumento)
+            <option value="{{$tiposdedocumento->id}}">{{$tiposdedocumento->abreviatura}}</option>
+          @endforeach
+        </select>
+      </div>
+      @error('tipo_de_documento_id')
+      <div class="alert alert-danger">{{ $message }}</div>
+      @enderror
+    </div>
+    <div class="col-md-6">
+        <label for="documento">N° de documento</label>
+        <div class="form-group has-default">
+        	<input type="text" name="documento" value="{{old('documento')}}" placeholder="N° de documento"
+        		class="form-control form-control-default @error('documento') is-invalid @enderror" >
+        </div>
+        @error('documento')
+					<div class="alert alert-danger">{{ $message }}</div>
+				@enderror
+  	</div>
+  </div>
+  <div class="row">
   	<div class="col-md-6">
         <label for="nombre">Nombre</label>
         <div class="form-group has-default">
@@ -14,9 +39,7 @@
 					<div class="alert alert-danger">{{ $message }}</div>
 				@enderror
   	</div>
-  </div>
-  <div class="row">
-  	<div class="col-md-6">
+    <div class="col-md-6">
         <label for="apellidos">Apellidos</label>
         <div class="form-group has-default">
         	<input type="text" name="apellidos" value="{{old('apellidos')}}" placeholder="Apellidos"
@@ -38,9 +61,7 @@
 				  <div class="alert alert-danger">{{ $message }}</div>
 				@enderror
   	</div>
-  </div>
-  <div class="row">
-  	<div class="col-md-6">
+    <div class="col-md-6">
       <label for="ciudad">Ciudad</label>
       <div class="form-group has-default">
       <input type="text" name="ciudad" value="{{old('ciudad')}}" placeholder="Ciudad"
@@ -59,6 +80,16 @@
       	class="form-control form-control-default @error('telefono') is-invalid @enderror">
       </div>
       @error('telefono')
+				<div class="alert alert-danger">{{ $message }}</div>
+			@enderror
+  	</div>
+    <div class="col-md-6">
+      <label for="celular">Celular</label>
+      <div class="form-group has-default">
+      <input type="text" name="celular" value="{{old('celular')}}" placeholder="Celular"
+      	class="form-control form-control-default @error('celular') is-invalid @enderror">
+      </div>
+      @error('celular')
 				<div class="alert alert-danger">{{ $message }}</div>
 			@enderror
   	</div>
