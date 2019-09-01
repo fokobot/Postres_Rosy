@@ -12,7 +12,7 @@
 		</div>
 		<div class="form-group col-md-4">
 			<label>Cantidad</label>
-			<input :disabled="productos.length==0" type="number" v-model.number="unidades" class="form-control">
+			<input :disabled="productos.length==0" @keydown.enter.prevent="addProducto" type="number" v-model.number="unidades" class="form-control">
 		</div>
 		<div class="form-group col-md-2">
 			<label style="color: white;">FIX THIS</label>
@@ -34,7 +34,7 @@
 				<td>{{producto.nombre}} {{producto.edition}}</td>
 				<td>$ {{valorProducto(producto)}}</td>
 				<td>
-					<input class="form-control" type="number" v-if="edition[producto.id]" v-model="producto.cantidad"/>
+					<input class="form-control" type="number" v-if="edition[producto.id]" v-model="producto.cantidad" @keydown.enter.prevent="editarProducto(producto)"/>
 					<span v-else>{{producto.cantidad}}</span>
 				</td>
 				<td>$ {{producto.cantidad * valorProducto(producto)}}</td>
@@ -105,8 +105,8 @@ export default {
 		        this.productos.push(item)
 		   	}
 		},
-		valorProducto: function(producto){
-			if (this.unidades >= producto.minimopormayor){
+		valorProducto: function(producto, cantidad){
+			if (producto.cantidad >= producto.minimopormayor){
 				return producto.valormayor;
 			} else {
 				return producto.valordetal;
