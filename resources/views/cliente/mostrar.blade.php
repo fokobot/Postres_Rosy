@@ -14,7 +14,7 @@
   <tbody>
 @foreach($clientes as $cliente)
       <tr>
-        <td>{{$cliente->tipo_de_documento_id}}</td>
+        <td>{{$cliente->tipo_de_documento->abreviatura}}</td>
         <td>{{$cliente->documento}}</td>
         <td>{{$cliente->nombre}}</td>
         <td>{{$cliente->apellidos}}</td>
