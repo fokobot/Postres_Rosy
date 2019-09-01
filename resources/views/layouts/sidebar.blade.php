@@ -27,10 +27,25 @@
         Interface
       </div>
 
-       <li class="nav-item">
+      <li class="nav-item">
         <a class="nav-link" href="{{route('clientes.index')}}">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <i class="fas fa-fw fa-user-friends"></i>
+          <span>Clientes</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('productos.index')}}">
+          <i class="fas fa-fw fa-th-list"></i>
+          <span>Productos</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('ventas.index')}}">
+          <i class="fas fa-fw fa-cart-arrow-down"></i>
+          <span>Ventas</span>
+        </a>
       </li>
 
       <!-- Nav Item - Pages Collapse Menu -->
