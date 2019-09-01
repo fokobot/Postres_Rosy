@@ -69,7 +69,7 @@
         data: () => { return {
             productos: [],
             tipos_de_documento: [],
-            tipodedocumento: 0,
+            tipodedocumento: 1,
             documento: '',
             nombre: '',
             apellidos: '',

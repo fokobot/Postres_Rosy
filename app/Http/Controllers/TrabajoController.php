@@ -15,7 +15,8 @@ class TrabajoController extends Controller
      */
     public function index()
     {
-        //
+      $trabajos = Trabajo::all();
+      return view('trabajo.index', compact('trabajos'));
     }
 
     /**
@@ -41,14 +42,7 @@ class TrabajoController extends Controller
       $trabajo->costo         = $request->costo;
       $trabajo->save();
       session()->flash('success','Trabajo creado con éxito');
-      return redirect()->route('trabajos.mostrar');
-    }
-
-    public function ShowTrabajolist()
-    {
-      $trabajos = Trabajo::all();
-
-      return view('trabajo.mostrar', compact('trabajos'));
+      return redirect()->route('trabajos.index');
     }
 
     /**

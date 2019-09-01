@@ -4,11 +4,6 @@
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
 
 Route::get('/', function () {
@@ -18,24 +13,33 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-//Route::resource('clientes', 'ClienteController');
 
-Route::get('/clientes', 'ClienteController@create');//->name('crear');
-Route::post('/clientes', 'ClienteController@store')->name('clientes.store');
-Route::get('/clientes/show', 'ClienteController@ShowClientelist')->name('cliente.mostrar');
+Route::group(['prefix' => 'clientes', 'as' => 'clientes.'], function() {
+	Route::get('/', 'ClienteController@index')->name('index');
+	Route::post('/', 'ClienteController@store')->name('store');
+	Route::get('/new', 'ClienteController@create')->name('new');
+});
 
-Route::get('/productos', 'ProductoController@create');//->name('crear');
-Route::post('/productos', 'ProductoController@store')->name('productos.store');
-Route::get('/productos/show', 'ProductoController@ShowProductolist')->name('productos.mostrar');
+Route::group(['prefix' => 'productos', 'as' => 'productos.'], function() {
+	Route::get('/', 'ProductoController@index')->name('index');
+	Route::post('/', 'ProductoController@store')->name('store');
+	Route::get('/new', 'ProductoController@create')->name('new');
+});
 
-Route::get('/trabajos', 'TrabajoController@create');//->name('crear');
-Route::post('/trabajos', 'TrabajoController@store')->name('trabajos.store');
-Route::get('/trabajos/show', 'TrabajoController@ShowTrabajolist')->name('trabajos.mostrar');
+Route::group(['prefix' => 'trabajos', 'as' => 'trabajos.'], function() {
+	Route::get('/', 'TrabajoController@index')->name('index');
+	Route::post('/', 'TrabajoController@store')->name('store');
+	Route::get('/new', 'TrabajoController@create')->name('new');
+});
 
-Route::get('/gastos', 'GastoController@create');//->name('crear');
-Route::post('/gastos', 'GastoController@store')->name('gastos.store');
-Route::get('/gastos/show', 'GastoController@ShowGastolist')->name('gastos.mostrar');
+Route::group(['prefix' => 'gastos', 'as' => 'gastos.'], function() {
+	Route::get('/', 'GastoController@index')->name('index');
+	Route::post('/', 'GastoController@store')->name('store');
+	Route::get('/new', 'GastoController@create')->name('new');
+});
 
-Route::get('/ventas', 'VentaController@index')->name('ventas.index');
-Route::post('/ventas', 'VentaController@store')->name('ventas.store');
-Route::get('/ventas/create', 'VentaController@create')->name('ventas.create');
+Route::group(['prefix' => 'ventas', 'as' => 'ventas.'], function() {
+	Route::get('/', 'VentaController@index')->name('index');
+	Route::post('/', 'VentaController@store')->name('store');
+	Route::get('/new', 'VentaController@create')->name('create');
+});

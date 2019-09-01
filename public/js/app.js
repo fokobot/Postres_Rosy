@@ -1904,7 +1904,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/api/productos/').then(function (response) {
-      return _this.productos = response.data;
+      return _this.productos = response.data, _this.productoactual = _this.productos[0].id;
     });
   },
   data: function data() {
@@ -1929,7 +1929,7 @@ __webpack_require__.r(__webpack_exports__);
       this.productos.splice(index, 1);
       this.escogidos.push(item);
       this.total += item.cantidad * this.valorProducto(item);
-      this.productoactual = 0;
+      this.productoactual = this.productos.length === 0 ? 0 : this.productos[0].id;
     },
     editarProducto: function editarProducto(producto) {
       this.$set(this.edition, producto.id, !this.edition[producto.id]);
@@ -1950,6 +1950,7 @@ __webpack_require__.r(__webpack_exports__);
         this.total -= item.cantidad * this.valorProducto(item);
         delete item['cantidad'];
         this.productos.push(item);
+        this.productoactual = item.id;
       }
     },
     valorProducto: function valorProducto(producto, cantidad) {
@@ -2038,7 +2039,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'FormVenta',
   mounted: function mounted() {
@@ -2052,7 +2052,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       productos: [],
       tipos_de_documento: [],
-      tipodedocumento: 0,
+      tipodedocumento: 1,
       documento: '',
       nombre: '',
       apellidos: '',
@@ -37920,8 +37920,7 @@ var render = function() {
             on: { updatedProductos: _vm.updateProductos }
           }),
           _vm._v(" "),
-          _vm._m(0),
-          _vm._v("\r\n      " + _vm._s(_vm.productos) + "\r\n    ")
+          _vm._m(0)
         ],
         1
       )
