@@ -15,7 +15,8 @@ class ClienteController extends Controller
      */
     public function index()
     {
-      //
+        $clientes = Cliente::all();
+        return view('cliente.index', compact('clientes'));
     }
 
     /**
@@ -36,7 +37,7 @@ class ClienteController extends Controller
      */
     public function store(SaveClienteRequest $request)
     {
-      $cliente               = new Cliente;
+      $cliente                          = new Cliente;
       $cliente->tipo_de_documento       = $request->tipo_de_documento;
       $cliente->documento               = $request->documento;
       $cliente->nombre                  = $request->nombre;
@@ -47,7 +48,7 @@ class ClienteController extends Controller
       $cliente->celular                 = $request->celular;
       $cliente->save();
       session()->flash('success', 'Cliente creado con éxito');
-      return redirect()->route('cliente.mostrar');
+      return redirect()->route('clientes.index');
     }
 
     /**
@@ -59,13 +60,6 @@ class ClienteController extends Controller
     public function show(Cliente $cliente)
     {
         //
-    }
-
-    public function ShowClientelist()
-    {
-      $clientes = Cliente::all();
-
-      return view('cliente.mostrar', compact('clientes'));
     }
 
     /**

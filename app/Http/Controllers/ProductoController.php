@@ -15,7 +15,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        $productos = Producto::all();
+        return view('producto.index', compact('productos')); //
     }
 
     /**
@@ -36,14 +37,14 @@ class ProductoController extends Controller
      */
     public function store(SaveProductoRequest $request)
     {
-      $producto                    = new Producto;
-      $producto->nombre            = $request->nombre;
-      $producto->valordetal        = $request->valordetal;
-      $producto->valormayor        = $request->valormayor;
-      $producto->minimopormayor    = $request->minimopormayor;
-      $producto->save();
-      session()->flash('success','Producto creado con éxito');
-      return redirect()->route('productos.mostrar');
+        $producto                    = new Producto;
+        $producto->nombre            = $request->nombre;
+        $producto->valordetal        = $request->valordetal;
+        $producto->valormayor        = $request->valormayor;
+        $producto->minimopormayor    = $request->minimopormayor;
+        $producto->save();
+        session()->flash('success','Producto creado con éxito');
+        return redirect()->route('productos.index');
     }
 
     /**
@@ -57,13 +58,6 @@ class ProductoController extends Controller
         //
     }
 
-
-    public function ShowProductolist()
-    {
-      $productos = Producto::all();
-
-      return view('producto.mostrar', compact('productos'));
-    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -95,6 +89,6 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        //
+     //
     }
 }
