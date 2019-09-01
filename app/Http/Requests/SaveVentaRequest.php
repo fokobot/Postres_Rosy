@@ -24,7 +24,10 @@ class SaveVentaRequest extends FormRequest
     public function rules()
     {
         return [
-          
+            'productos'             => 'array|min:1',
+            'productos.*.id'        => 'exists:productos,id',
+            'productos.*.cantidad'  => 'numeric|min:0',
         ];
+
     }
 }

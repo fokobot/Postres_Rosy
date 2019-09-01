@@ -14,4 +14,9 @@ class DetalleCompra extends Model
   {
     return $this->belongsTo('App\Venta', 'venta_id');
   }
+
+  public function producto()
+  {
+    return $this->belongsTo('App\DetalleCompra', 'producto_id');
+  }
 }
