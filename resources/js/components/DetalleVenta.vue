@@ -64,7 +64,7 @@ export default {
 	mounted () {
     axios
       .get('/api/productos/')
-      .then(response => (this.productos = response.data))
+      .then(response => (this.productos = response.data, this.productoactual = this.productos[0].id))
   	},
 	data: function() { return {
 		productos : [],
@@ -86,7 +86,7 @@ export default {
 	        this.productos.splice(index, 1);
 	        this.escogidos.push(item);
 	        this.total += item.cantidad * this.valorProducto(item);
-	        this.productoactual = 0;
+	        this.productoactual = this.productos.length === 0 ? 0 : this.productos[0].id;
 		},
 		editarProducto: function(producto){
 			this.$set(this.edition, producto.id, !this.edition[producto.id]);
@@ -106,6 +106,7 @@ export default {
 		       	this.total -= item.cantidad * this.valorProducto(item);
 	        	delete item['cantidad'];
 		        this.productos.push(item)
+		        this.productoactual = item.id;
 		   	}
 		},
 		valorProducto: function(producto, cantidad){
