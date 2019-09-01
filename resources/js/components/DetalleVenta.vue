@@ -12,7 +12,7 @@
 		</div>
 		<div class="form-group col-md-4">
 			<label>Cantidad</label>
-			<input :disabled="productos.length==0" @keydown.enter.prevent="addProducto" type="number" v-model.number="unidades" class="form-control">
+			<input :disabled="productos.length==0" min="1" @keydown.enter.prevent="addProducto" type="number" v-model.number="unidades" class="form-control">
 		</div>
 		<div class="form-group col-md-2">
 			<label style="color: white;">FIX THIS</label>
@@ -34,7 +34,7 @@
 				<td>{{producto.nombre}} {{producto.edition}}</td>
 				<td>$ {{valorProducto(producto)}}</td>
 				<td>
-					<input class="form-control" type="number" v-if="edition[producto.id]" v-model="producto.cantidad" @keydown.enter.prevent="editarProducto(producto)"/>
+					<input class="form-control" type="number" min="1" v-if="edition[producto.id]" v-model="producto.cantidad" @keydown.enter.prevent="editarProducto(producto)"/>
 					<span v-else>{{producto.cantidad}}</span>
 				</td>
 				<td>$ {{producto.cantidad * valorProducto(producto)}}</td>
@@ -48,13 +48,15 @@
 					</button>
 				</td>
 			</tr>
-			<tr>
+		</tbody>
+		<tfoot>
+			<tr class="table-active">
 				<td><b>Total: </b></td>
 				<td colspan="2"></td>
-				<td><b>$ {{total}}</b></td>
+				<td><strong><u>$ {{total}}</u></strong></td>
 				<td></td>
 			</tr>
-		</tbody>
+		</tfoot>
 	</table>
 </div>
 </template>
@@ -71,7 +73,7 @@ export default {
 		escogidos: [],
 		edition: [],
 		productoactual: 0,
-		unidades: 0,
+		unidades: 1,
 		total: 0.0
 	}},
 	methods: {
@@ -81,7 +83,7 @@ export default {
 	          return el.id == pactual;
 	        });
 	        var item = this.productos[index];
-	        item.cantidad = this.unidades;
+	        item.cantidad = Math.abs(this.unidades);
 	        this.edition[item.id] = false;
 	        this.productos.splice(index, 1);
 	        this.escogidos.push(item);

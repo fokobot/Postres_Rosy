@@ -1899,6 +1899,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var _this = this;
@@ -1913,7 +1915,7 @@ __webpack_require__.r(__webpack_exports__);
       escogidos: [],
       edition: [],
       productoactual: 0,
-      unidades: 0,
+      unidades: 1,
       total: 0.0
     };
   },
@@ -1924,7 +1926,7 @@ __webpack_require__.r(__webpack_exports__);
         return el.id == pactual;
       });
       var item = this.productos[index];
-      item.cantidad = this.unidades;
+      item.cantidad = Math.abs(this.unidades);
       this.edition[item.id] = false;
       this.productos.splice(index, 1);
       this.escogidos.push(item);
@@ -1979,6 +1981,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -37450,7 +37454,11 @@ var render = function() {
             }
           ],
           staticClass: "form-control",
-          attrs: { disabled: _vm.productos.length == 0, type: "number" },
+          attrs: {
+            disabled: _vm.productos.length == 0,
+            min: "1",
+            type: "number"
+          },
           domProps: { value: _vm.unidades },
           on: {
             keydown: function($event) {
@@ -37507,111 +37515,113 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tbody",
-        [
-          _vm._l(_vm.escogidos, function(producto) {
-            return _c("tr", [
-              _c("td", [
-                _vm._v(_vm._s(producto.nombre) + " " + _vm._s(producto.edition))
-              ]),
-              _vm._v(" "),
-              _c("td", [_vm._v("$ " + _vm._s(_vm.valorProducto(producto)))]),
-              _vm._v(" "),
-              _c("td", [
-                _vm.edition[producto.id]
-                  ? _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: producto.cantidad,
-                          expression: "producto.cantidad"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "number" },
-                      domProps: { value: producto.cantidad },
-                      on: {
-                        keydown: function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          $event.preventDefault()
-                          return _vm.editarProducto(producto)
-                        },
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(producto, "cantidad", $event.target.value)
-                        }
+        _vm._l(_vm.escogidos, function(producto) {
+          return _c("tr", [
+            _c("td", [
+              _vm._v(_vm._s(producto.nombre) + " " + _vm._s(producto.edition))
+            ]),
+            _vm._v(" "),
+            _c("td", [_vm._v("$ " + _vm._s(_vm.valorProducto(producto)))]),
+            _vm._v(" "),
+            _c("td", [
+              _vm.edition[producto.id]
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: producto.cantidad,
+                        expression: "producto.cantidad"
                       }
-                    })
-                  : _c("span", [_vm._v(_vm._s(producto.cantidad))])
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  "$ " + _vm._s(producto.cantidad * _vm.valorProducto(producto))
-                )
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-primary",
-                    attrs: { type: "button" },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "number", min: "1" },
+                    domProps: { value: producto.cantidad },
                     on: {
-                      click: function($event) {
+                      keydown: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        $event.preventDefault()
                         return _vm.editarProducto(producto)
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(producto, "cantidad", $event.target.value)
                       }
                     }
-                  },
-                  [
-                    !_vm.edition[producto.id]
-                      ? _c("i", { staticClass: "fa fa-edit" })
-                      : _c("i", { staticClass: "fa fa-save" })
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-danger",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.eliminarProducto(producto.id)
-                      }
+                  })
+                : _c("span", [_vm._v(_vm._s(producto.cantidad))])
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                "$ " + _vm._s(producto.cantidad * _vm.valorProducto(producto))
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-primary",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.editarProducto(producto)
                     }
-                  },
-                  [_c("i", { staticClass: "fa fa-trash" })]
-                )
-              ])
+                  }
+                },
+                [
+                  !_vm.edition[producto.id]
+                    ? _c("i", { staticClass: "fa fa-edit" })
+                    : _c("i", { staticClass: "fa fa-save" })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-danger",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.eliminarProducto(producto.id)
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-trash" })]
+              )
             ])
-          }),
-          _vm._v(" "),
-          _c("tr", [
-            _vm._m(2),
-            _vm._v(" "),
-            _c("td", { attrs: { colspan: "2" } }),
-            _vm._v(" "),
-            _c("td", [_c("b", [_vm._v("$ " + _vm._s(_vm.total))])]),
-            _vm._v(" "),
-            _c("td")
           ])
-        ],
-        2
-      )
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c("tfoot", [
+        _c("tr", { staticClass: "table-active" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c("td", { attrs: { colspan: "2" } }),
+          _vm._v(" "),
+          _c("td", [
+            _c("strong", [_c("u", [_vm._v("$ " + _vm._s(_vm.total))])])
+          ]),
+          _vm._v(" "),
+          _c("td")
+        ])
+      ])
     ])
   ])
 }
@@ -37668,7 +37678,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-header" }, [
-      _vm._v("\r\n    Nueva Venta\r\n  ")
+      _vm._v("\n    Nueva Venta\n  ")
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
@@ -37916,9 +37926,13 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
           _c("form-detalleventa", {
             on: { updatedProductos: _vm.updateProductos }
           }),
+          _vm._v(" "),
+          _c("hr"),
           _vm._v(" "),
           _vm._m(0)
         ],
@@ -37933,7 +37947,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "col-md-12" }, [
         _c(
           "button",
           {
