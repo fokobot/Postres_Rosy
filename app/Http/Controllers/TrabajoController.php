@@ -26,7 +26,7 @@ class TrabajoController extends Controller
      */
     public function create()
     {
-        return view('trabajo.crear');
+        return view('trabajo.create');
     }
 
     /**
@@ -64,7 +64,7 @@ class TrabajoController extends Controller
      */
     public function edit(Trabajo $trabajo)
     {
-        //
+        return view('trabajo.create', compact('trabajo'));
     }
 
     /**
@@ -74,9 +74,13 @@ class TrabajoController extends Controller
      * @param  \App\Trabajo  $trabajo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Trabajo $trabajo)
+    public function update(SaveTrabajoRequest $request, Trabajo $trabajo)
     {
-        //
+      $trabajo->nombre        = $request->nombre;
+      $trabajo->costo         = $request->costo;
+      $trabajo->save();
+      session()->flash('success','Trabajo editado con éxito');
+      return redirect()->route('trabajos.index');
     }
 
     /**

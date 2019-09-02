@@ -34,6 +34,8 @@ Route::group(['prefix' => 'trabajos', 'as' => 'trabajos.'], function() {
 	Route::get('/', 'TrabajoController@index')->name('index');
 	Route::post('/', 'TrabajoController@store')->name('store');
 	Route::get('/new', 'TrabajoController@create')->name('new');
+  Route::get('/{trabajo}/edit', 'TrabajoController@edit')->name('edit');
+  Route::put('/{trabajo}/edit', 'TrabajoController@update')->name('put');
 });
 
 Route::group(['prefix' => 'gastos', 'as' => 'gastos.'], function() {

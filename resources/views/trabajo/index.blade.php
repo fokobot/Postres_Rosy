@@ -11,12 +11,18 @@
       <thead>
         <th>Nombre del trabajo</th>
         <th>Costo</th>
+        <th>Opciones</th>
       </thead>
       <tbody>
         @foreach($trabajos as $trabajo)
         <tr>
           <td>{{$trabajo->nombre}}</td>
           <td>{{$trabajo->costo}}</td>
+          <td>
+          <a class="btn btn-sm btn-primary" href="{{route('trabajos.edit',  $trabajo->id)}}">
+						<i class="fa fa-edit" ></i>
+					</a>
+          </td>
         </tr>
         @endforeach
       </tbody>
