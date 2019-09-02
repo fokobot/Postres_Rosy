@@ -26,8 +26,8 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        $tiposdedocumentos = \App\TipoDeDocumento::all();
-        return view('cliente.create', compact('tiposdedocumentos'));
+        $tipos_de_documento = \App\TipoDeDocumento::all();
+        return view('cliente.create', compact('tipos_de_documento'));
     }
 
     /**
@@ -71,7 +71,8 @@ class ClienteController extends Controller
      */
     public function edit(Cliente $cliente)
     {
-        //
+        $tipos_de_documento = \App\TipoDeDocumento::all();
+        return view('cliente.create', compact('cliente', 'tipos_de_documento'));
     }
 
     /**
@@ -81,9 +82,19 @@ class ClienteController extends Controller
      * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(SaveClienteRequest $request, Cliente $cliente)
     {
-        //
+      $cliente->tipo_de_documento_id    = $request->tipo_de_documento_id;
+      $cliente->documento               = $request->documento;
+      $cliente->nombre                  = $request->nombre;
+      $cliente->apellidos               = $request->apellidos;
+      $cliente->direccion               = $request->direccion;
+      $cliente->ciudad                  = $request->ciudad;
+      $cliente->telefono                = $request->telefono;
+      $cliente->celular                 = $request->celular;
+      $cliente->save();
+      session()->flash('success', 'Cliente editado con éxito');
+      return redirect()->route('clientes.index');
     }
 
     /**

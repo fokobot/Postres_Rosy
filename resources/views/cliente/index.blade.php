@@ -15,6 +15,7 @@
         <th>Ciudad</th>
         <th>Telefono</th>
         <th>Celular</th>
+        <th>Opciones</th>
       </thead>
       <tbody>
         @foreach($clientes as $cliente)
@@ -27,6 +28,11 @@
           <td>{{$cliente->ciudad}}</td>
           <td>{{$cliente->telefono}}</td>
           <td>{{$cliente->celular}}</td>
+          <td>
+          <a class="btn btn-sm btn-primary" href="{{route('clientes.edit',  $cliente->id)}}">
+						<i class="fa fa-edit" ></i>
+					</a>
+          </td>
         </tr>
         @endforeach
       </tbody>
