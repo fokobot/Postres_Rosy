@@ -5,70 +5,54 @@
     </div>
     <div class="card-body">
       <form method="POST" @submit.prevent="registrarVenta" novalidate  class="needs-validation">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="sr-only">Tipo de Documento</label>
-              <select class="form-control" v-bind:class="{ 'is-invalid': errores['tipo_de_documento_id'] }" v-model="tipodedocumento">
-                <option v-for="tipo in tipos_de_documento" v-bind:value="tipo.id">{{tipo.abreviatura}} - {{tipo.nombre}}</option>
-              </select>
-              <form-error v-bind:errores="errores" v-bind:campo="'tipo_de_documento_id'"></form-error>
-            </div>
+        <div class="form-row">
+          <div class="col-md-6 form-group">
+            <label class="sr-only">Tipo de Documento</label>
+            <select class="form-control" v-bind:class="{ 'is-invalid': errores['tipo_de_documento_id'] }" v-model="tipodedocumento">
+              <option v-for="tipo in tipos_de_documento" v-bind:value="tipo.id">{{tipo.abreviatura}} - {{tipo.nombre}}</option>
+            </select>
+            <form-error v-bind:errores="errores" v-bind:campo="'tipo_de_documento_id'"></form-error>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="sr-only">Documento</label>
-              <input type="text" v-bind:class="{ 'is-invalid': errores['documento'] }" placeholder="Documento" class="form-control" v-model="documento" required>
-              <form-error v-bind:errores="errores" v-bind:campo="'documento'"></form-error>
-            </div>
+          <div class="form-group col-md-6">
+            <label class="sr-only">Documento</label>
+            <input type="text" v-bind:class="{ 'is-invalid': errores['documento'] }" placeholder="Documento" class="form-control" v-model="documento" required>
+            <form-error v-bind:errores="errores" v-bind:campo="'documento'"></form-error>
           </div>
         </div>
         <div class="form-row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="sr-only">Nombre</label>
-              <input type="text" v-bind:class="{ 'is-invalid': errores['nombre'] }" placeholder="Nombre" class="form-control" v-model="nombre" required>
+          <div class="form-group col-md-6">
+            <label class="sr-only">Nombre</label>
+            <input type="text" v-bind:class="{ 'is-invalid': errores['nombre'] }" placeholder="Nombre" class="form-control" v-model="nombre" required>
               <form-error v-bind:errores="errores" v-bind:campo="'nombre'"></form-error>
-            </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="sr-only">Apellidos</label>
-              <input type="text" v-bind:class="{ 'is-invalid': errores['apellidos'] }" placeholder="Apellidos" class="form-control" v-model="apellidos" required>
+          <div class="form-group col-md-6">
+            <label class="sr-only">Apellidos</label>
+            <input type="text" v-bind:class="{ 'is-invalid': errores['apellidos'] }" placeholder="Apellidos" class="form-control" v-model="apellidos" required>
               <form-error v-bind:errores="errores" v-bind:campo="'apellidos'"></form-error>
-            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="sr-only">Dirección</label>
-              <input type="text" v-bind:class="{ 'is-invalid': errores['direccion'] }" placeholder="Dirección" class="form-control" v-model="direccion" required>
-              <form-error v-bind:errores="errores" v-bind:campo="'direccion'"></form-error>
-            </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label class="sr-only">Dirección</label>
+            <input type="text" v-bind:class="{ 'is-invalid': errores['direccion'] }" placeholder="Dirección" class="form-control" v-model="direccion" required>
+            <form-error v-bind:errores="errores" v-bind:campo="'direccion'"></form-error>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="sr-only">Ciudad</label>
-              <input type="text" v-bind:class="{ 'is-invalid': errores['ciudad'] }" placeholder="Ciudad" class="form-control" v-model="ciudad" required>
-              <form-error v-bind:errores="errores" v-bind:campo="'ciudad'"></form-error>
-            </div>
+          <div class="form-group col-md-6">
+            <label class="sr-only">Ciudad</label>
+            <input type="text" v-bind:class="{ 'is-invalid': errores['ciudad'] }" placeholder="Ciudad" class="form-control" v-model="ciudad" required>
+            <form-error v-bind:errores="errores" v-bind:campo="'ciudad'"></form-error>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="sr-only">Teléfono</label>
-              <input type="text" v-bind:class="{ 'is-invalid': errores['telefono'] }" placeholder="Teléfono" class="form-control" v-model="telefono" required>
-              <form-error v-bind:errores="errores" v-bind:campo="'telefono'"></form-error>
-            </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label class="sr-only">Teléfono</label>
+            <input type="text" v-bind:class="{ 'is-invalid': errores['telefono'] }" placeholder="Teléfono" class="form-control" v-model="telefono" required>
+            <form-error v-bind:errores="errores" v-bind:campo="'telefono'"></form-error>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="sr-only">Celular</label>
-              <input type="text" v-bind:class="{ 'is-invalid': errores['celular'] }" placeholder="Celular" class="form-control" v-model="celular" required>
-              <form-error v-bind:errores="errores" v-bind:campo="'celular'"></form-error>
-            </div>
+          <div class="form-group col-md-6">
+            <label class="sr-only">Celular</label>
+            <input type="text" v-bind:class="{ 'is-invalid': errores['celular'] }" placeholder="Celular" class="form-control" v-model="celular" required>
+            <form-error v-bind:errores="errores" v-bind:campo="'celular'"></form-error>
           </div>
         </div>
         <hr>

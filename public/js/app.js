@@ -2057,22 +2057,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'FormVenta',
   mounted: function mounted() {
@@ -37763,373 +37747,336 @@ var render = function() {
           }
         },
         [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-6" }, [
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", { staticClass: "sr-only" }, [
-                    _vm._v("Tipo de Documento")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.tipodedocumento,
-                          expression: "tipodedocumento"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      class: {
-                        "is-invalid": _vm.errores["tipo_de_documento_id"]
-                      },
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.tipodedocumento = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        }
-                      }
-                    },
-                    _vm._l(_vm.tipos_de_documento, function(tipo) {
-                      return _c("option", { domProps: { value: tipo.id } }, [
-                        _vm._v(
-                          _vm._s(tipo.abreviatura) + " - " + _vm._s(tipo.nombre)
-                        )
-                      ])
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c("form-error", {
-                    attrs: {
-                      errores: _vm.errores,
-                      campo: "tipo_de_documento_id"
-                    }
-                  })
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", { staticClass: "sr-only" }, [
-                    _vm._v("Documento")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
+          _c("div", { staticClass: "form-row" }, [
+            _c(
+              "div",
+              { staticClass: "col-md-6 form-group" },
+              [
+                _c("label", { staticClass: "sr-only" }, [
+                  _vm._v("Tipo de Documento")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.documento,
-                        expression: "documento"
+                        value: _vm.tipodedocumento,
+                        expression: "tipodedocumento"
                       }
                     ],
                     staticClass: "form-control",
-                    class: { "is-invalid": _vm.errores["documento"] },
-                    attrs: {
-                      type: "text",
-                      placeholder: "Documento",
-                      required: ""
+                    class: {
+                      "is-invalid": _vm.errores["tipo_de_documento_id"]
                     },
-                    domProps: { value: _vm.documento },
                     on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.documento = $event.target.value
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.tipodedocumento = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
                       }
                     }
+                  },
+                  _vm._l(_vm.tipos_de_documento, function(tipo) {
+                    return _c("option", { domProps: { value: tipo.id } }, [
+                      _vm._v(
+                        _vm._s(tipo.abreviatura) + " - " + _vm._s(tipo.nombre)
+                      )
+                    ])
                   }),
-                  _vm._v(" "),
-                  _c("form-error", {
-                    attrs: { errores: _vm.errores, campo: "documento" }
-                  })
-                ],
-                1
-              )
-            ])
+                  0
+                ),
+                _vm._v(" "),
+                _c("form-error", {
+                  attrs: { errores: _vm.errores, campo: "tipo_de_documento_id" }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group col-md-6" },
+              [
+                _c("label", { staticClass: "sr-only" }, [_vm._v("Documento")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.documento,
+                      expression: "documento"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errores["documento"] },
+                  attrs: {
+                    type: "text",
+                    placeholder: "Documento",
+                    required: ""
+                  },
+                  domProps: { value: _vm.documento },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.documento = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("form-error", {
+                  attrs: { errores: _vm.errores, campo: "documento" }
+                })
+              ],
+              1
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-row" }, [
-            _c("div", { staticClass: "col-md-6" }, [
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", { staticClass: "sr-only" }, [_vm._v("Nombre")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.nombre,
-                        expression: "nombre"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errores["nombre"] },
-                    attrs: {
-                      type: "text",
-                      placeholder: "Nombre",
-                      required: ""
-                    },
-                    domProps: { value: _vm.nombre },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.nombre = $event.target.value
-                      }
+            _c(
+              "div",
+              { staticClass: "form-group col-md-6" },
+              [
+                _c("label", { staticClass: "sr-only" }, [_vm._v("Nombre")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.nombre,
+                      expression: "nombre"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("form-error", {
-                    attrs: { errores: _vm.errores, campo: "nombre" }
-                  })
-                ],
-                1
-              )
-            ]),
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errores["nombre"] },
+                  attrs: { type: "text", placeholder: "Nombre", required: "" },
+                  domProps: { value: _vm.nombre },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.nombre = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("form-error", {
+                  attrs: { errores: _vm.errores, campo: "nombre" }
+                })
+              ],
+              1
+            ),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", { staticClass: "sr-only" }, [
-                    _vm._v("Apellidos")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.apellidos,
-                        expression: "apellidos"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errores["apellidos"] },
-                    attrs: {
-                      type: "text",
-                      placeholder: "Apellidos",
-                      required: ""
-                    },
-                    domProps: { value: _vm.apellidos },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.apellidos = $event.target.value
-                      }
+            _c(
+              "div",
+              { staticClass: "form-group col-md-6" },
+              [
+                _c("label", { staticClass: "sr-only" }, [_vm._v("Apellidos")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.apellidos,
+                      expression: "apellidos"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("form-error", {
-                    attrs: { errores: _vm.errores, campo: "apellidos" }
-                  })
-                ],
-                1
-              )
-            ])
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errores["apellidos"] },
+                  attrs: {
+                    type: "text",
+                    placeholder: "Apellidos",
+                    required: ""
+                  },
+                  domProps: { value: _vm.apellidos },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.apellidos = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("form-error", {
+                  attrs: { errores: _vm.errores, campo: "apellidos" }
+                })
+              ],
+              1
+            )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-6" }, [
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", { staticClass: "sr-only" }, [
-                    _vm._v("Dirección")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.direccion,
-                        expression: "direccion"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errores["direccion"] },
-                    attrs: {
-                      type: "text",
-                      placeholder: "Dirección",
-                      required: ""
-                    },
-                    domProps: { value: _vm.direccion },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.direccion = $event.target.value
-                      }
+          _c("div", { staticClass: "form-row" }, [
+            _c(
+              "div",
+              { staticClass: "form-group col-md-6" },
+              [
+                _c("label", { staticClass: "sr-only" }, [_vm._v("Dirección")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.direccion,
+                      expression: "direccion"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("form-error", {
-                    attrs: { errores: _vm.errores, campo: "direccion" }
-                  })
-                ],
-                1
-              )
-            ]),
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errores["direccion"] },
+                  attrs: {
+                    type: "text",
+                    placeholder: "Dirección",
+                    required: ""
+                  },
+                  domProps: { value: _vm.direccion },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.direccion = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("form-error", {
+                  attrs: { errores: _vm.errores, campo: "direccion" }
+                })
+              ],
+              1
+            ),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", { staticClass: "sr-only" }, [_vm._v("Ciudad")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.ciudad,
-                        expression: "ciudad"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errores["ciudad"] },
-                    attrs: {
-                      type: "text",
-                      placeholder: "Ciudad",
-                      required: ""
-                    },
-                    domProps: { value: _vm.ciudad },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.ciudad = $event.target.value
-                      }
+            _c(
+              "div",
+              { staticClass: "form-group col-md-6" },
+              [
+                _c("label", { staticClass: "sr-only" }, [_vm._v("Ciudad")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.ciudad,
+                      expression: "ciudad"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("form-error", {
-                    attrs: { errores: _vm.errores, campo: "ciudad" }
-                  })
-                ],
-                1
-              )
-            ])
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errores["ciudad"] },
+                  attrs: { type: "text", placeholder: "Ciudad", required: "" },
+                  domProps: { value: _vm.ciudad },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.ciudad = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("form-error", {
+                  attrs: { errores: _vm.errores, campo: "ciudad" }
+                })
+              ],
+              1
+            )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-6" }, [
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", { staticClass: "sr-only" }, [_vm._v("Teléfono")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.telefono,
-                        expression: "telefono"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errores["telefono"] },
-                    attrs: {
-                      type: "text",
-                      placeholder: "Teléfono",
-                      required: ""
-                    },
-                    domProps: { value: _vm.telefono },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.telefono = $event.target.value
-                      }
+          _c("div", { staticClass: "form-row" }, [
+            _c(
+              "div",
+              { staticClass: "form-group col-md-6" },
+              [
+                _c("label", { staticClass: "sr-only" }, [_vm._v("Teléfono")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.telefono,
+                      expression: "telefono"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("form-error", {
-                    attrs: { errores: _vm.errores, campo: "telefono" }
-                  })
-                ],
-                1
-              )
-            ]),
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errores["telefono"] },
+                  attrs: {
+                    type: "text",
+                    placeholder: "Teléfono",
+                    required: ""
+                  },
+                  domProps: { value: _vm.telefono },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.telefono = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("form-error", {
+                  attrs: { errores: _vm.errores, campo: "telefono" }
+                })
+              ],
+              1
+            ),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", { staticClass: "sr-only" }, [_vm._v("Celular")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.celular,
-                        expression: "celular"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errores["celular"] },
-                    attrs: {
-                      type: "text",
-                      placeholder: "Celular",
-                      required: ""
-                    },
-                    domProps: { value: _vm.celular },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.celular = $event.target.value
-                      }
+            _c(
+              "div",
+              { staticClass: "form-group col-md-6" },
+              [
+                _c("label", { staticClass: "sr-only" }, [_vm._v("Celular")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.celular,
+                      expression: "celular"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("form-error", {
-                    attrs: { errores: _vm.errores, campo: "celular" }
-                  })
-                ],
-                1
-              )
-            ])
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errores["celular"] },
+                  attrs: { type: "text", placeholder: "Celular", required: "" },
+                  domProps: { value: _vm.celular },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.celular = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("form-error", {
+                  attrs: { errores: _vm.errores, campo: "celular" }
+                })
+              ],
+              1
+            )
           ]),
           _vm._v(" "),
           _c("hr"),
