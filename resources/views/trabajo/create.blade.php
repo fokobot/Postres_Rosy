@@ -5,6 +5,9 @@
 <div class="card">
   <div class="card-header">
     {{isset($trabajo) ? 'Editar' : 'Nuevo'}} Trabajo
+    <a class="btn btn-sm btn-primary float-right" href="{{route('trabajos.index')}}">
+      <i class="fa fa-list" ></i> Trabajo
+    </a>
   </div>
   <div class="card-body">
     <form method="POST" action="{{isset($trabajo) ? route('trabajos.put', $trabajo->id) : route('trabajos.store')}}" >

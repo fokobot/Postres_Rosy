@@ -4,6 +4,10 @@
 <div class="col-md-9">
 <div class="card">
   <div class="card-header">
+    {{isset($producto) ? 'Editar' : 'Nuevo'}} Producto
+    <a class="btn btn-sm btn-primary float-right" href="{{route('productos.index')}}">
+      <i class="fa fa-list" ></i> Productos
+    </a>
   </div>
   <div class="card-body">
     <form method="POST" action="{{isset($producto) ? route('productos.put', $producto->id) : route('productos.store')}}" >
