@@ -21,6 +21,9 @@
 			</button>
 		</div>
 	</div>
+    <div class="alert alert-danger" v-if="errores['productos']">
+  		{{ errores.productos[0] }}
+	</div>
 	<table class="table tbl-responsive tbl-stripped">
 		<thead class="thead-light">
 			<th>Producto</th>
@@ -68,6 +71,7 @@ export default {
       .get('/api/productos/')
       .then(response => (this.productos = response.data, this.productoactual = this.productos[0].id))
   	},
+  	props: ['errores'],
 	data: function() { return {
 		productos : [],
 		escogidos: [],
@@ -83,7 +87,7 @@ export default {
 	          return el.id == pactual;
 	        });
 	        var item = this.productos[index];
-	        item.cantidad = Math.abs(this.unidades);
+	        item.cantidad = Math.max(1, Math.abs(this.unidades));
 	        this.edition[item.id] = false;
 	        this.productos.splice(index, 1);
 	        this.escogidos.push(item);
@@ -93,6 +97,7 @@ export default {
 		editarProducto: function(producto){
 			this.$set(this.edition, producto.id, !this.edition[producto.id]);
 			this.total= this.escogidos.reduce(function(sum, current, index, vector){
+			  current.cantidad = Math.max(1, Math.abs(current.cantidad));
 			  return sum + this.valorProducto(current) * current.cantidad;
 			}.bind(this), 0);
 		},

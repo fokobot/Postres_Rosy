@@ -5,14 +5,12 @@
  */
 
 require('./bootstrap');
-
-window.axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest',
-};
+require('./notify');
 
 window.Vue = require('vue');
 
 Vue.component('form-detalleventa', require('./components/DetalleVenta.vue').default);
+Vue.component('form-error', require('./components/ValidationError.vue').default);
 Vue.component('form-venta', require('./components/FormVenta.vue').default);
 
 const app = new Vue({
