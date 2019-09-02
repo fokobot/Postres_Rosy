@@ -5,6 +5,9 @@
 <div class="card mb-4">
   <div class="card-header">
     Lista de Productos
+    <a class="btn btn-sm btn-primary float-right" href="{{route('productos.new')}}">
+      <i class="fa fa-plus" ></i> Nuevo Producto
+    </a>
   </div>
   <div class="card-body">
     <table class="table table-hover">
@@ -23,7 +26,7 @@
           <td>{{$producto->valormayor}}</td>
           <td>{{$producto->minimopormayor}}</td>
           <td>
-          <a class="btn btn-sm btn-primary" href="{{route('productos.edit',  $producto->id)}}">
+          <a class="btn btn-sm btn-success" href="{{route('productos.edit',  $producto->id)}}">
 						<i class="fa fa-edit" ></i>
 					</a>
           </td>

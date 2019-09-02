@@ -49,5 +49,5 @@ Route::group(['prefix' => 'gastos', 'as' => 'gastos.'], function() {
 Route::group(['prefix' => 'ventas', 'as' => 'ventas.'], function() {
 	Route::get('/', 'VentaController@index')->name('index');
 	Route::post('/', 'VentaController@store')->name('store');
-	Route::get('/new', 'VentaController@create')->name('create');
+	Route::get('/new', 'VentaController@create')->name('new');
 });

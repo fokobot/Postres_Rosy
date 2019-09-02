@@ -5,6 +5,9 @@
 <div class="card mb-4">
   <div class="card-header">
     Lista de Gastos
+    <a class="btn btn-sm btn-primary float-right" href="{{route('gastos.new')}}">
+      <i class="fa fa-plus" ></i> Nuevo Gasto
+    </a>
   </div>
   <div class="card-body">
     <table class="table table-hover">
@@ -23,7 +26,7 @@
           <td>{{$gasto->estado->nombre}}</td>
           <td>{{$gasto->fecha}}</td>
           <td>
-          <a class="btn btn-sm btn-primary" href="{{route('gastos.edit',  $gasto->id)}}">
+          <a class="btn btn-sm btn-success" href="{{route('gastos.edit',  $gasto->id)}}">
 						<i class="fa fa-edit" ></i>
 					</a>
           </td>

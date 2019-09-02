@@ -3,6 +3,9 @@
 <div class="card mb-4">
   <div class="card-header">
     Lista de Clientes
+      <a class="btn btn-sm btn-primary float-right" href="{{route('clientes.new')}}">
+        <i class="fa fa-plus" ></i> Nuevo Cliente
+      </a>
   </div>
   <div class="card-body">
     <table class="table table-hover">
@@ -29,7 +32,7 @@
           <td>{{$cliente->telefono}}</td>
           <td>{{$cliente->celular}}</td>
           <td>
-          <a class="btn btn-sm btn-primary" href="{{route('clientes.edit',  $cliente->id)}}">
+          <a class="btn btn-sm btn-success" href="{{route('clientes.edit',  $cliente->id)}}">
 						<i class="fa fa-edit" ></i>
 					</a>
           </td>
