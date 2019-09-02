@@ -39,7 +39,7 @@ class ClienteController extends Controller
     public function store(SaveClienteRequest $request)
     {
       $cliente                          = new Cliente;
-      $cliente->tipo_de_documento_id    = $request->tipo_de_documento;
+      $cliente->tipo_de_documento_id    = $request->tipo_de_documento_id;
       $cliente->documento               = $request->documento;
       $cliente->nombre                  = $request->nombre;
       $cliente->apellidos               = $request->apellidos;

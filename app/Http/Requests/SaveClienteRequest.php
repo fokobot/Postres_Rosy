@@ -27,7 +27,7 @@ class SaveClienteRequest extends FormRequest
     {
         // esto debe SIEMPRE coincidir con la longitud máxima en base de datos
         return [
-            'tipo_de_documento_id' => 'required',
+            'tipo_de_documento_id' => 'exists:tipos_de_documento,id',
             'documento'            => 'required|numeric',
             'nombre'               => 'required|min:3|max:30',
             'apellidos'            => 'required|min:3|max:30',

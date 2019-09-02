@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaveVentaRequest extends FormRequest
+class SaveVentaRequest extends SaveClienteRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,11 @@ class SaveVentaRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(), [
             'productos'             => 'array|min:1',
             'productos.*.id'        => 'exists:productos,id',
             'productos.*.cantidad'  => 'numeric|min:0',
-        ];
+        ]);
 
     }
 }
