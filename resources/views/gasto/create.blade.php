@@ -1,7 +1,7 @@
 @extends('layouts.principal')
 
 @section('content')
-<div class="col-md-9">
+<div class="col-md-6">
 <div class="card">
   <div class="card-header">
     {{isset($gasto) ? 'Editar' : 'Nuevo'}} Gasto
@@ -15,8 +15,8 @@
       @isset($gasto)
         @method('PUT')
       @endisset
-      <div class="row">
-        <div class="col-md-6">
+      <div class="form-row">
+        <div class="col-md-12">
           <label for="nombre">Descripcion del gasto</label>
           <div class="form-group has-default">
             <input type="text" name="descripcion" value="{{isset($gasto) ? $gasto->descripcion : old('descripcion')}}" placeholder="Descripcion"
@@ -27,20 +27,25 @@
           @enderror
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
+      <div class="form-row">
+        <div class="col-md-12">
           <label for="valor">Valor</label>
           <div class="form-group has-default">
-            <input type="text" name="valor" value="{{isset($gasto) ? $gasto->valor : old('valor')}}" placeholder="$10000"
-            class="form-control form-control-default @error('valor') is-invalid @enderror">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input type="text" name="valor" value="{{isset($gasto) ? $gasto->valor : old('valor')}}" placeholder="10000"
+              class="form-control form-control-default @error('valor') is-invalid @enderror">
+            </div>
           </div>
           @error('valor')
           <div class="alert alert-danger">{{ $message }}</div>
           @enderror
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
+      <div class="form-row">
+        <div class="col-md-12">
           <label for="estado">Estado del Gasto</label>
           <div class="form-group has-default">
             <select name="estado_id" class="form-control form-control-default @error('estado_id') is-invalid @enderror">
@@ -54,17 +59,19 @@
           @enderror
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label for="fecha">Fecha: </label>
-          <input type="datetime" class="form-control form-control-default" name="fecha" value="{{\Carbon\Carbon::now()}}"/>
-          @error('fecha')
-            <div class="alert alert-danger">{{ $message }}</div>
-          @enderror
+      <div class="form-row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="fecha">Fecha: </label>
+            <input type="datetime" class="form-control form-control-default" name="fecha" value="{{\Carbon\Carbon::now()}}"/>
+            @error('fecha')
+              <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
+      <div class="form-row">
+        <div class="col-md-12">
           <button type="submit" class="btn btn-block btn-success">{{ __('Registrar Producto') }}</button>
         </div>
       </div>

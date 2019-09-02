@@ -2,7 +2,7 @@
 @extends('layouts.principal')
 
 @section('content')
-<div class="col-md-9">
+<div class="col-md-6">
 	<div class="card">
 		<div class="card-header">
 			{{isset($cliente) ? 'Editar' : 'Nuevo'}} Cliente
@@ -16,7 +16,7 @@
 				@isset($cliente)
 					@method('PUT')
 				@endisset
-				<div class="row">
+				<div class="form-row">
 					<div class="col-md-6">
 						<label for="tipo_de_documento_id">Tipo de documento</label>
 						<div class="form-group has-default">
@@ -41,7 +41,7 @@
 						@enderror
 					</div>
 				</div>
-				<div class="row">
+				<div class="form-row">
 					<div class="col-md-6">
 						<label for="nombre">Nombre</label>
 						<div class="form-group has-default">
@@ -63,7 +63,7 @@
 						@enderror
 					</div>
 				</div>
-				<div class="row">
+				<div class="form-row">
 					<div class="col-md-6">
 						<label for="direccion">Dirección</label>
 						<div class="form-group has-default">
@@ -85,7 +85,7 @@
 						@enderror
 					</div>
 				</div>
-				<div class="row">
+				<div class="form-row">
 					<div class="col-md-6">
 						<div class="form-group has-default">
 							<label for="telefono">Telefono</label>
@@ -106,7 +106,7 @@
 						@enderror
 					</div>
 				</div>
-				<div class="row">
+				<div class="form-row">
 					<div class="col-md-12">
 						<button type="submit" class="btn btn-block btn-success">
 							{{ __('Registrar Cliente') }}
