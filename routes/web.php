@@ -26,6 +26,8 @@ Route::group(['prefix' => 'productos', 'as' => 'productos.'], function() {
 	Route::get('/', 'ProductoController@index')->name('index');
 	Route::post('/', 'ProductoController@store')->name('store');
 	Route::get('/new', 'ProductoController@create')->name('new');
+  Route::get('/{producto}/edit', 'ProductoController@edit')->name('edit');
+  Route::put('/{producto}/edit', 'ProductoController@update')->name('put');
 });
 
 Route::group(['prefix' => 'trabajos', 'as' => 'trabajos.'], function() {

@@ -13,6 +13,7 @@
         <th>Valor al detal</th>
         <th>Valor al por mayor</th>
         <th>Cantidad min. al por mayor</th>
+        <th>Opciones</th>
       </thead>
       <tbody>
         @foreach($productos as $producto)
@@ -21,6 +22,11 @@
           <td>{{$producto->valordetal}}</td>
           <td>{{$producto->valormayor}}</td>
           <td>{{$producto->minimopormayor}}</td>
+          <td>
+          <a class="btn btn-sm btn-primary" href="{{route('productos.edit',  $producto->id)}}">
+						<i class="fa fa-edit" ></i>
+					</a>
+          </td>
         </tr>
         @endforeach
       </tbody>

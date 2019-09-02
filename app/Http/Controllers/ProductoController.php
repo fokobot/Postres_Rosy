@@ -26,7 +26,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('producto.crear');
+        return view('producto.create');
     }
 
     /**
@@ -66,7 +66,7 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
-        //
+      return view('producto.create', compact('producto'));
     }
 
     /**
@@ -76,9 +76,15 @@ class ProductoController extends Controller
      * @param  \App\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Producto $producto)
+    public function update(SaveProductoRequest $request, Producto $producto)
     {
-        //
+      $producto->nombre            = $request->nombre;
+      $producto->valordetal        = $request->valordetal;
+      $producto->valormayor        = $request->valormayor;
+      $producto->minimopormayor    = $request->minimopormayor;
+      $producto->save();
+      session()->flash('success','Producto editado con éxito');
+      return redirect()->route('productos.index');
     }
 
     /**
