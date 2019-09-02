@@ -27,7 +27,7 @@ class GastoController extends Controller
 		public function create()
 		{
 			$estados = \App\Estado::all();
-			return view('gasto.crear', compact('estados'));
+			return view('gasto.create', compact('estados'));
 		}
 
 		/**
@@ -38,11 +38,11 @@ class GastoController extends Controller
 		 */
 		public function store(SaveGastoRequest $request)
 		{
-			$gasto                     = new Gasto;
-			$gasto->descripcion        = $request->descripcion;
-			$gasto->valor              = $request->valor;
-			$gasto->estado             = $request->estado;
-			$gasto->fecha              = $request->fecha;
+			$gasto                        = new Gasto;
+			$gasto->descripcion           = $request->descripcion;
+			$gasto->valor                 = $request->valor;
+			$gasto->estado_id             = $request->estado_id;
+			$gasto->fecha                 = $request->fecha;
 			$gasto->save();
 			session()->flash('success','Gasto creado con éxito');
 			return redirect()->route('gastos.index');
@@ -67,7 +67,8 @@ class GastoController extends Controller
 		 */
 		public function edit(Gasto $gasto)
 		{
-				//
+				$estados = \App\Estado::all();
+				return view('gasto.create', compact('gasto', 'estados'));
 		}
 
 		/**
@@ -77,9 +78,15 @@ class GastoController extends Controller
 		 * @param  \App\Gasto  $gasto
 		 * @return \Illuminate\Http\Response
 		 */
-		public function update(Request $request, Gasto $gasto)
+		public function update(SaveGastoRequest $request, Gasto $gasto)
 		{
-				//
+			$gasto->descripcion        	= $request->descripcion;
+			$gasto->valor              	= $request->valor;
+			$gasto->estado_id						= $request->estado_id;
+			$gasto->fecha              	= $request->fecha;
+			$gasto->save();
+			session()->flash('success','Gasto editado con éxito');
+			return redirect()->route('gastos.index');
 		}
 
 		/**

@@ -13,6 +13,7 @@
         <th>Valor</th>
         <th>Estado</th>
         <th>Fecha</th>
+        <th>Opciones</th>
       </thead>
       <tbody>
         @foreach($gastos as $gasto)
@@ -21,6 +22,11 @@
           <td>{{$gasto->valor}}</td>
           <td>{{$gasto->estado->nombre}}</td>
           <td>{{$gasto->fecha}}</td>
+          <td>
+          <a class="btn btn-sm btn-primary" href="{{route('gastos.edit',  $gasto->id)}}">
+						<i class="fa fa-edit" ></i>
+					</a>
+          </td>
         </tr>
         @endforeach
       </tbody>
