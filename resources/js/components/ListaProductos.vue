@@ -1,0 +1,51 @@
+<template>
+    <div class="card-body">
+      <table class="table table-hover">
+        <thead>
+          <th>Nombre del producto</th>
+          <th>Valor al detal</th>
+          <th>Valor al por mayor</th>
+          <th>Cantidad min. al por mayor</th>
+          <th>Opciones</th>
+        </thead>
+        <tbody v-for="producto in productos">
+          <tr>
+            <td>{{producto.nombre}}</td>
+            <td>{{producto.valordetal}}</td>
+            <td>{{producto.valormayor}}</td>
+            <td>{{producto.minimopormayor}}</td>
+            <td>
+            <a class="btn btn-sm btn-success" :href="url('edit', producto.id)">
+              <i class="fa fa-edit" ></i>
+            </a>
+            <a class="btn btn-sm btn-danger" href="#">
+              <i class="fa fa-trash"></i>
+            </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</template>
+
+<script>
+    export default {
+      name: 'lista-productos',
+      mounted() {
+        axios
+          .get('/api/productos/')
+          .then(response => (this.productos = response.data))
+      },
+      data: function(){ return {
+        productos:  []
+      }},
+      methods: {
+        url: function (verb, id) {
+          return `productos/${id}/${verb}`;
+        },
+        eliminar: function (id) {
+          // DO SOMETHING
+        }
+      }
+    }
+</script>

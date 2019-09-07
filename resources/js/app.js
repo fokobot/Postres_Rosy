@@ -9,6 +9,8 @@ require('./notify');
 
 window.Vue = require('vue');
 
+Vue.component('lista-productos', require('./components/ListaProductos.vue').default);
+
 Vue.component('form-detalleventa', require('./components/DetalleVenta.vue').default);
 Vue.component('form-error', require('./components/ValidationError.vue').default);
 Vue.component('form-venta', require('./components/FormVenta.vue').default);
