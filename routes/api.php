@@ -21,4 +21,5 @@ Route::get('tipos_de_documento', 'API\TipoDeDocumentoController@index');
 Route::get('productos', 'API\ProductoController@index');
 Route::get('trabajos', 'API\TrabajoController@index');
 Route::get('clientes', 'API\ClienteController@index');
+Route::get('gastos', 'API\GastoController@index');
 Route::post('ventas', 'API\VentaController@store');

@@ -1,0 +1,59 @@
+<template>
+  <div class="card-body">
+    <table class="table table-hover">
+      <thead>
+        <th>Descripcion</th>
+        <th>Valor</th>
+        <th>Estado</th>
+        <th>Fecha</th>
+        <th>Opciones</th>
+      </thead>
+      <tbody>
+        <tr v-for="gasto in gastos">
+          <td>{{gasto.descripcion}}</td>
+          <td>{{gasto.valor}}</td>
+          <td>{{estado(gasto)}}</td>
+          <td>{{gasto.fecha}}</td>
+          <td>
+            <a class="btn btn-sm btn-success" :href="url('edit', gasto.id)">
+  						<i class="fa fa-edit" ></i>
+  					</a>
+            <a class="btn btn-sm btn-danger" href="#">
+              <i class="fa fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+    export default {
+      name: 'lista-gastos',
+      mounted() {
+        axios
+          .get('/api/gastos/')
+          .then(response => (this.gastos = response.data['gastos'], this.estados = response.data['estados']))
+          .catch(err => $.notify('Ha ocurrido un error desconocido.', 'error'))
+      },
+      data: function(){ return {
+        gastos:  [],
+        estados: []
+      }},
+      methods: {
+        url: function (verb, id) {
+          return `gastos/${id}/${verb}`;
+        },
+        estado: function (gasto) {
+          console.log(this.estados)
+          return this.estados.find(function (item) {
+            return item.id == gasto.estado_id;
+          }).nombre;
+        },
+        eliminar: function (id) {
+          // DO SOMETHING
+        }
+      }
+    }
+</script>
