@@ -22,4 +22,5 @@ Route::get('productos', 'API\ProductoController@index');
 Route::get('trabajos', 'API\TrabajoController@index');
 Route::get('clientes', 'API\ClienteController@index');
 Route::get('gastos', 'API\GastoController@index');
+Route::get('ventas', 'API\VentaController@index');
 Route::post('ventas', 'API\VentaController@store');

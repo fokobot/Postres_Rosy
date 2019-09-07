@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
 {
+    public function index()
+    {
+      $ventas = \App\Venta::all()->load('cliente');
+      $estados = \App\EstadoVenta::all();
+      return response()->json([
+        'ventas'       => $ventas,
+        'estados'      => $estados
+      ]);
+    }
+
     public function store(SaveVentaRequest $request)
     {
         DB::beginTransaction();

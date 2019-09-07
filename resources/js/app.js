@@ -13,6 +13,7 @@ Vue.component('lista-productos', require('./components/ListaProductos.vue').defa
 Vue.component('lista-trabajos', require('./components/ListaTrabajos.vue').default);
 Vue.component('lista-clientes', require('./components/ListaClientes.vue').default);
 Vue.component('lista-gastos', require('./components/ListaGastos.vue').default);
+Vue.component('lista-ventas', require('./components/ListaVentas.vue').default);
 
 Vue.component('form-detalleventa', require('./components/DetalleVenta.vue').default);
 Vue.component('form-error', require('./components/ValidationError.vue').default);
