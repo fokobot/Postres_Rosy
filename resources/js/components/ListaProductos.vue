@@ -8,8 +8,8 @@
           <th>Cantidad min. al por mayor</th>
           <th>Opciones</th>
         </thead>
-        <tbody v-for="producto in productos">
-          <tr>
+        <tbody>
+          <tr v-for="producto in productos">
             <td>{{producto.nombre}}</td>
             <td>{{producto.valordetal}}</td>
             <td>{{producto.valormayor}}</td>
