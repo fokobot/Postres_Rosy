@@ -24,4 +24,5 @@ Route::delete('trabajos/{trabajo}', 'API\TrabajoController@destroy');
 Route::get('clientes', 'API\ClienteController@index');
 Route::get('gastos', 'API\GastoController@index');
 Route::get('ventas', 'API\VentaController@index');
+Route::delete('ventas/{venta}', 'API\VentaController@destroy');
 Route::post('ventas', 'API\VentaController@store');

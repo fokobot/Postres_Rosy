@@ -2398,7 +2398,7 @@ __webpack_require__.r(__webpack_exports__);
     eliminar: function eliminar(id) {
       var _this2 = this;
 
-      bootbox.confirm("¿Realmente desea eliminar este elemento?", function (result) {
+      bootbox.confirm("¿Realmente desea eliminar este trabajo?", function (result) {
         if (!result) return;
         axios["delete"]('/api/trabajos/' + id).then(function (res) {
           var index = _this2.trabajos.findIndex(function (item) {
@@ -2499,7 +2499,28 @@ __webpack_require__.r(__webpack_exports__);
     show: function show(venta) {
       console.log('Mostrar Venta'); // DO SOMETHING
     },
-    eliminar: function eliminar(id) {// DO SOMETHING
+    eliminar: function eliminar(id) {
+      var _this2 = this;
+
+      bootbox.confirm("¿Realmente desea eliminar esta venta?", function (result) {
+        if (!result) return;
+        axios["delete"]('/api/ventas/' + id).then(function (res) {
+          var index = _this2.ventas.findIndex(function (item) {
+            item.id == id;
+          });
+
+          _this2.ventas.splice(index, 1);
+
+          $.notify(res.data.mensaje, 'success');
+        })["catch"](function (err) {
+          if (err.response && err.response.status === 422) {
+            // PONER EL ERROR DEVUELTO POR EL SERVIDOR.
+            $.notify("Error al eliminar.", 'warn');
+          } else {
+            $.notify("Error desconocido al eliminar", 'danger');
+          }
+        });
+      });
     }
   }
 });
@@ -40300,7 +40321,19 @@ var render = function() {
                 [_c("i", { staticClass: "fa fa-edit" })]
               ),
               _vm._v(" "),
-              _vm._m(1, true)
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-sm btn-danger",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      return _vm.eliminar(venta.id)
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-trash" })]
+              )
             ])
           ])
         }),
@@ -40327,16 +40360,6 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Opciones")])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "btn btn-sm btn-danger", attrs: { href: "#" } },
-      [_c("i", { staticClass: "fa fa-trash" })]
-    )
   }
 ]
 render._withStripped = true

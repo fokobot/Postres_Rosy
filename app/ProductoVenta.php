@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductoVenta extends Model
 {
@@ -22,4 +23,6 @@ class ProductoVenta extends Model
   {
     return $this->belongsTo('App\Producto', 'producto_id');
   }
+
+  use SoftDeletes;
 }

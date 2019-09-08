@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveVentaRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Response;
 
 class VentaController extends Controller
 {
@@ -58,6 +59,12 @@ class VentaController extends Controller
                 'mensaje' => 'Error al crear la venta.'
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+    }
+
+    public function destroy(Venta $venta)
+    {
+      $venta->delete();
+      return response()->json(['mensaje' => 'Venta eliminada con éxito.'], Response::HTTP_OK);
     }
 
     private static function lista_productos($producto){
