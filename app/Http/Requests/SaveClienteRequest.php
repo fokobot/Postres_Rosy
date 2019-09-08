@@ -31,7 +31,7 @@ class SaveClienteRequest extends FormRequest
             'documento'            => 'required|numeric',
             'nombre'               => 'required|min:3|max:30',
             'apellidos'            => 'required|min:3|max:30',
-            'direccion'            => 'required|min:5|max:50',
+            'direccion'            => 'required|min:5|max:100',
             'ciudad'               => 'required|min:3|max:50',
             'telefono'             => 'numeric',
             'celular'              => 'numeric'

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ProductosTableSeeder extends Seeder
+class GastosTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class ProductosTableSeeder extends Seeder
      */
     public function run()
     {
-      $productos = factory(App\Producto::class, 50)->create();
+      $gastos = factory(App\Gasto::class, 50)->create();
     }
 }
