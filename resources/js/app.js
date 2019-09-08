@@ -6,6 +6,7 @@
 
 require('./bootstrap');
 require('./notify');
+window.bootbox = require('bootbox');
 
 window.Vue = require('vue');
 

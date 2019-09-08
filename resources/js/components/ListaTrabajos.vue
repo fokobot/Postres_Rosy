@@ -14,7 +14,7 @@
             <a class="btn btn-sm btn-success" :href="url('edit', trabajo.id)">
               <i class="fa fa-edit" ></i>
             </a>
-            <a class="btn btn-sm btn-danger" href="#">
+            <a class="btn btn-sm btn-danger" href="#" @click="eliminar(trabajo.id)">
               <i class="fa fa-trash"></i>
             </a>
           </td>
@@ -41,7 +41,25 @@
           return `trabajos/${id}/${verb}`;
         },
         eliminar: function (id) {
-          // DO SOMETHING
+          bootbox.confirm("¿Realmente desea eliminar este trabajo?", result => {
+              if (!result) return;
+              axios.delete('/api/trabajos/' + id)
+                .then(res => {
+                  let index = this.trabajos.findIndex(function (item) {
+                    item.id == id;
+                  });
+                  this.trabajos.splice(index, 1);
+                  $.notify(res.data.mensaje , 'success');
+                })
+                .catch(err => {
+                  if (err.response && err.response.status === 422){
+                    // PONER EL ERROR DEVUELTO POR EL SERVIDOR.
+                    $.notify("Error al eliminar.", 'warn')
+                  } else {
+                    $.notify("Error desconocido al eliminar", 'danger');
+                  }
+                })
+          });
         }
       }
     }
