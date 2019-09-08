@@ -26,4 +26,9 @@ class Producto extends Model
     }
     return $producto->valordetal;
   }
+
+  public function ventas()
+  {
+    return $this->hasMany('App\ProductoVenta', 'producto_id');
+  }
 }

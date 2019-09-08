@@ -18,7 +18,14 @@ class ProductoController extends Controller
 
     public function destroy(Producto $producto)
     {
-      $producto->delete();
-      return response()->json(['mensaje' => 'Producto eliminado con éxito.'], Response::HTTP_OK);
+      if ($producto->ventas()->count() > 0){
+        $mensaje = 'No es posible eliminar el producto, tiene compras asociadas.';
+        $status = Response::HTTP_UNPROCESSABLE_ENTITY;
+      } else {
+        $producto->delete();
+        $mensaje = 'Producto eliminado con éxito.';
+        $status = Response::HTTP_OK;
+      }
+      return response()->json(['mensaje' => $mensaje], $status);
     }
 }

@@ -47,21 +47,20 @@
           bootbox.confirm("¿Realmente desea eliminar este producto?", result => {
               if (!result) return;
               axios.delete('/api/productos/' + id)
-                .then(res => {
-                  let index = this.productos.findIndex(function (item) {
-                    item.id == id;
-                  });
-                  this.productos.splice(index, 1);
-                  $.notify(res.data.mensaje , 'success');
-                })
-                .catch(err => {
-                  if (err.response && err.response.status === 422){
-                    // PONER EL ERROR DEVUELTO POR EL SERVIDOR.
-                    $.notify("Error al eliminar.", 'warn')
-                  } else {
-                    $.notify("Error desconocido al eliminar", 'danger');
-                  }
-                })
+              .then(res => {
+                let index = this.productos.findIndex(function (item) {
+                  item.id == id;
+                });
+                this.productos.splice(index, 1);
+                $.notify(res.data.mensaje , 'success');
+              })
+              .catch(err => {
+                if (err.response && err.response.status === 422){
+                  $.notify(err.response.data.mensaje, 'warn')
+                } else {
+                  $.notify("Error desconocido al eliminar", 'danger');
+                }
+              })
           });
         }
       }

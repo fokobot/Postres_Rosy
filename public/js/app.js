@@ -2467,8 +2467,7 @@ __webpack_require__.r(__webpack_exports__);
           $.notify(res.data.mensaje, 'success');
         })["catch"](function (err) {
           if (err.response && err.response.status === 422) {
-            // PONER EL ERROR DEVUELTO POR EL SERVIDOR.
-            $.notify("Error al eliminar.", 'warn');
+            $.notify(err.response.data.mensaje, 'warn');
           } else {
             $.notify("Error desconocido al eliminar", 'danger');
           }
