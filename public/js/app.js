@@ -2333,7 +2333,28 @@ __webpack_require__.r(__webpack_exports__);
     url: function url(verb, id) {
       return "productos/".concat(id, "/").concat(verb);
     },
-    eliminar: function eliminar(id) {// DO SOMETHING
+    eliminar: function eliminar(id) {
+      var _this2 = this;
+
+      bootbox.confirm("¿Realmente desea eliminar este producto?", function (result) {
+        if (!result) return;
+        axios["delete"]('/api/productos/' + id).then(function (res) {
+          var index = _this2.productos.findIndex(function (item) {
+            item.id == id;
+          });
+
+          _this2.productos.splice(index, 1);
+
+          $.notify(res.data.mensaje, 'success');
+        })["catch"](function (err) {
+          if (err.response && err.response.status === 422) {
+            // PONER EL ERROR DEVUELTO POR EL SERVIDOR.
+            $.notify("Error al eliminar.", 'warn');
+          } else {
+            $.notify("Error desconocido al eliminar", 'danger');
+          }
+        });
+      });
     }
   }
 });
@@ -40143,7 +40164,19 @@ var render = function() {
                 [_c("i", { staticClass: "fa fa-edit" })]
               ),
               _vm._v(" "),
-              _vm._m(1, true)
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-sm btn-danger",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      return _vm.eliminar(producto.id)
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-trash" })]
+              )
             ])
           ])
         }),
@@ -40168,16 +40201,6 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Opciones")])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "btn btn-sm btn-danger", attrs: { href: "#" } },
-      [_c("i", { staticClass: "fa fa-trash" })]
-    )
   }
 ]
 render._withStripped = true

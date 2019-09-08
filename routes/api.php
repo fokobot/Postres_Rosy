@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('tipos_de_documento', 'API\TipoDeDocumentoController@index');
 Route::get('productos', 'API\ProductoController@index');
+Route::delete('productos/{producto}', 'API\ProductoController@destroy');
 Route::get('trabajos', 'API\TrabajoController@index');
 Route::delete('trabajos/{trabajo}', 'API\TrabajoController@destroy');
 Route::get('clientes', 'API\ClienteController@index');

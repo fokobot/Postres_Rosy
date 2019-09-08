@@ -19,6 +19,7 @@ class CreateProductosTable extends Migration
             $table->double('valordetal', 8, 2);
             $table->double('valormayor', 8, 2);
             $table->integer('minimopormayor');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
