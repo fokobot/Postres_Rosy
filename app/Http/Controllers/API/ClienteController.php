@@ -21,7 +21,14 @@ class ClienteController extends Controller
 
     public function destroy(Cliente $cliente)
     {
-      $cliente->delete();
-      return response()->json(['mensaje' => 'Cliente eliminado con éxito.'], Response::HTTP_OK);
+      if ($cliente->compras()->count() > 0){
+        $mensaje = 'No es posible eliminar el cliente, tiene compras asociadas.';
+        $status = Response::HTTP_UNPROCESSABLE_ENTITY;
+      } else {
+        $cliente->delete();
+        $mensaje = 'Cliente eliminado con éxito.';
+        $status = Response::HTTP_OK;
+      }
+      return response()->json(['mensaje' => $mensaje], $status);
     }
 }

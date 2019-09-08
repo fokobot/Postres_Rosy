@@ -40,8 +40,10 @@
       mounted() {
         axios
           .get('/api/clientes/')
-          .then(response => (this.clientes = response.data['clientes'], this.tipos_de_documento = response.data['tipos_de_documento']))
-          .catch(err => $.notify('Ha ocurrido un error desconocido.', 'error'))
+          .then(response => {
+            this.clientes = response.data['clientes'];
+            this.tipos_de_documento = response.data['tipos_de_documento'];
+           }).catch(err => $.notify('Ha ocurrido un error desconocido.', 'error'));
       },
       data: function(){ return {
         clientes:  [],
@@ -52,30 +54,28 @@
           return `clientes/${id}/${verb}`;
         },
         tipo_doc: function (cliente) {
-          console.log(this.tipos_de_documento)
           return this.tipos_de_documento.find(function (item) {
             return item.id == cliente.tipo_de_documento_id;
           }).abreviatura;
         },
         eliminar: function (id) {
-          bootbox.confirm("¿Realmente desea eliminar este clienteclientes?", result => {
+          bootbox.confirm("¿Realmente desea eliminar este cliente?", result => {
               if (!result) return;
               axios.delete('/api/clientes/' + id)
-                .then(res => {
-                  let index = this.clientes.findIndex(function (item) {
-                    item.id == id;
-                  });
-                  this.clientes.splice(index, 1);
-                  $.notify(res.data.mensaje , 'success');
-                })
-                .catch(err => {
-                  if (err.response && err.response.status === 422){
-                    // PONER EL ERROR DEVUELTO POR EL SERVIDOR.
-                    $.notify("Error al eliminar.", 'warn')
-                  } else {
-                    $.notify("Error desconocido al eliminar", 'danger');
-                  }
-                })
+              .then(res => {
+                let index = this.clientes.findIndex(function (item) {
+                  item.id == id;
+                });
+                this.clientes.splice(index, 1);
+                $.notify(res.data.mensaje , 'success');
+              })
+              .catch(err => {
+                if (err.response && err.response.status === 422){
+                  $.notify(err.response.data.mensaje, 'warn')
+                } else {
+                  $.notify("Error desconocido al eliminar.", 'danger');
+                }
+              });
           });
         }
       }

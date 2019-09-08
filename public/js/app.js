@@ -2253,7 +2253,8 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/api/clientes/').then(function (response) {
-      return _this.clientes = response.data['clientes'], _this.tipos_de_documento = response.data['tipos_de_documento'];
+      _this.clientes = response.data['clientes'];
+      _this.tipos_de_documento = response.data['tipos_de_documento'];
     })["catch"](function (err) {
       return $.notify('Ha ocurrido un error desconocido.', 'error');
     });
@@ -2269,7 +2270,6 @@ __webpack_require__.r(__webpack_exports__);
       return "clientes/".concat(id, "/").concat(verb);
     },
     tipo_doc: function tipo_doc(cliente) {
-      console.log(this.tipos_de_documento);
       return this.tipos_de_documento.find(function (item) {
         return item.id == cliente.tipo_de_documento_id;
       }).abreviatura;
@@ -2277,7 +2277,7 @@ __webpack_require__.r(__webpack_exports__);
     eliminar: function eliminar(id) {
       var _this2 = this;
 
-      bootbox.confirm("¿Realmente desea eliminar este clienteclientes?", function (result) {
+      bootbox.confirm("¿Realmente desea eliminar este cliente?", function (result) {
         if (!result) return;
         axios["delete"]('/api/clientes/' + id).then(function (res) {
           var index = _this2.clientes.findIndex(function (item) {
@@ -2289,10 +2289,9 @@ __webpack_require__.r(__webpack_exports__);
           $.notify(res.data.mensaje, 'success');
         })["catch"](function (err) {
           if (err.response && err.response.status === 422) {
-            // PONER EL ERROR DEVUELTO POR EL SERVIDOR.
-            $.notify("Error al eliminar.", 'warn');
+            $.notify(err.response.data.mensaje, 'warn');
           } else {
-            $.notify("Error desconocido al eliminar", 'danger');
+            $.notify("Error desconocido al eliminar.", 'danger');
           }
         });
       });
