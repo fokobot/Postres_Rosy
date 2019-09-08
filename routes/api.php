@@ -20,8 +20,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('tipos_de_documento', 'API\TipoDeDocumentoController@index');
 Route::get('productos', 'API\ProductoController@index');
 Route::delete('productos/{producto}', 'API\ProductoController@destroy');
-Route::get('trabajos', 'API\TrabajoController@index');
-Route::delete('trabajos/{trabajo}', 'API\TrabajoController@destroy');
+
+Route::group(['prefix' => 'trabajos'], function() {
+	Route::get('/', 'API\TrabajoController@index');
+	Route::post('/', 'API\TrabajoController@store');
+	Route::delete('/{trabajo}', 'API\TrabajoController@destroy');
+});
+
 Route::get('clientes', 'API\ClienteController@index');
 Route::delete('clientes/{cliente}', 'API\ClienteController@destroy');
 Route::get('gastos', 'API\GastoController@index');

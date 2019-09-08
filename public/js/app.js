@@ -1977,6 +1977,84 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FormTrabajo.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FormTrabajo.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      trabajo: {},
+      errores: []
+    };
+  },
+  methods: {
+    post: function post() {
+      var _this = this;
+
+      axios.post('/api/trabajos', this.trabajo).then(function (res) {
+        _this.errores = [];
+        $.notify(res.data.mensaje, "success");
+      })["catch"](function (err) {
+        var errores = err.response;
+
+        if (errores.status === 422) {
+          $.notify("Errores de validación.", "warn");
+          _this.errores = errores.data.errors;
+        } else {
+          $.notify("Error desconocido..");
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FormVenta.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FormVenta.vue?vue&type=script&lang=js& ***!
@@ -39574,6 +39652,167 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FormTrabajo.vue?vue&type=template&id=ff1eb430&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FormTrabajo.vue?vue&type=template&id=ff1eb430& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-header" }, [
+      _vm._v("\r\n    Nuevo Trabajo\r\n  ")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c(
+        "form",
+        {
+          staticClass: "needs-validation",
+          attrs: { method: "POST", novalidate: "" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.post($event)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "form-row" }, [
+            _c(
+              "div",
+              { staticClass: "form-group col-md-12" },
+              [
+                _c("label", [_vm._v("Nombre")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.trabajo.nombre,
+                      expression: "trabajo.nombre"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errores["nombre"] },
+                  attrs: { type: "text", placeholder: "Trabajo", required: "" },
+                  domProps: { value: _vm.trabajo.nombre },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.trabajo, "nombre", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("form-error", {
+                  attrs: { errores: _vm.errores, campo: "nombre" }
+                })
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", { attrs: { for: "costo" } }, [
+                    _vm._v("Costo del trabajo")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group mb-3" }, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.trabajo.costo,
+                          expression: "trabajo.costo"
+                        }
+                      ],
+                      staticClass: "form-control form-control-default",
+                      class: { "is-invalid": _vm.errores["costo"] },
+                      attrs: {
+                        type: "text",
+                        name: "costo",
+                        placeholder: "25000"
+                      },
+                      domProps: { value: _vm.trabajo.costo },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.trabajo, "costo", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("form-error", {
+                    attrs: { errores: _vm.errores, campo: "costo" }
+                  })
+                ],
+                1
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(1)
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("span", { staticClass: "input-group-text" }, [_vm._v("$")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-block btn-success",
+            attrs: { type: "submit" }
+          },
+          [_vm._v("Registrar")]
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FormVenta.vue?vue&type=template&id=2e453e0d&":
 /*!************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FormVenta.vue?vue&type=template&id=2e453e0d& ***!
@@ -52627,6 +52866,7 @@ Vue.component('lista-ventas', __webpack_require__(/*! ./components/ListaVentas.v
 Vue.component('form-detalleventa', __webpack_require__(/*! ./components/DetalleVenta.vue */ "./resources/js/components/DetalleVenta.vue")["default"]);
 Vue.component('form-error', __webpack_require__(/*! ./components/ValidationError.vue */ "./resources/js/components/ValidationError.vue")["default"]);
 Vue.component('form-venta', __webpack_require__(/*! ./components/FormVenta.vue */ "./resources/js/components/FormVenta.vue")["default"]);
+Vue.component('form-trabajo', __webpack_require__(/*! ./components/FormTrabajo.vue */ "./resources/js/components/FormTrabajo.vue")["default"]);
 var app = new Vue({
   el: '#app'
 });
@@ -52755,6 +52995,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetalleVenta_vue_vue_type_template_id_75153080___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetalleVenta_vue_vue_type_template_id_75153080___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/FormTrabajo.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/FormTrabajo.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FormTrabajo_vue_vue_type_template_id_ff1eb430___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FormTrabajo.vue?vue&type=template&id=ff1eb430& */ "./resources/js/components/FormTrabajo.vue?vue&type=template&id=ff1eb430&");
+/* harmony import */ var _FormTrabajo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormTrabajo.vue?vue&type=script&lang=js& */ "./resources/js/components/FormTrabajo.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FormTrabajo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FormTrabajo_vue_vue_type_template_id_ff1eb430___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FormTrabajo_vue_vue_type_template_id_ff1eb430___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/FormTrabajo.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/FormTrabajo.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/FormTrabajo.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormTrabajo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./FormTrabajo.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FormTrabajo.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormTrabajo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/FormTrabajo.vue?vue&type=template&id=ff1eb430&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/FormTrabajo.vue?vue&type=template&id=ff1eb430& ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormTrabajo_vue_vue_type_template_id_ff1eb430___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./FormTrabajo.vue?vue&type=template&id=ff1eb430& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FormTrabajo.vue?vue&type=template&id=ff1eb430&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormTrabajo_vue_vue_type_template_id_ff1eb430___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormTrabajo_vue_vue_type_template_id_ff1eb430___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
