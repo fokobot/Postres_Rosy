@@ -23,6 +23,7 @@ Route::delete('productos/{producto}', 'API\ProductoController@destroy');
 Route::get('trabajos', 'API\TrabajoController@index');
 Route::delete('trabajos/{trabajo}', 'API\TrabajoController@destroy');
 Route::get('clientes', 'API\ClienteController@index');
+Route::delete('clientes/{cliente}', 'API\ClienteController@destroy');
 Route::get('gastos', 'API\GastoController@index');
 Route::delete('gastos/{gasto}', 'API\GastoController@destroy');
 Route::get('ventas', 'API\VentaController@index');

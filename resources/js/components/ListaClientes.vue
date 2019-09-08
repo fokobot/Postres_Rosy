@@ -24,7 +24,7 @@
           <a class="btn btn-sm btn-success" :href="url('edit', cliente.id)">
 						<i class="fa fa-edit" ></i>
 					</a>
-          <a class="btn btn-sm btn-danger" href="#">
+          <a class="btn btn-sm btn-danger" href="#" @click="eliminar(cliente.id)">
             <i class="fa fa-trash"></i>
           </a>
           </td>
@@ -58,7 +58,25 @@
           }).abreviatura;
         },
         eliminar: function (id) {
-          // DO SOMETHING
+          bootbox.confirm("¿Realmente desea eliminar este clienteclientes?", result => {
+              if (!result) return;
+              axios.delete('/api/clientes/' + id)
+                .then(res => {
+                  let index = this.clientes.findIndex(function (item) {
+                    item.id == id;
+                  });
+                  this.clientes.splice(index, 1);
+                  $.notify(res.data.mensaje , 'success');
+                })
+                .catch(err => {
+                  if (err.response && err.response.status === 422){
+                    // PONER EL ERROR DEVUELTO POR EL SERVIDOR.
+                    $.notify("Error al eliminar.", 'warn')
+                  } else {
+                    $.notify("Error desconocido al eliminar", 'danger');
+                  }
+                })
+          });
         }
       }
     }
