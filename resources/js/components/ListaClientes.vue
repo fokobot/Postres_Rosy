@@ -64,7 +64,7 @@
               axios.delete('/api/clientes/' + id)
               .then(res => {
                 let index = this.clientes.findIndex(function (item) {
-                  item.id == id;
+                  return item.id == id;
                 });
                 this.clientes.splice(index, 1);
                 $.notify(res.data.mensaje , 'success');

@@ -57,7 +57,7 @@
               axios.delete('/api/gastos/' + id)
                 .then(res => {
                   let index = this.gastos.findIndex(function (item) {
-                    item.id == id;
+                    return item.id == id;
                   });
                   this.gastos.splice(index, 1);
                   $.notify(res.data.mensaje , 'success');

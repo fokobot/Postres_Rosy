@@ -46,7 +46,7 @@
               axios.delete('/api/trabajos/' + id)
                 .then(res => {
                   let index = this.trabajos.findIndex(function (item) {
-                    item.id == id;
+                    return item.id == id;
                   });
                   this.trabajos.splice(index, 1);
                   $.notify(res.data.mensaje , 'success');

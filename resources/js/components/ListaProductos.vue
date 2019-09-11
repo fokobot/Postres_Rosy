@@ -49,7 +49,7 @@
               axios.delete('/api/productos/' + id)
               .then(res => {
                 let index = this.productos.findIndex(function (item) {
-                  item.id == id;
+                  return item.id == id;
                 });
                 this.productos.splice(index, 1);
                 $.notify(res.data.mensaje , 'success');
