@@ -1,4 +1,13 @@
 <template>
+<div class="card mb-4">
+  <div class="card-header">
+    Lista de Ventas
+    <router-link to="/ventas/new">
+      <button class="btn btn-sm btn-primary float-right">
+        <i class="fa fa-plus" ></i> Nueva Venta
+      </button>
+    </router-link>
+  </div>
   <div class="card-body">
     <table class="table table-hover">
       <thead>
@@ -31,6 +40,7 @@
       </tbody>
     </table>
   </div>
+</div>
 </template>
 
 <script>
@@ -85,4 +95,4 @@
         }
       }
     }
-</script>ventas
+</script>

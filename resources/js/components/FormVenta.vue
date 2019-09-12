@@ -2,6 +2,11 @@
   <div class="card">
     <div class="card-header">
       Nueva Venta
+      <router-link to="/ventas">
+        <button class="btn btn-primary btn-sm float-right">
+          <i class="fa fa-list"></i> Ventas
+        </button>
+      </router-link>
     </div>
     <div class="card-body">
       <form method="POST" @submit.prevent="registrarVenta" novalidate  class="needs-validation">
@@ -110,9 +115,10 @@
         axios.post('/api/ventas', venta).then(res => {
           this.errores = [];
           $.notify("Venta realizada con éxito.", "success");
+          this.$router.push('/ventas')
         }).catch(err => { 
           let errores = err.response;
-          if (errores.status === 422){
+          if (errores.status && errores.status === 422){
             $.notify("Errores de validación.", "warn");
             this.errores = errores.data.errors;
           } else {

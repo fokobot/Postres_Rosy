@@ -42,7 +42,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{route('ventas.index')}}">
+        <a class="nav-link" href="/#/ventas">
           <i class="fas fa-fw fa-cart-arrow-down"></i>
           <span>Ventas</span>
         </a>

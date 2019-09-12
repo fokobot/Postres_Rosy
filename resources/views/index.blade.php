@@ -1,9 +1,7 @@
 @extends('layouts.principal')
 
 @section('content')
-<div class="col-md-9">
-  <form-venta></form-venta>
-</div>
+	<router-view></router-view>
 @endsection
 {{-- S C R I P T S --}}
 @push('scripts')

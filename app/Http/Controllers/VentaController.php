@@ -9,27 +9,6 @@ use Auth;
 
 class VentaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-      $ventas = \App\Venta::all();
-      return view('venta.index', compact('ventas'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $cliente_ids = \App\Cliente::all();
-        return view('venta.create', compact('cliente_ids'));
-    }
 
     /**
      * Store a newly created resource in storage.

@@ -7,7 +7,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Auth::routes();
@@ -47,7 +47,5 @@ Route::group(['prefix' => 'gastos', 'as' => 'gastos.'], function() {
 });
 
 Route::group(['prefix' => 'ventas', 'as' => 'ventas.'], function() {
-	Route::get('/', 'VentaController@index')->name('index');
 	Route::post('/', 'VentaController@store')->name('store');
-	Route::get('/new', 'VentaController@create')->name('new');
 });
