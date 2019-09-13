@@ -46,11 +46,6 @@ Route::group(['prefix' => 'trabajos'], function() {
 	Route::delete('/{trabajo}', 'API\TrabajoController@destroy');
 });
 
-Route::get('clientes', 'API\ClienteController@index');
-Route::delete('clientes/{cliente}', 'API\ClienteController@destroy');
-Route::get('gastos', 'API\GastoController@index');
-Route::delete('gastos/{gasto}', 'API\GastoController@destroy');
-
 Route::group(['prefix' => 'ventas'], function (){
 	Route::get('/', 'API\VentaController@index');
 	Route::post('/', 'API\VentaController@store');
