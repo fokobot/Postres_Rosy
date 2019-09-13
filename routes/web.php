@@ -45,7 +45,3 @@ Route::group(['prefix' => 'gastos', 'as' => 'gastos.'], function() {
   Route::get('/{gasto}/edit', 'GastoController@edit')->name('edit');
   Route::put('/{gasto}/edit', 'GastoController@update')->name('put');
 });
-
-Route::group(['prefix' => 'ventas', 'as' => 'ventas.'], function() {
-	Route::post('/', 'VentaController@store')->name('store');
-});
