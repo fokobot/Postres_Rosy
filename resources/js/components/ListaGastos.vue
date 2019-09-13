@@ -16,7 +16,7 @@
         <th>Opciones</th>
       </thead>
       <tbody>
-        <tr v-for="gasto in gastos">
+        <tr v-for="gasto in gastos" :key="gasto.id">
           <td>{{gasto.descripcion}}</td>
           <td>{{gasto.valor}}</td>
           <td>{{estado(gasto)}}</td>
@@ -45,7 +45,7 @@
           .then(response => (this.gastos = response.data['gastos'], this.estados = response.data['estados']))
           .catch(err => $.notify('Ha ocurrido un error desconocido.', 'error'))
       },
-      data: function(){ return {
+      data() { return {
         gastos:  [],
         estados: []
       }},
@@ -54,30 +54,29 @@
           return `/gastos/${id}/${verb}`;
         },
         estado: function (gasto) {
-          console.log(this.estados)
           return this.estados.find(function (item) {
             return item.id == gasto.estado_id;
           }).nombre;
         },
         eliminar: function (id) {
           bootbox.confirm("¿Realmente desea eliminar este gasto?", result => {
-              if (!result) return;
-              axios.delete('/api/gastos/' + id)
-                .then(res => {
-                  let index = this.gastos.findIndex(function (item) {
-                    return item.id == id;
-                  });
-                  this.gastos.splice(index, 1);
-                  $.notify(res.data.mensaje , 'success');
-                })
-                .catch(err => {
-                  if (err.response && err.response.status === 422){
-                    // PONER EL ERROR DEVUELTO POR EL SERVIDOR.
-                    $.notify("Error al eliminar.", 'warn')
-                  } else {
-                    $.notify("Error desconocido al eliminar", 'danger');
-                  }
-                })
+            if (!result) return;
+            axios.delete('/api/gastos/' + id)
+              .then(res => {
+                let index = this.gastos.findIndex(function (item) {
+                  return item.id == id;
+                });
+                this.gastos.splice(index, 1);
+                $.notify(res.data.mensaje , 'success');
+              })
+              .catch(err => {
+                if (err.response && err.response.status === 422){
+                  //TODO PONER EL ERROR DEVUELTO POR EL SERVIDOR.
+                  $.notify("Error al eliminar.", 'warn')
+                } else {
+                  $.notify("Error desconocido al eliminar", 'danger');
+                }
+              })
           });
         }
       }

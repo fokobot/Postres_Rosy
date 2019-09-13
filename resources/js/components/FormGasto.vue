@@ -41,7 +41,7 @@
             <label for="estado">Estado del Gasto</label>
             <div class="form-group has-default">
               <select v-model="gasto.estado_id" class="form-control form-control-default" v-bind:class="{ 'is-invalid': errores['estado_id'] }">
-                  <option v-for="estado in estados" :value="estado.id">{{estado.nombre}}</option>
+                  <option v-for="estado in estados" v-bind:key="estado.id" :value="estado.id">{{estado.nombre}}</option>
               </select>
               <form-error v-bind:errores="errores" v-bind:campo="'estado_id'"></form-error>
             </div>
@@ -75,7 +75,7 @@
         this.$set(this.gasto, 'id', id);
         this.show(this.gasto.id)
       },
-      data: function() {return {
+      data() { return {
         gasto: {},
         estados: [],
         errores: []
