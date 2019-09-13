@@ -21,6 +21,14 @@ Route::get('tipos_de_documento', 'API\TipoDeDocumentoController@index');
 Route::get('productos', 'API\ProductoController@index');
 Route::delete('productos/{producto}', 'API\ProductoController@destroy');
 
+Route::group(['prefix' => 'clientes'], function() {
+	Route::get('/', 'API\ClienteController@index');
+	Route::post('/', 'API\ClienteController@store');
+	Route::get('/{cliente}', 'API\ClienteController@show');
+	Route::put('/{cliente}/edit', 'API\ClienteController@update');
+	Route::delete('/{cliente}', 'API\ClienteController@destroy');
+});
+
 Route::group(['prefix' => 'gastos'], function() {
 	Route::get('/', 'API\GastoController@index');
 	Route::get('/estados', 'API\EstadoGastoController@index');

@@ -28,7 +28,7 @@
       </div>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{route('clientes.index')}}">
+        <a class="nav-link" href="/#/clientes">
           <i class="fas fa-fw fa-user-friends"></i>
           <span>Clientes</span>
         </a>

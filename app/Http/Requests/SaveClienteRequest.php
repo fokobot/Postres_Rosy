@@ -33,8 +33,8 @@ class SaveClienteRequest extends FormRequest
             'apellidos'            => 'required|min:3|max:30',
             'direccion'            => 'required|min:5|max:50',
             'ciudad'               => 'required|min:3|max:50',
-            'telefono'             => 'numeric',
-            'celular'              => 'numeric'
+            'telefono'             => 'required|numeric',
+            'celular'              => 'required|numeric'
         ];
     }
 }
