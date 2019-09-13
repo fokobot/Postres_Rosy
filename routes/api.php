@@ -24,6 +24,8 @@ Route::delete('productos/{producto}', 'API\ProductoController@destroy');
 Route::group(['prefix' => 'trabajos'], function() {
 	Route::get('/', 'API\TrabajoController@index');
 	Route::post('/', 'API\TrabajoController@store');
+	Route::get('/{trabajo}', 'API\TrabajoController@show');
+	Route::put('/{trabajo}/edit', 'API\TrabajoController@update');
 	Route::delete('/{trabajo}', 'API\TrabajoController@destroy');
 });
 

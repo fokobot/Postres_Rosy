@@ -2025,7 +2025,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    this.trabajo = {};
+    this.$set(this.trabajo, 'id', parseInt(this.$route.params.id) || 0);
+    this.show(this.trabajo.id);
+  },
   data: function data() {
     return {
       trabajo: {},
@@ -2033,19 +2040,42 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    post: function post() {
+    show: function show(id) {
       var _this = this;
 
-      axios.post('/api/trabajos', this.trabajo).then(function (res) {
-        _this.errores = [];
+      if (id <= 0) {
+        return;
+      }
+
+      console.log('retrieving...');
+      axios.get("/api/trabajos/".concat(id)).then(function (res) {
+        _this.trabajo = res.data;
+      })["catch"](function (err) {
+        $.notify("Error desconocido..");
+      });
+    },
+    save: function save() {
+      var _this2 = this;
+
+      var extra = this.trabajo.id == 0 ? '' : "/".concat(this.trabajo.id, "/edit");
+      this.trabajo['_method'] = this.trabajo.id == 0 ? 'post' : 'put';
+      console.log('Saving...');
+      var ruta = '/api/trabajos' + extra;
+      console.log(ruta);
+      axios.post(ruta, this.trabajo).then(function (res) {
+        console.log(res);
+        _this2.errores = [];
         $.notify(res.data.mensaje, "success");
+
+        _this2.$router.push('/trabajos');
       })["catch"](function (err) {
         var errores = err.response;
 
-        if (errores.status === 422) {
+        if (errores && errores.status === 422) {
           $.notify("Errores de validación.", "warn");
-          _this.errores = errores.data.errors;
+          _this2.errores = errores.data.errors;
         } else {
+          console.log(errores);
           $.notify("Error desconocido..");
         }
       });
@@ -2495,6 +2525,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -39682,116 +39724,126 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-header" }, [
-      _vm._v("\r\n    Nuevo Trabajo\r\n  ")
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c(
-        "form",
-        {
-          staticClass: "needs-validation",
-          attrs: { method: "POST", novalidate: "" },
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.post($event)
+  return _c("div", { staticClass: "col-md-5" }, [
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [
+        _vm._v(
+          "\r\n      " +
+            _vm._s(_vm.trabajo.id > 0 ? "Editar" : "Nuevo") +
+            " Trabajo\r\n    "
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c(
+          "form",
+          {
+            staticClass: "needs-validation",
+            attrs: { method: "POST", novalidate: "" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.save($event)
+              }
             }
-          }
-        },
-        [
-          _c("div", { staticClass: "form-row" }, [
-            _c(
-              "div",
-              { staticClass: "form-group col-md-12" },
-              [
-                _c("label", [_vm._v("Nombre")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.trabajo.nombre,
-                      expression: "trabajo.nombre"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: { "is-invalid": _vm.errores["nombre"] },
-                  attrs: { type: "text", placeholder: "Trabajo", required: "" },
-                  domProps: { value: _vm.trabajo.nombre },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.trabajo, "nombre", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("form-error", {
-                  attrs: { errores: _vm.errores, campo: "nombre" }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-row" }, [
-            _c("div", { staticClass: "col-md-12" }, [
+          },
+          [
+            _c("div", { staticClass: "form-row" }, [
               _c(
                 "div",
-                { staticClass: "form-group" },
+                { staticClass: "form-group col-md-12" },
                 [
-                  _c("label", { attrs: { for: "costo" } }, [
-                    _vm._v("Costo del trabajo")
-                  ]),
+                  _c("label", [_vm._v("Nombre")]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "input-group mb-3" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.trabajo.costo,
-                          expression: "trabajo.costo"
-                        }
-                      ],
-                      staticClass: "form-control form-control-default",
-                      class: { "is-invalid": _vm.errores["costo"] },
-                      attrs: {
-                        type: "text",
-                        name: "costo",
-                        placeholder: "25000"
-                      },
-                      domProps: { value: _vm.trabajo.costo },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.trabajo, "costo", $event.target.value)
-                        }
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.trabajo.nombre,
+                        expression: "trabajo.nombre"
                       }
-                    })
-                  ]),
+                    ],
+                    staticClass: "form-control",
+                    class: { "is-invalid": _vm.errores["nombre"] },
+                    attrs: {
+                      type: "text",
+                      placeholder: "Trabajo",
+                      required: ""
+                    },
+                    domProps: { value: _vm.trabajo.nombre },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.trabajo, "nombre", $event.target.value)
+                      }
+                    }
+                  }),
                   _vm._v(" "),
                   _c("form-error", {
-                    attrs: { errores: _vm.errores, campo: "costo" }
+                    attrs: { errores: _vm.errores, campo: "nombre" }
                   })
                 ],
                 1
               )
-            ])
-          ]),
-          _vm._v(" "),
-          _vm._m(1)
-        ]
-      )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", { attrs: { for: "costo" } }, [
+                      _vm._v("Costo del trabajo")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group mb-3" }, [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.trabajo.costo,
+                            expression: "trabajo.costo"
+                          }
+                        ],
+                        staticClass: "form-control form-control-default",
+                        class: { "is-invalid": _vm.errores["costo"] },
+                        attrs: {
+                          type: "text",
+                          name: "costo",
+                          placeholder: "25000"
+                        },
+                        domProps: { value: _vm.trabajo.costo },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.trabajo, "costo", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("form-error", {
+                      attrs: { errores: _vm.errores, campo: "costo" }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(1)
+          ]
+        )
+      ])
     ])
   ])
 }
@@ -40535,46 +40587,75 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card-body" }, [
-    _c("table", { staticClass: "table table-hover" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.trabajos, function(trabajo) {
-          return _c("tr", [
-            _c("td", [_vm._v(_vm._s(trabajo.nombre))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(trabajo.costo))]),
-            _vm._v(" "),
-            _c("td", [
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-sm btn-success",
-                  attrs: { href: _vm.url("edit", trabajo.id) }
-                },
-                [_c("i", { staticClass: "fa fa-edit" })]
-              ),
+  return _c("div", { staticClass: "card mb-4" }, [
+    _c(
+      "div",
+      { staticClass: "card-header" },
+      [
+        _vm._v("\r\n    Lista de Trabajos\r\n    "),
+        _c("router-link", { attrs: { to: "/trabajos/new" } }, [
+          _c("button", { staticClass: "btn btn-sm btn-primary float-right" }, [
+            _c("i", { staticClass: "fa fa-plus" }),
+            _vm._v(" Nuevo Trabajo\r\n      ")
+          ])
+        ])
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c("table", { staticClass: "table table-hover" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.trabajos, function(trabajo) {
+            return _c("tr", [
+              _c("td", [_vm._v(_vm._s(trabajo.nombre))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(trabajo.costo))]),
               _vm._v(" "),
               _c(
-                "a",
-                {
-                  staticClass: "btn btn-sm btn-danger",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      return _vm.eliminar(trabajo.id)
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "fa fa-trash" })]
+                "td",
+                [
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to: {
+                          name: "EditarTrabajo",
+                          params: { id: trabajo.id }
+                        }
+                      }
+                    },
+                    [
+                      _c("button", { staticClass: "btn btn-sm btn-success" }, [
+                        _c("i", { staticClass: "fa fa-edit" })
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-danger",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          return _vm.eliminar(trabajo.id)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-trash" })]
+                  )
+                ],
+                1
               )
             ])
-          ])
-        }),
-        0
-      )
+          }),
+          0
+        )
+      ])
     ])
   ])
 }
@@ -56835,9 +56916,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+var ListaTrabajos = __webpack_require__(/*! ./components/ListaTrabajos */ "./resources/js/components/ListaTrabajos.vue")["default"];
+
 var ListaVentas = __webpack_require__(/*! ./components/ListaVentas.vue */ "./resources/js/components/ListaVentas.vue")["default"];
 
 var FormVenta = __webpack_require__(/*! ./components/FormVenta.vue */ "./resources/js/components/FormVenta.vue")["default"];
+
+var FormTrabajo = __webpack_require__(/*! ./components/FormTrabajo.vue */ "./resources/js/components/FormTrabajo.vue")["default"];
 
 var routes = [{
   path: '/ventas/new',
@@ -56845,6 +56930,16 @@ var routes = [{
 }, {
   path: '/ventas',
   component: ListaVentas
+}, {
+  path: '/trabajos',
+  component: ListaTrabajos
+}, {
+  path: '/trabajos/:id/edit',
+  name: 'EditarTrabajo',
+  component: FormTrabajo
+}, {
+  path: '/trabajos/new',
+  component: FormTrabajo
 }];
 /* harmony default export */ __webpack_exports__["default"] = (routes);
 

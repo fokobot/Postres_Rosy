@@ -30,14 +30,6 @@ Route::group(['prefix' => 'productos', 'as' => 'productos.'], function() {
   Route::put('/{producto}/edit', 'ProductoController@update')->name('put');
 });
 
-Route::group(['prefix' => 'trabajos', 'as' => 'trabajos.'], function() {
-	Route::get('/', 'TrabajoController@index')->name('index');
-	Route::post('/', 'TrabajoController@store')->name('store');
-	Route::get('/new', 'TrabajoController@create')->name('new');
-  Route::get('/{trabajo}/edit', 'TrabajoController@edit')->name('edit');
-  Route::put('/{trabajo}/edit', 'TrabajoController@update')->name('put');
-});
-
 Route::group(['prefix' => 'gastos', 'as' => 'gastos.'], function() {
 	Route::get('/', 'GastoController@index')->name('index');
 	Route::post('/', 'GastoController@store')->name('store');

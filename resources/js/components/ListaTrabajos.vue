@@ -1,4 +1,13 @@
 <template>
+<div class="card mb-4">
+  <div class="card-header">
+    Lista de Trabajos
+    <router-link to="/trabajos/new">
+      <button class="btn btn-sm btn-primary float-right">
+        <i class="fa fa-plus" ></i> Nuevo Trabajo
+      </button>
+    </router-link>
+  </div>
   <div class="card-body">
     <table class="table table-hover">
       <thead>
@@ -11,9 +20,11 @@
           <td>{{trabajo.nombre}}</td>
           <td>{{trabajo.costo}}</td>
           <td>
-            <a class="btn btn-sm btn-success" :href="url('edit', trabajo.id)">
-              <i class="fa fa-edit" ></i>
-            </a>
+            <router-link :to="{name: 'EditarTrabajo', params: {id: trabajo.id} }">
+              <button class="btn btn-sm btn-success">
+                <i class="fa fa-edit" ></i>
+              </button>
+            </router-link>
             <a class="btn btn-sm btn-danger" href="#" @click="eliminar(trabajo.id)">
               <i class="fa fa-trash"></i>
             </a>
@@ -22,6 +33,7 @@
       </tbody>
     </table>
   </div>
+</div>
 </template>
 
 <script>
