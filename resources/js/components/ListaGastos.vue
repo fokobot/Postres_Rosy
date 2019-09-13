@@ -1,4 +1,11 @@
 <template>
+<div class="card mb-4">
+  <div class="card-header">
+    Lista de Gastos
+    <router-link class="btn btn-sm btn-primary float-right" to="/gastos/new">
+      <i class="fa fa-plus" ></i> Nuevo Gasto
+    </router-link>
+  </div>
   <div class="card-body">
     <table class="table table-hover">
       <thead>
@@ -15,9 +22,9 @@
           <td>{{estado(gasto)}}</td>
           <td>{{gasto.fecha}}</td>
           <td>
-            <a class="btn btn-sm btn-success" :href="url('edit', gasto.id)">
+            <router-link class="btn btn-sm btn-success" :to="url('edit', gasto.id)">
   						<i class="fa fa-edit" ></i>
-  					</a>
+  					</router-link>
             <a class="btn btn-sm btn-danger" href="#" @click="eliminar(gasto.id)">
               <i class="fa fa-trash"></i>
             </a>
@@ -26,6 +33,7 @@
       </tbody>
     </table>
   </div>
+</div>
 </template>
 
 <script>
@@ -43,7 +51,7 @@
       }},
       methods: {
         url: function (verb, id) {
-          return `gastos/${id}/${verb}`;
+          return `/gastos/${id}/${verb}`;
         },
         estado: function (gasto) {
           console.log(this.estados)

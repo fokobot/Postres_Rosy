@@ -29,11 +29,3 @@ Route::group(['prefix' => 'productos', 'as' => 'productos.'], function() {
   Route::get('/{producto}/edit', 'ProductoController@edit')->name('edit');
   Route::put('/{producto}/edit', 'ProductoController@update')->name('put');
 });
-
-Route::group(['prefix' => 'gastos', 'as' => 'gastos.'], function() {
-	Route::get('/', 'GastoController@index')->name('index');
-	Route::post('/', 'GastoController@store')->name('store');
-	Route::get('/new', 'GastoController@create')->name('new');
-  Route::get('/{gasto}/edit', 'GastoController@edit')->name('edit');
-  Route::put('/{gasto}/edit', 'GastoController@update')->name('put');
-});
