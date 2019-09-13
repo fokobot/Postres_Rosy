@@ -30,6 +30,14 @@ Route::group(['prefix' => 'gastos'], function() {
 	Route::delete('/{gasto}', 'API\GastoController@destroy');
 });
 
+Route::group(['prefix' => 'productos'], function() {
+	Route::get('/', 'API\ProductoController@index');
+	Route::post('/', 'API\ProductoController@store');
+	Route::get('/{producto}', 'API\ProductoController@show');
+	Route::put('/{producto}/edit', 'API\ProductoController@update');
+	Route::delete('/{producto}', 'API\ProductoController@destroy');
+});
+
 Route::group(['prefix' => 'trabajos'], function() {
 	Route::get('/', 'API\TrabajoController@index');
 	Route::post('/', 'API\TrabajoController@store');

@@ -35,7 +35,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{route('productos.index')}}">
+        <a class="nav-link" href="/#/productos">
           <i class="fas fa-fw fa-th-list"></i>
           <span>Productos</span>
         </a>
