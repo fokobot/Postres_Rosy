@@ -53,7 +53,6 @@
       methods: {
         show: function(id) {
           if (id <= 0) { return ; }
-          console.log('retrieving...')
           axios.get(`/api/trabajos/${id}`).then(res => {
             this.trabajo = res.data;
           }).catch(err => {
@@ -63,11 +62,8 @@
         save: function() {
           let extra = this.trabajo.id == 0 ? '' : `/${this.trabajo.id}/edit`;
           this.trabajo['_method'] = this.trabajo.id == 0 ? 'post' : 'put';
-          console.log('Saving...')
           const ruta = '/api/trabajos' + extra;
-          console.log(ruta)
           axios.post(ruta, this.trabajo).then(res => {
-            console.log(res);
             this.errores = [];
             $.notify(res.data.mensaje, "success");
             this.$router.push('/trabajos');
