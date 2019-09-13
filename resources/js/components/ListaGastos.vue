@@ -37,48 +37,48 @@
 </template>
 
 <script>
-    export default {
-      name: 'lista-gastos',
-      mounted() {
-        axios
-          .get('/api/gastos/')
-          .then(response => (this.gastos = response.data['gastos'], this.estados = response.data['estados']))
-          .catch(err => $.notify('Ha ocurrido un error desconocido.', 'error'))
+  export default {
+    name: 'ListaGastos',
+    mounted() {
+      axios
+        .get('/api/gastos/')
+        .then(response => (this.gastos = response.data['gastos'], this.estados = response.data['estados']))
+        .catch(err => $.notify('Ha ocurrido un error desconocido.', 'error'))
+    },
+    data() { return {
+      gastos:  [],
+      estados: []
+    }},
+    methods: {
+      url: function (verb, id) {
+        return `/gastos/${id}/${verb}`;
       },
-      data() { return {
-        gastos:  [],
-        estados: []
-      }},
-      methods: {
-        url: function (verb, id) {
-          return `/gastos/${id}/${verb}`;
-        },
-        estado: function (gasto) {
-          return this.estados.find(function (item) {
-            return item.id == gasto.estado_id;
-          }).nombre;
-        },
-        eliminar: function (id) {
-          bootbox.confirm("¿Realmente desea eliminar este gasto?", result => {
-            if (!result) return;
-            axios.delete('/api/gastos/' + id)
-              .then(res => {
-                let index = this.gastos.findIndex(function (item) {
-                  return item.id == id;
-                });
-                this.gastos.splice(index, 1);
-                $.notify(res.data.mensaje , 'success');
-              })
-              .catch(err => {
-                if (err.response && err.response.status === 422){
-                  //TODO PONER EL ERROR DEVUELTO POR EL SERVIDOR.
-                  $.notify("Error al eliminar.", 'warn')
-                } else {
-                  $.notify("Error desconocido al eliminar", 'danger');
-                }
-              })
-          });
-        }
+      estado: function (gasto) {
+        return this.estados.find(function (item) {
+          return item.id == gasto.estado_id;
+        }).nombre;
+      },
+      eliminar: function (id) {
+        bootbox.confirm("¿Realmente desea eliminar este gasto?", result => {
+          if (!result) return;
+          axios.delete('/api/gastos/' + id)
+            .then(res => {
+              let index = this.gastos.findIndex(function (item) {
+                return item.id == id;
+              });
+              this.gastos.splice(index, 1);
+              $.notify(res.data.mensaje , 'success');
+            })
+            .catch(err => {
+              if (err.response && err.response.status === 422){
+                //TODO PONER EL ERROR DEVUELTO POR EL SERVIDOR.
+                $.notify("Error al eliminar.", 'warn')
+              } else {
+                $.notify("Error desconocido al eliminar", 'danger');
+              }
+            })
+        });
       }
     }
+  }
 </script>

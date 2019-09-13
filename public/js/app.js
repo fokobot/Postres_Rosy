@@ -1905,6 +1905,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['errores'],
   mounted: function mounted() {
     var _this = this;
 
@@ -1912,7 +1913,6 @@ __webpack_require__.r(__webpack_exports__);
       return _this.productos = response.data, _this.productoactual = _this.productos[0].id;
     });
   },
-  props: ['errores'],
   data: function data() {
     return {
       productos: [],
@@ -2082,9 +2082,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'FormCliente',
   mounted: function mounted() {
     var id = parseInt(this.$route.params.id) || 0;
     this.getTiposDeDocumento(id);
@@ -2228,7 +2227,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'FormProducto',
   mounted: function mounted() {
     var id = parseInt(this.$route.params.id) || 0;
     this.getEstados(id);
@@ -2479,6 +2481,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'FormTrabajo',
   mounted: function mounted() {
     this.trabajo = {};
     this.$set(this.trabajo, 'id', parseInt(this.$route.params.id) || 0);
@@ -2615,8 +2618,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'FormVenta',
   mounted: function mounted() {
@@ -2625,19 +2626,12 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('/api/tipos_de_documento/').then(function (response) {
       return _this.tipos_de_documento = response.data;
     });
+    venta.tipos_de_documento;
   },
   data: function data() {
     return {
       productos: [],
-      tipos_de_documento: [],
-      tipodedocumento: 1,
-      documento: '',
-      nombre: '',
-      apellidos: '',
-      telefono: '',
-      celular: '',
-      direccion: '',
-      ciudad: '',
+      venta: {},
       errores: []
     };
   },
@@ -2651,17 +2645,7 @@ __webpack_require__.r(__webpack_exports__);
           cantidad: item.cantidad
         };
       });
-      var venta = {
-        tipo_de_documento: this.tipodedocumento,
-        documento: this.documento,
-        nombre: this.nombre,
-        apellidos: this.apellidos,
-        telefono: this.telefono,
-        celular: this.celular,
-        direccion: this.direccion,
-        ciudad: this.ciudad,
-        productos: lista
-      };
+      venta.productos = lista;
       axios.post('/api/ventas', venta).then(function (res) {
         _this2.errores = [];
         $.notify("Venta realizada con éxito.", "success");
@@ -2841,7 +2825,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'lista-gastos',
+  name: 'ListaGastos',
   mounted: function mounted() {
     var _this = this;
 
@@ -2942,7 +2926,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'lista-productos',
+  name: 'ListaProductos',
   mounted: function mounted() {
     var _this = this;
 
@@ -3136,7 +3120,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'lista-ventas',
+  name: 'ListaVentas',
   mounted: function mounted() {
     var _this = this;
 
@@ -39941,12 +39925,16 @@ var render = function() {
               }
             }
           },
-          _vm._l(_vm.productos, function(producto, index) {
-            return _c("option", { domProps: { value: producto.id } }, [
-              _vm._v(
-                "\r\n\t\t\t\t\t" + _vm._s(producto.nombre) + "\r\n\t\t\t\t"
-              )
-            ])
+          _vm._l(_vm.productos, function(producto) {
+            return _c(
+              "option",
+              { key: producto.id, domProps: { value: producto.id } },
+              [
+                _vm._v(
+                  "\r\n\t\t\t\t\t" + _vm._s(producto.nombre) + "\r\n\t\t\t\t"
+                )
+              ]
+            )
           }),
           0
         )
@@ -40034,7 +40022,7 @@ var render = function() {
       _c(
         "tbody",
         _vm._l(_vm.escogidos, function(producto) {
-          return _c("tr", [
+          return _c("tr", { key: producto.id }, [
             _c("td", [
               _vm._v(_vm._s(producto.nombre) + " " + _vm._s(producto.edition))
             ]),
@@ -40201,9 +40189,9 @@ var render = function() {
         { staticClass: "card-header" },
         [
           _vm._v(
-            "\r\n\t\t\t" +
+            "\n        " +
               _vm._s(_vm.cliente.id != 0 ? "Editar" : "Nuevo") +
-              " Cliente\r\n\t\t\t"
+              " Cliente\n        "
           ),
           _c(
             "router-link",
@@ -40213,7 +40201,7 @@ var render = function() {
             },
             [
               _c("i", { staticClass: "fa fa-list" }),
-              _vm._v(" Clientes\r\n\t    ")
+              _vm._v(" Clientes\n        ")
             ]
           )
         ],
@@ -40613,7 +40601,7 @@ var staticRenderFns = [
             staticClass: "btn btn-block btn-success",
             attrs: { type: "submit" }
           },
-          [_vm._v("\r\n\t\t\t\t\t\t\tRegistrar Cliente\r\n\t\t\t\t\t\t")]
+          [_vm._v("\n              Registrar Cliente\n            ")]
         )
       ])
     ])
@@ -40647,9 +40635,9 @@ var render = function() {
         { staticClass: "card-header" },
         [
           _vm._v(
-            "\r\n      " +
+            "\n      " +
               _vm._s(_vm.gasto.id > 0 ? "Editar" : "Nuevo") +
-              " Gasto\r\n      "
+              " Gasto\n      "
           ),
           _c(
             "router-link",
@@ -40657,10 +40645,7 @@ var render = function() {
               staticClass: "btn btn-sm btn-primary float-right",
               attrs: { to: "/gastos" }
             },
-            [
-              _c("i", { staticClass: "fa fa-list" }),
-              _vm._v(" Gastos\r\n      ")
-            ]
+            [_c("i", { staticClass: "fa fa-list" }), _vm._v(" Gastos\n      ")]
           )
         ],
         1
@@ -40818,7 +40803,13 @@ var render = function() {
                         return _c(
                           "option",
                           { key: estado.id, domProps: { value: estado.id } },
-                          [_vm._v(_vm._s(estado.nombre))]
+                          [
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(estado.nombre) +
+                                "\n                "
+                            )
+                          ]
                         )
                       }),
                       0
@@ -40937,9 +40928,9 @@ var render = function() {
         { staticClass: "card-header" },
         [
           _vm._v(
-            "\r\n      " +
+            "\n      " +
               _vm._s(_vm.producto.id != 0 ? "Editar" : "Nuevo") +
-              " Producto\r\n      "
+              " Producto\n      "
           ),
           _c(
             "router-link",
@@ -40949,7 +40940,7 @@ var render = function() {
             },
             [
               _c("i", { staticClass: "fa fa-list" }),
-              _vm._v(" Productos\r\n      ")
+              _vm._v(" Productos\n      ")
             ]
           )
         ],
@@ -41225,9 +41216,9 @@ var render = function() {
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-header" }, [
         _vm._v(
-          "\r\n      " +
+          "\n      " +
             _vm._s(_vm.trabajo.id > 0 ? "Editar" : "Nuevo") +
-            " Trabajo\r\n    "
+            " Trabajo\n    "
         )
       ]),
       _vm._v(" "),
@@ -41311,11 +41302,7 @@ var render = function() {
                         ],
                         staticClass: "form-control form-control-default",
                         class: { "is-invalid": _vm.errores["costo"] },
-                        attrs: {
-                          type: "text",
-                          name: "costo",
-                          placeholder: "25000"
-                        },
+                        attrs: { type: "text", placeholder: "25000" },
                         domProps: { value: _vm.trabajo.costo },
                         on: {
                           input: function($event) {
@@ -41398,12 +41385,14 @@ var render = function() {
       { staticClass: "card-header" },
       [
         _vm._v("\n    Nueva Venta\n    "),
-        _c("router-link", { attrs: { to: "/ventas" } }, [
-          _c("button", { staticClass: "btn btn-primary btn-sm float-right" }, [
-            _c("i", { staticClass: "fa fa-list" }),
-            _vm._v(" Ventas\n      ")
-          ])
-        ])
+        _c(
+          "router-link",
+          {
+            staticClass: "btn btn-primary btn-sm float-right",
+            attrs: { to: "/ventas" }
+          },
+          [_c("i", { staticClass: "fa fa-list" }), _vm._v(" Ventas\n    ")]
+        )
       ],
       1
     ),
@@ -41463,11 +41452,15 @@ var render = function() {
                     }
                   },
                   _vm._l(_vm.tipos_de_documento, function(tipo) {
-                    return _c("option", { domProps: { value: tipo.id } }, [
-                      _vm._v(
-                        _vm._s(tipo.abreviatura) + " - " + _vm._s(tipo.nombre)
-                      )
-                    ])
+                    return _c(
+                      "option",
+                      { key: tipo.id, domProps: { value: tipo.id } },
+                      [
+                        _vm._v(
+                          _vm._s(tipo.abreviatura) + " - " + _vm._s(tipo.nombre)
+                        )
+                      ]
+                    )
                   }),
                   0
                 ),
@@ -41650,20 +41643,20 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.ciudad,
-                      expression: "ciudad"
+                      value: _vm.venta.ciudad,
+                      expression: "venta.ciudad"
                     }
                   ],
                   staticClass: "form-control",
                   class: { "is-invalid": _vm.errores["ciudad"] },
                   attrs: { type: "text", placeholder: "Ciudad", required: "" },
-                  domProps: { value: _vm.ciudad },
+                  domProps: { value: _vm.venta.ciudad },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.ciudad = $event.target.value
+                      _vm.$set(_vm.venta, "ciudad", $event.target.value)
                     }
                   }
                 }),
@@ -41728,20 +41721,20 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.celular,
-                      expression: "celular"
+                      value: _vm.venta.celular,
+                      expression: "venta.celular"
                     }
                   ],
                   staticClass: "form-control",
                   class: { "is-invalid": _vm.errores["celular"] },
                   attrs: { type: "text", placeholder: "Celular", required: "" },
-                  domProps: { value: _vm.celular },
+                  domProps: { value: _vm.venta.celular },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.celular = $event.target.value
+                      _vm.$set(_vm.venta, "celular", $event.target.value)
                     }
                   }
                 }),
@@ -42187,7 +42180,7 @@ var render = function() {
         _c(
           "tbody",
           _vm._l(_vm.trabajos, function(trabajo) {
-            return _c("tr", [
+            return _c("tr", { key: trabajo.id }, [
               _c("td", [_vm._v(_vm._s(trabajo.nombre))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(trabajo.costo))]),
@@ -42394,7 +42387,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _vm.errores[_vm.campo]
     ? _c("div", { staticClass: "invalid-feedback" }, [
-        _vm._v("\n    " + _vm._s(_vm.errores[_vm.campo][0]) + "\n")
+        _vm._v("\n  " + _vm._s(_vm.errores[_vm.campo][0]) + "\n")
       ])
     : _vm._e()
 }
