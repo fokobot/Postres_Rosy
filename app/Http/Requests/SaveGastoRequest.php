@@ -26,7 +26,7 @@ class SaveGastoRequest extends FormRequest
         return [
           'descripcion'        => 'required|min:3|max:35',
           'valor'              => 'required|numeric',
-          'estado'             => 'exists:gatos,id',
+          'estado_id'          => 'exists:estados,id',
           'fecha'              => 'required|date'
         ];
     }

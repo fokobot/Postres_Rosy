@@ -28,21 +28,21 @@
       </div>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{route('clientes.index')}}">
+        <a class="nav-link" href="/#/clientes">
           <i class="fas fa-fw fa-user-friends"></i>
           <span>Clientes</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{route('productos.index')}}">
+        <a class="nav-link" href="/#/productos">
           <i class="fas fa-fw fa-th-list"></i>
           <span>Productos</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{route('ventas.index')}}">
+        <a class="nav-link" href="/#/ventas">
           <i class="fas fa-fw fa-cart-arrow-down"></i>
           <span>Ventas</span>
         </a>

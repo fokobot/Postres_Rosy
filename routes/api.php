@@ -20,12 +20,42 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('tipos_de_documento', 'API\TipoDeDocumentoController@index');
 Route::get('productos', 'API\ProductoController@index');
 Route::delete('productos/{producto}', 'API\ProductoController@destroy');
-Route::get('trabajos', 'API\TrabajoController@index');
-Route::delete('trabajos/{trabajo}', 'API\TrabajoController@destroy');
-Route::get('clientes', 'API\ClienteController@index');
-Route::delete('clientes/{cliente}', 'API\ClienteController@destroy');
-Route::get('gastos', 'API\GastoController@index');
-Route::delete('gastos/{gasto}', 'API\GastoController@destroy');
-Route::get('ventas', 'API\VentaController@index');
-Route::delete('ventas/{venta}', 'API\VentaController@destroy');
-Route::post('ventas', 'API\VentaController@store');
+
+Route::group(['prefix' => 'clientes'], function() {
+	Route::get('/', 'API\ClienteController@index');
+	Route::post('/', 'API\ClienteController@store');
+	Route::get('/{cliente}', 'API\ClienteController@show');
+	Route::put('/{cliente}/edit', 'API\ClienteController@update');
+	Route::delete('/{cliente}', 'API\ClienteController@destroy');
+});
+
+Route::group(['prefix' => 'gastos'], function() {
+	Route::get('/', 'API\GastoController@index');
+	Route::get('/estados', 'API\EstadoGastoController@index');
+	Route::post('/', 'API\GastoController@store');
+	Route::get('/{gasto}', 'API\GastoController@show');
+	Route::put('/{gasto}/edit', 'API\GastoController@update');
+	Route::delete('/{gasto}', 'API\GastoController@destroy');
+});
+
+Route::group(['prefix' => 'productos'], function() {
+	Route::get('/', 'API\ProductoController@index');
+	Route::post('/', 'API\ProductoController@store');
+	Route::get('/{producto}', 'API\ProductoController@show');
+	Route::put('/{producto}/edit', 'API\ProductoController@update');
+	Route::delete('/{producto}', 'API\ProductoController@destroy');
+});
+
+Route::group(['prefix' => 'trabajos'], function() {
+	Route::get('/', 'API\TrabajoController@index');
+	Route::post('/', 'API\TrabajoController@store');
+	Route::get('/{trabajo}', 'API\TrabajoController@show');
+	Route::put('/{trabajo}/edit', 'API\TrabajoController@update');
+	Route::delete('/{trabajo}', 'API\TrabajoController@destroy');
+});
+
+Route::group(['prefix' => 'ventas'], function (){
+	Route::get('/', 'API\VentaController@index');
+	Route::post('/', 'API\VentaController@store');
+	Route::delete('ventas/{venta}', 'API\VentaController@destroy');
+});

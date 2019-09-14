@@ -25,9 +25,9 @@ class SaveProductoRequest extends FormRequest
     {
         return [
           'nombre'            => 'required|min:3|max:35',
-          'valordetal'        => 'required|numeric',
-          'valormayor'        => 'required|numeric',
-          'minimopormayor'    => 'required|numeric',
+          'valordetal'        => 'required|numeric|min:0',
+          'valormayor'        => 'required|numeric|min:0',
+          'minimopormayor'    => 'required|numeric|min:0',
         ];
     }
 }

@@ -30,7 +30,7 @@ class VentaController extends Controller
         DB::beginTransaction();
         try {
             $cliente                             = new Cliente;
-            $cliente->tipo_de_documento_id       = $request->tipo_de_documento;
+            $cliente->tipo_de_documento_id       = $request->tipo_de_documento_id;
             $cliente->documento                  = $request->documento;
             $cliente->nombre                     = $request->nombre;
             $cliente->apellidos                  = $request->apellidos;
