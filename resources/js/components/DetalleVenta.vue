@@ -37,12 +37,12 @@
       <tbody>
         <tr v-for="producto in escogidos" :key="producto.id">
           <td>{{producto.nombre}} {{producto.edition}}</td>
-          <td>$ {{valorProducto(producto)}}</td>
+          <td>$ {{valorProducto(producto) | currency}}</td>
           <td>
             <input class="form-control" type="number" min="1" v-if="edition[producto.id]" v-model="producto.cantidad" @keydown.enter.prevent="editarProducto(producto)"/>
             <span v-else>{{producto.cantidad}}</span>
           </td>
-          <td>$ {{producto.cantidad * valorProducto(producto)}}</td>
+          <td>$ {{producto.cantidad * valorProducto(producto) | currency}}</td>
           <td>
             <button class="btn btn-sm btn-primary" type="button" @click="editarProducto(producto)">
               <i class="fa fa-edit" v-if="!edition[producto.id]"></i>
@@ -58,7 +58,7 @@
       <tr class="table-active">
         <td><b>Total: </b></td>
         <td colspan="2"></td>
-        <td><strong><u>$ {{total}}</u></strong></td>
+        <td><strong><u>$ {{total | currency}}</u></strong></td>
         <td></td>
       </tr>
     </tfoot>

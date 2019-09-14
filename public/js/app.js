@@ -40044,7 +40044,11 @@ var render = function() {
               _vm._v(_vm._s(producto.nombre) + " " + _vm._s(producto.edition))
             ]),
             _vm._v(" "),
-            _c("td", [_vm._v("$ " + _vm._s(_vm.valorProducto(producto)))]),
+            _c("td", [
+              _vm._v(
+                "$ " + _vm._s(_vm._f("currency")(_vm.valorProducto(producto)))
+              )
+            ]),
             _vm._v(" "),
             _c("td", [
               _vm.edition[producto.id]
@@ -40090,7 +40094,12 @@ var render = function() {
             _vm._v(" "),
             _c("td", [
               _vm._v(
-                "$ " + _vm._s(producto.cantidad * _vm.valorProducto(producto))
+                "$ " +
+                  _vm._s(
+                    _vm._f("currency")(
+                      producto.cantidad * _vm.valorProducto(producto)
+                    )
+                  )
               )
             ]),
             _vm._v(" "),
@@ -40139,7 +40148,9 @@ var render = function() {
           _c("td", { attrs: { colspan: "2" } }),
           _vm._v(" "),
           _c("td", [
-            _c("strong", [_c("u", [_vm._v("$ " + _vm._s(_vm.total))])])
+            _c("strong", [
+              _c("u", [_vm._v("$ " + _vm._s(_vm._f("currency")(_vm.total)))])
+            ])
           ]),
           _vm._v(" "),
           _c("td")
@@ -42143,9 +42154,13 @@ var render = function() {
             return _c("tr", { key: producto.id }, [
               _c("td", [_vm._v(_vm._s(producto.nombre))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(producto.valordetal))]),
+              _c("td", [
+                _vm._v(_vm._s(_vm._f("currency")(producto.valordetal)))
+              ]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(producto.valormayor))]),
+              _c("td", [
+                _vm._v(_vm._s(_vm._f("currency")(producto.valormayor)))
+              ]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(producto.minimopormayor))]),
               _vm._v(" "),
@@ -42354,7 +42369,7 @@ var render = function() {
         _c(
           "tbody",
           _vm._l(_vm.ventas, function(venta) {
-            return _c("tr", [
+            return _c("tr", { key: venta.id }, [
               _c("td", [_vm._v(_vm._s(_vm.nombre_cliente(venta.cliente)))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(venta.vendedor))]),
@@ -57506,6 +57521,7 @@ module.exports = function(module) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
+/* harmony import */ var _filters_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./filters.js */ "./resources/js/filters.js");
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -57523,6 +57539,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 var VueRouter = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js")["default"];
 
 Vue.use(VueRouter);
+
 
 var router = new VueRouter({
   routes: _routes__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -58425,6 +58442,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ValidationError_vue_vue_type_template_id_7f8ae9f4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/filters.js":
+/*!*********************************!*\
+  !*** ./resources/js/filters.js ***!
+  \*********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('currency', function (value) {
+  return value.toLocaleString('es', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+});
 
 /***/ }),
 

@@ -18,8 +18,8 @@
       <tbody>
         <tr v-for="producto in productos" :key="producto.id">
           <td>{{producto.nombre}}</td>
-          <td>{{producto.valordetal}}</td>
-          <td>{{producto.valormayor}}</td>
+          <td>{{producto.valordetal | currency}}</td>
+          <td>{{producto.valormayor | currency}}</td>
           <td>{{producto.minimopormayor}}</td>
           <td>
           <router-link class="btn btn-sm btn-success" :to="url('edit', producto.id)">

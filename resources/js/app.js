@@ -14,6 +14,7 @@ window.Vue = require('vue');
 const VueRouter = require('vue-router').default;
 Vue.use(VueRouter);
 import routes from './routes';
+import './filters.js';
 
 const router = new VueRouter({routes});
 
