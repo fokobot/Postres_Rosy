@@ -2,10 +2,8 @@
   <div class="card">
     <div class="card-header">
       Nueva Venta
-      <router-link to="/ventas">
-        <button class="btn btn-primary btn-sm float-right">
-          <i class="fa fa-list"></i> Ventas
-        </button>
+      <router-link to="/ventas" class="btn btn-primary btn-sm float-right">
+        <i class="fa fa-list"></i> Ventas
       </router-link>
     </div>
     <div class="card-body">
@@ -13,55 +11,70 @@
         <div class="form-row">
           <div class="col-md-6 form-group">
             <label class="sr-only">Tipo de Documento</label>
-            <select class="form-control" v-bind:class="{ 'is-invalid': errores['tipo_de_documento_id'] }" v-model="tipodedocumento">
-              <option v-for="tipo in tipos_de_documento" v-bind:value="tipo.id">{{tipo.abreviatura}} - {{tipo.nombre}}</option>
+            <select class="form-control" :class="{ 'is-invalid': errores['tipo_de_documento_id'] }" v-model="venta.tipo_de_documento_id">
+              <option v-for="tipo in tipos_de_documento" :value="tipo.id" :key="tipo.id">{{tipo.abreviatura}} - {{tipo.nombre}}</option>
             </select>
-            <form-error v-bind:errores="errores" v-bind:campo="'tipo_de_documento_id'"></form-error>
+            <form-error :errores="errores" :campo="'tipo_de_documento_id'"></form-error>
           </div>
           <div class="form-group col-md-6">
             <label class="sr-only">Documento</label>
-            <input type="text" v-bind:class="{ 'is-invalid': errores['documento'] }" placeholder="Documento" class="form-control" v-model="documento" required>
-            <form-error v-bind:errores="errores" v-bind:campo="'documento'"></form-error>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+              </div>
+              <input type="text" :class="{ 'is-invalid': errores['documento'] }" placeholder="Documento" class="form-control" v-model="venta.documento" required>
+            </div>
+            <form-error :errores="errores" :campo="'documento'"></form-error>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label class="sr-only">Nombre</label>
-            <input type="text" v-bind:class="{ 'is-invalid': errores['nombre'] }" placeholder="Nombre" class="form-control" v-model="nombre" required>
-              <form-error v-bind:errores="errores" v-bind:campo="'nombre'"></form-error>
+            <input type="text" :class="{ 'is-invalid': errores['nombre'] }" placeholder="Nombre" class="form-control" v-model="venta.nombre" required>
+            <form-error :errores="errores" :campo="'nombre'"></form-error>
           </div>
           <div class="form-group col-md-6">
             <label class="sr-only">Apellidos</label>
-            <input type="text" v-bind:class="{ 'is-invalid': errores['apellidos'] }" placeholder="Apellidos" class="form-control" v-model="apellidos" required>
-              <form-error v-bind:errores="errores" v-bind:campo="'apellidos'"></form-error>
+            <input type="text" :class="{ 'is-invalid': errores['apellidos'] }" placeholder="Apellidos" class="form-control" v-model="venta.apellidos" required>
+            <form-error :errores="errores" :campo="'apellidos'"></form-error>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label class="sr-only">Dirección</label>
-            <input type="text" v-bind:class="{ 'is-invalid': errores['direccion'] }" placeholder="Dirección" class="form-control" v-model="direccion" required>
-            <form-error v-bind:errores="errores" v-bind:campo="'direccion'"></form-error>
+            <input type="text" :class="{ 'is-invalid': errores['direccion'] }" placeholder="Dirección" class="form-control" v-model="venta.direccion" required>
+            <form-error :errores="errores" :campo="'direccion'"></form-error>
           </div>
           <div class="form-group col-md-6">
             <label class="sr-only">Ciudad</label>
-            <input type="text" v-bind:class="{ 'is-invalid': errores['ciudad'] }" placeholder="Ciudad" class="form-control" v-model="ciudad" required>
-            <form-error v-bind:errores="errores" v-bind:campo="'ciudad'"></form-error>
+            <input type="text" :class="{ 'is-invalid': errores['ciudad'] }" placeholder="Ciudad" class="form-control" v-model="venta.ciudad" required>
+            <form-error :errores="errores" :campo="'ciudad'"></form-error>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label class="sr-only">Teléfono</label>
-            <input type="text" v-bind:class="{ 'is-invalid': errores['telefono'] }" placeholder="Teléfono" class="form-control" v-model="telefono" required>
-            <form-error v-bind:errores="errores" v-bind:campo="'telefono'"></form-error>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-phone"></i></span>
+              </div>
+              <input type="text" :class="{ 'is-invalid': errores['telefono'] }" placeholder="Teléfono" class="form-control" v-model="venta.telefono" required>
+              <form-error :errores="errores" :campo="'telefono'"></form-error>
+            </div>
           </div>
           <div class="form-group col-md-6">
             <label class="sr-only">Celular</label>
-            <input type="text" v-bind:class="{ 'is-invalid': errores['celular'] }" placeholder="Celular" class="form-control" v-model="celular" required>
-            <form-error v-bind:errores="errores" v-bind:campo="'celular'"></form-error>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-mobile-alt"></i></span>
+              </div>
+              <input type="text" :class="{ 'is-invalid': errores['celular'] }" placeholder="Celular" class="form-control" v-model="venta.celular" required>
+            </div>
+            <form-error :errores="errores" :campo="'celular'"></form-error>
           </div>
         </div>
         <hr>
-        <form-detalleventa @updatedProductos="updateProductos" v-bind:errores="errores">
+        <form-detalleventa @updatedProductos="updateProductos" :errores="errores">
         </form-detalleventa>
         <hr>
         <div class="row">
@@ -80,39 +93,21 @@
     mounted() {
       axios
       .get('/api/tipos_de_documento/')
-      .then(response => (this.tipos_de_documento = response.data))
+      .then(response => (this.tipos_de_documento = response.data, this.venta.tipo_de_documento_id = response.data[0].id))
     },
-    data: () => { return {
+    data () { return {
       productos: [],
-      tipos_de_documento: [],
-      tipodedocumento: 1,
-      documento: '',
-      nombre: '',
-      apellidos: '',
-      telefono: '',
-      celular: '',
-      direccion: '',
-      ciudad: '',
+      venta: { },
       errores: [],
+      tipos_de_documento: []
     }},
     methods: {
       registrarVenta: function(){
         let lista = this.productos.map(function(item) {
           return {id: item.id, cantidad: item.cantidad};
         });
-
-        let venta = {
-          tipo_de_documento: this.tipodedocumento,
-          documento: this.documento,
-          nombre: this.nombre,
-          apellidos: this.apellidos,
-          telefono: this.telefono,
-          celular: this.celular,
-          direccion: this.direccion,
-          ciudad: this.ciudad,
-          productos: lista
-        }
-        axios.post('/api/ventas', venta).then(res => {
+        this.venta.productos = lista;
+        axios.post('/api/ventas', this.venta).then(res => {
           this.errores = [];
           $.notify("Venta realizada con éxito.", "success");
           this.$router.push('/ventas')
