@@ -19,7 +19,7 @@
         <th>Opciones</th>
       </thead>
       <tbody>
-        <tr v-for= "venta in ventas">
+        <tr v-for= "venta in ventas" :key="venta.id">
           <td>{{nombre_cliente(venta.cliente)}}</td>
           <td>{{venta.vendedor}}</td>
           <td>{{venta.fecha}}</td>
@@ -30,8 +30,8 @@
               <i class="fa fa-eye"></i>
             </a>
             <a class="btn btn-sm btn-success" :href="url('edit', venta.id)">
-  						<i class="fa fa-edit" ></i>
-  					</a>
+              <i class="fa fa-edit" ></i>
+            </a>
             <a class="btn btn-sm btn-danger" href="#" @click="eliminar(venta.id)">
               <i class="fa fa-trash"></i>
             </a>

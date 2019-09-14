@@ -97,7 +97,7 @@
     },
     data () { return {
       productos: [],
-      venta: { },
+      venta: {},
       errores: [],
       tipos_de_documento: []
     }},
