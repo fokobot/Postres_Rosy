@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-6">
+  <div class="col-md-8">
     <div class="card">
       <div class="card-header">
         {{gasto.id > 0 ? 'Editar' : 'Nuevo'}} Gasto
@@ -10,54 +10,43 @@
       <div class="card-body">
         <form method="POST" @submit.prevent="save" novalidate  class="needs-validation">
           <div class="form-row">
-            <div class="col-md-12">
-              <label for="nombre">Descripcion del gasto</label>
-              <div class="form-group has-default">
-                <div>
-                  <input type="text" v-model="gasto.descripcion" placeholder="Descripcion"
-                  class="form-control form-control-default" :class="{ 'is-invalid': errores['descripcion'] }" />
-                  <form-error :errores="errores" :campo="'descripcion'"></form-error>
-                </div>
-              </div>
+            <div class="form-group has-default col-md-12">
+              <label for="nombre">Proveedor</label>
+              <select class="form-control form-control-default" :class="{ 'is-invalid': errores['proveedor'] }" >
+                <option value="-1">Seleccione una opción...</option>
+                <option v-for="proveedor in proveedores" :key="proveedor.id" :value="proveedor.id">
+                   {{proveedor.razon_social}}
+                </option>
+              </select>
+              <form-error :errores="errores" :campo="'proveedor'"></form-error>
             </div>
           </div>
           <div class="form-row">
-            <div class="col-md-12">
+            <div class="form-group has-default col-md-4">
               <label for="valor">Valor</label>
-              <div class="form-group has-default">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">$</span>
-                  </div>
-                  <input type="text" v-model="gasto.valor" placeholder="10000"
-                  class="form-control form-control-default" :class="{ 'is-invalid': errores['valor'] }">
-                  <form-error :errores="errores" :campo="'valor'"></form-error>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
                 </div>
+                <input type="text" :value="total | currency" class="form-control form-control-default" disabled>
               </div>
             </div>
-          </div>
-          <div class="form-row">
-            <div class="col-md-12">
+            <div class="form-group has-default col-md-4">
               <label for="estado">Estado del Gasto</label>
-              <div class="form-group has-default">
-                <select v-model="gasto.estado_id" class="form-control form-control-default" :class="{ 'is-invalid': errores['estado_id'] }">
-                  <option v-for="estado in estados" :key="estado.id" :value="estado.id">
-                    {{estado.nombre}}
-                  </option>
-                </select>
-                <form-error :errores="errores" :campo="'estado_id'"></form-error>
-              </div>
+              <select v-model="gasto.estado_id" class="form-control form-control-default" :class="{ 'is-invalid': errores['estado_id'] }">
+                <option v-for="estado in estados" :key="estado.id" :value="estado.id">
+                  {{estado.nombre}}
+                </option>
+              </select>
+              <form-error :errores="errores" :campo="'estado_id'"></form-error>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="fecha">Fecha: </label>
+              <input type="date" class="form-control form-control-default" v-model="gasto.fecha" :class="{ 'is-invalid': errores['fecha'] }" >
+              <form-error :errores="errores" :campo="'fecha'"></form-error>
             </div>
           </div>
-          <div class="form-row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label for="fecha">Fecha: </label>
-                <input type="date" class="form-control form-control-default" v-model="gasto.fecha" :class="{ 'is-invalid': errores['fecha'] }" >
-                <form-error :errores="errores" :campo="'fecha'"></form-error>
-              </div>
-            </div>
-          </div>
+          <detalle-gasto @updatedProductos="updateProductos" :errores="errores"></detalle-gasto>
           <div class="form-row">
             <div class="col-md-12">
               <button type="submit" class="btn btn-block btn-success">Registrar Gasto</button>
@@ -70,18 +59,29 @@
 </template>
 
 <script>
+  import DetalleGasto from './DetalleGasto';
+
   export default {
     name: 'FormProducto',
+    components: {
+      'detalle-gasto': DetalleGasto
+    },
     mounted() {
       var id =parseInt(this.$route.params.id) || 0;
       this.getEstados(id);
       this.$set(this.gasto, 'id', id);
       this.show(this.gasto.id)
+      axios.get('/api/proveedores')
+        .then(res => {
+          this.proveedores = res.data;
+        });
     },
     data() { return {
       gasto: {},
       estados: [],
-      errores: []
+      errores: [],
+      productos: [],
+      proveedores: []
     }}, 
     methods: {
       show: function(id) {
@@ -117,6 +117,15 @@
         }).catch(err => {
           $.notify("Error desconocido..");
         });
+      },
+      updateProductos: function(productos) {
+        this.productos = productos;
+      }
+    }, computed: {
+      total: function(){
+        return this.productos.reduce((sum, current) => {
+          return sum + current.cantidad * current.valor;
+        }, 0);
       }
     }
   }
