@@ -46,6 +46,14 @@ Route::group(['prefix' => 'productos'], function() {
 	Route::delete('/{producto}', 'API\ProductoController@destroy');
 });
 
+Route::group(['prefix' => 'proveedores'], function() {
+	Route::get('/', 'API\ProveedorController@index');
+	Route::post('/', 'API\ProveedorController@store');
+	Route::get('/{proveedor}', 'API\ProveedorController@show');
+	Route::put('/{proveedor}/edit', 'API\ProveedorController@update');
+	Route::delete('/{proveedor}', 'API\ProveedorController@destroy');
+});
+
 Route::group(['prefix' => 'trabajos'], function() {
 	Route::get('/', 'API\TrabajoController@index');
 	Route::post('/', 'API\TrabajoController@store');
@@ -58,4 +66,10 @@ Route::group(['prefix' => 'ventas'], function (){
 	Route::get('/', 'API\VentaController@index');
 	Route::post('/', 'API\VentaController@store');
 	Route::delete('ventas/{venta}', 'API\VentaController@destroy');
+});
+
+/******************************************************/
+Route::group(['prefix' => 'departamentos'], function() {
+	Route::get('/', 'API\DepartamentoController@index');
+	Route::get('/{departamento}', 'API\DepartamentoController@show');
 });
