@@ -9,7 +9,7 @@ class DepartamentoController extends Controller
 {
     public function index()
     {
-        $departamentos = Departamento::all();
+        $departamentos = Departamento::with('ciudades')->get();
         return response()->json($departamentos);
     }
 
