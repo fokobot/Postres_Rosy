@@ -12,7 +12,7 @@
           <div class="form-row">
             <div class="form-group has-default col-md-12">
               <label for="nombre">Proveedor</label>
-              <select class="form-control form-control-default" :class="{ 'is-invalid': errores['proveedor'] }" >
+              <select v-model="gasto.proveedor" class="form-control form-control-default" :class="{ 'is-invalid': errores['proveedor'] }" >
                 <option value="-1">Seleccione una opción...</option>
                 <option v-for="proveedor in proveedores" :key="proveedor.id" :value="proveedor.id">
                    {{proveedor.razon_social}}
@@ -33,12 +33,12 @@
             </div>
             <div class="form-group has-default col-md-4">
               <label for="estado">Estado del Gasto</label>
-              <select v-model="gasto.estado_id" class="form-control form-control-default" :class="{ 'is-invalid': errores['estado_id'] }">
+              <select v-model="gasto.estado" class="form-control form-control-default" :class="{ 'is-invalid': errores['estado'] }">
                 <option v-for="estado in estados" :key="estado.id" :value="estado.id">
                   {{estado.nombre}}
                 </option>
               </select>
-              <form-error :errores="errores" :campo="'estado_id'"></form-error>
+              <form-error :errores="errores" :campo="'estado'"></form-error>
             </div>
             <div class="form-group col-md-4">
               <label for="fecha">Fecha: </label>
@@ -93,8 +93,11 @@
         });
       },
       save: function() {
+        // TODO Edición de Gastos (id asignada)
         let extra = this.gasto.id == 0 ? '' : `/${this.gasto.id}/edit`;
         this.gasto['_method'] = this.gasto.id == 0 ? 'post' : 'put';
+        this.$set(this.gasto, 'productos', this.productos);
+        console.log(this.gasto);
         axios.post('/api/gastos' + extra, this.gasto).then(res => {
           this.errores = [];
           $.notify(res.data.mensaje, "success");

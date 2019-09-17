@@ -24,10 +24,9 @@ class SaveGastoRequest extends FormRequest
     public function rules()
     {
         return [
-          'descripcion'        => 'required|min:3|max:35',
-          'valor'              => 'required|numeric',
-          'estado_id'          => 'exists:estados,id',
-          'fecha'              => 'required|date'
+          'proveedor'       => 'exists:proveedores,id',
+          'estado'          => 'exists:estados_gasto,id',
+          'fecha'           => 'required|date'
         ];
     }
 }

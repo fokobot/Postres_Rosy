@@ -9,7 +9,7 @@ class EstadoGastoController extends Controller
 {
   public function index()
   {
-    $estados = \App\Estado::all();
+    $estados = \App\EstadoGasto::all();
     return response()->json($estados);
   }
 }
