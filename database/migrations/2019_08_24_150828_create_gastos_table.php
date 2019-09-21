@@ -15,13 +15,14 @@ class CreateGastosTable extends Migration
     {
         Schema::create('gastos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('proveedor_id');
+            $table->unsignedBigInteger('proveedor_id');
             $table->date('fecha');
             $table->double('valor_total', 10, 2);
             $table->unsignedBigInteger('estado_gasto_id');
             $table->timestamps();
 
             $table->foreign('estado_gasto_id')->references('id')->on('estados_gasto');
+            $table->foreign('proveedor_id')->references('id')->on('proveedores');
         });
     }
 
