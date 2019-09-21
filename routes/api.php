@@ -62,6 +62,14 @@ Route::group(['prefix' => 'trabajos'], function() {
 	Route::delete('/{trabajo}', 'API\TrabajoController@destroy');
 });
 
+Route::group(['prefix' => 'empleados'], function() {
+	Route::get('/', 'API\EmpleadoController@index');
+	Route::post('/', 'API\EmpleadoController@store');
+	Route::get('/{empleado}', 'API\EmpleadoController@show');
+	Route::put('/{empleado}/edit', 'API\EmpleadoController@update');
+	Route::delete('/{empleado}', 'API\EmpleadoController@destroy');
+});
+
 Route::group(['prefix' => 'ventas'], function (){
 	Route::get('/', 'API\VentaController@index');
 	Route::post('/', 'API\VentaController@store');

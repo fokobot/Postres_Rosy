@@ -4,6 +4,7 @@ const ListaVentas = require('./components/ListaVentas.vue').default;
 const ListaGastos = require('./components/ListaGastos.vue').default;
 const ListaProductos = require('./components/ListaProductos.vue').default;
 const ListaProveedores = require('./components/ListaProveedores.vue').default;
+const ListaEmpleados = require('./components/ListaEmpleados.vue').default;
 
 const FormCliente = require('./components/FormCliente.vue').default;
 const FormVenta = require('./components/FormVenta.vue').default;
@@ -11,6 +12,7 @@ const FormTrabajo = require('./components/FormTrabajo.vue').default;
 const FormGasto = require('./components/FormGasto.vue').default;
 const FormProducto = require('./components/FormProducto.vue').default;
 const FormProveedor = require('./components/FormProveedor.vue').default;
+const FormEmpleado = require('./components/FormEmpleado.vue').default;
 
 const routes = [
     { path: '/clientes', component: ListaClientes},
@@ -30,6 +32,9 @@ const routes = [
     { path: '/proveedores', component: ListaProveedores},
     { path: '/proveedores/new', component: FormProveedor},
     { path: '/proveedores/:id/edit', component: FormProveedor},
+    { path: '/empleados', component: ListaEmpleados},
+    { path: '/empleados/new', component: FormEmpleado},
+    { path: '/empleados/:id/edit', component: FormEmpleado},
 ];
 
 export default routes;

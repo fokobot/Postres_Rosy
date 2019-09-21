@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaveClienteRequest extends FormRequest
+class SaveEmpleadoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,8 +13,6 @@ class SaveClienteRequest extends FormRequest
      */
     public function authorize()
     {
-        // Esto aquì SOLO debe ser true cuando el usuario actual tiene
-        // asignados los permisos para crear (o editar)
         return true;
     }
 
@@ -25,14 +23,15 @@ class SaveClienteRequest extends FormRequest
      */
     public function rules()
     {
-        // esto debe SIEMPRE coincidir con la longitud máxima en base de datos
         return [
-            'nombre'               => 'required|min:3|max:30',
+            'tipo_de_documento_id' => 'exists:tipos_de_documento,id',
+            'documento'            => 'required|numeric',
+            'nombres'              => 'required|min:3|max:30',
             'apellidos'            => 'required|min:3|max:30',
             'direccion'            => 'required|min:5|max:100',
             'barrio'               => 'required|min:3|max:50',
             'telefono'             => 'required|numeric',
-            'nacimiento'           => 'required|date'
+            'ocupacion'            => 'required|min:3|max:50'
         ];
     }
 }
