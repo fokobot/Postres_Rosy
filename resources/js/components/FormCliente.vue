@@ -9,26 +9,6 @@
       </div>
       <div class="card-body">
         <form method="POST" @submit.prevent="save" novalidate  class="needs-validation">
-          <div class="form-row">
-            <div class="col-md-6">
-              <label for="tipo_de_documento_id">Tipo de documento</label>
-              <div class="form-group has-default">
-                <select v-model="cliente.tipo_de_documento_id" class="form-control form-control-default"
-                :class="{ 'is-invalid': errores['tipo_de_documento_id'] }">
-                <option v-for="item in tipos_de_documento" :key="item.id" :value="item.id">{{item.abreviatura}}</option>
-              </select>
-              <form-error :errores="errores" :campo="'tipo_de_documento_id'"></form-error>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <label for="documento">N° de documento</label>
-            <div class="form-group has-default">
-              <input type="text" v-model="cliente.documento" placeholder="N° de documento"
-              class="form-control form-control-default" :class="{ 'is-invalid': errores['documento'] }" />
-              <form-error :errores="errores" :campo="'documento'"></form-error>
-            </div>
-          </div>
-        </div>
         <div class="form-row">
           <div class="col-md-6">
             <label for="nombre">Nombre</label>
@@ -56,11 +36,11 @@
             </div>
           </div>
           <div class="col-md-6">
-            <label for="ciudad">Ciudad</label>
+            <label for="barrio">Barrio</label>
             <div class="form-group has-default">
-              <input type="text" v-model="cliente.ciudad" placeholder="Ciudad"
-              class="form-control form-control-default" :class="{ 'is-invalid': errores['ciudad'] }" />
-              <form-error :errores="errores" :campo="'ciudad'"></form-error>
+              <input type="text" v-model="cliente.barrio" placeholder="Barrio"
+              class="form-control form-control-default" :class="{ 'is-invalid': errores['barrio'] }" />
+              <form-error :errores="errores" :campo="'barrio'"></form-error>
             </div>
           </div>
         </div>
@@ -74,11 +54,9 @@
             </div>
           </div>
           <div class="col-md-6">
-            <label for="celular">Celular</label>
-            <div class="form-group has-default">
-              <input type="text" v-model="cliente.celular" placeholder="Celular" class="form-control form-control-default" :class="{ 'is-invalid': errores['celular'] }" />
-              <form-error :errores="errores" :campo="'celular'"></form-error>
-            </div>
+              <label for="nacimiento">Fecha de Nacimiento: </label>
+              <input type="date" class="form-control form-control-default" v-model="cliente.nacimiento" :class="{ 'is-invalid': errores['nacimiento'] }" >
+              <form-error :errores="errores" :campo="'nacimiento'"></form-error>
           </div>
         </div>
         <div class="form-row">
@@ -99,13 +77,11 @@
     name: 'FormCliente',
     mounted() {
       var id = parseInt(this.$route.params.id) || 0;
-      this.getTiposDeDocumento(id);
       this.$set(this.cliente, 'id', id);
       this.show(this.cliente.id)
     },
     data() { return {
       cliente: {},
-      tipos_de_documento: [],
       errores: []
     }},
     methods: {
@@ -133,15 +109,6 @@
             console.log(err)
             $.notify("Error desconocido.");
           }
-        });
-      },
-      getTiposDeDocumento: function(id) {
-        axios.get(`/api/tipos_de_documento`).then(res => {
-          this.tipos_de_documento = res.data;
-          if (id == 0) Vue.set(this.cliente, 'tipo_de_documento_id', this.tipos_de_documento[0].id);
-        }).catch(err => {
-          console.log(err)
-          $.notify("Error desconocido.");
         });
       }
     }

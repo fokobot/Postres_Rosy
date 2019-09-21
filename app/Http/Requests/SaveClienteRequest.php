@@ -27,14 +27,12 @@ class SaveClienteRequest extends FormRequest
     {
         // esto debe SIEMPRE coincidir con la longitud máxima en base de datos
         return [
-            'tipo_de_documento_id' => 'exists:tipos_de_documento,id',
-            'documento'            => 'required|numeric',
             'nombre'               => 'required|min:3|max:30',
             'apellidos'            => 'required|min:3|max:30',
             'direccion'            => 'required|min:5|max:100',
-            'ciudad'               => 'required|min:3|max:50',
+            'barrio'               => 'required|min:3|max:50',
             'telefono'             => 'required|numeric',
-            'celular'              => 'required|numeric'
+            'nacimiento'              => 'required|date'
         ];
     }
 }

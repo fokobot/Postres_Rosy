@@ -15,17 +15,13 @@ class CreateClientesTable extends Migration
     {
         Schema::create('clientes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('tipo_de_documento_id');
-            $table->string('documento', 30);
             $table->string('nombre', 30);
             $table->string('apellidos', 30);
             $table->string('direccion', 100);
-            $table->string('ciudad', 50);
+            $table->string('barrio', 50);
             $table->string('telefono', 30);
-            $table->string('celular', 30);
+            $table->date('nacimiento');
             $table->timestamps();
-
-            $table->foreign('tipo_de_documento_id')->references('id')->on('tipos_de_documento');
         });
     }
 

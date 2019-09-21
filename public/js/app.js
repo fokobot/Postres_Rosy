@@ -2190,40 +2190,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'FormCliente',
   mounted: function mounted() {
     var id = parseInt(this.$route.params.id) || 0;
-    this.getTiposDeDocumento(id);
     this.$set(this.cliente, 'id', id);
     this.show(this.cliente.id);
   },
   data: function data() {
     return {
       cliente: {},
-      tipos_de_documento: [],
       errores: []
     };
   },
@@ -2261,17 +2237,6 @@ __webpack_require__.r(__webpack_exports__);
           console.log(err);
           $.notify("Error desconocido.");
         }
-      });
-    },
-    getTiposDeDocumento: function getTiposDeDocumento(id) {
-      var _this3 = this;
-
-      axios.get("/api/tipos_de_documento").then(function (res) {
-        _this3.tipos_de_documento = res.data;
-        if (id == 0) Vue.set(_this3.cliente, 'tipo_de_documento_id', _this3.tipos_de_documento[0].id);
-      })["catch"](function (err) {
-        console.log(err);
-        $.notify("Error desconocido.");
       });
     }
   }
@@ -3041,34 +3006,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ListaClientes',
   mounted: function mounted() {
     var _this = this;
 
     axios.get('/api/clientes/').then(function (response) {
-      _this.clientes = response.data['clientes'];
-      _this.tipos_de_documento = response.data['tipos_de_documento'];
+      return _this.clientes = response.data;
     })["catch"](function (err) {
       return $.notify('Ha ocurrido un error desconocido.', 'error');
     });
   },
   data: function data() {
     return {
-      clientes: [],
-      tipos_de_documento: []
+      clientes: []
     };
   },
   methods: {
     url: function url(verb, id) {
       return "/clientes/".concat(id, "/").concat(verb);
-    },
-    tipo_doc: function tipo_doc(cliente) {
-      return this.tipos_de_documento.find(function (item) {
-        return item.id == cliente.tipo_de_documento_id;
-      }).abreviatura;
     },
     eliminar: function eliminar(id) {
       var _this2 = this;
@@ -41078,117 +41034,6 @@ var render = function() {
           [
             _c("div", { staticClass: "form-row" }, [
               _c("div", { staticClass: "col-md-6" }, [
-                _c("label", { attrs: { for: "tipo_de_documento_id" } }, [
-                  _vm._v("Tipo de documento")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "form-group has-default" },
-                  [
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.cliente.tipo_de_documento_id,
-                            expression: "cliente.tipo_de_documento_id"
-                          }
-                        ],
-                        staticClass: "form-control form-control-default",
-                        class: {
-                          "is-invalid": _vm.errores["tipo_de_documento_id"]
-                        },
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.cliente,
-                              "tipo_de_documento_id",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          }
-                        }
-                      },
-                      _vm._l(_vm.tipos_de_documento, function(item) {
-                        return _c(
-                          "option",
-                          { key: item.id, domProps: { value: item.id } },
-                          [_vm._v(_vm._s(item.abreviatura))]
-                        )
-                      }),
-                      0
-                    ),
-                    _vm._v(" "),
-                    _c("form-error", {
-                      attrs: {
-                        errores: _vm.errores,
-                        campo: "tipo_de_documento_id"
-                      }
-                    })
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("label", { attrs: { for: "documento" } }, [
-                  _vm._v("N° de documento")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "form-group has-default" },
-                  [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.cliente.documento,
-                          expression: "cliente.documento"
-                        }
-                      ],
-                      staticClass: "form-control form-control-default",
-                      class: { "is-invalid": _vm.errores["documento"] },
-                      attrs: { type: "text", placeholder: "N° de documento" },
-                      domProps: { value: _vm.cliente.documento },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.cliente,
-                            "documento",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("form-error", {
-                      attrs: { errores: _vm.errores, campo: "documento" }
-                    })
-                  ],
-                  1
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-row" }, [
-              _c("div", { staticClass: "col-md-6" }, [
                 _c("label", { attrs: { for: "nombre" } }, [_vm._v("Nombre")]),
                 _vm._v(" "),
                 _c(
@@ -41317,7 +41162,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-6" }, [
-                _c("label", { attrs: { for: "ciudad" } }, [_vm._v("Ciudad")]),
+                _c("label", { attrs: { for: "barrio" } }, [_vm._v("Barrio")]),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -41328,26 +41173,26 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.cliente.ciudad,
-                          expression: "cliente.ciudad"
+                          value: _vm.cliente.barrio,
+                          expression: "cliente.barrio"
                         }
                       ],
                       staticClass: "form-control form-control-default",
-                      class: { "is-invalid": _vm.errores["ciudad"] },
-                      attrs: { type: "text", placeholder: "Ciudad" },
-                      domProps: { value: _vm.cliente.ciudad },
+                      class: { "is-invalid": _vm.errores["barrio"] },
+                      attrs: { type: "text", placeholder: "Barrio" },
+                      domProps: { value: _vm.cliente.barrio },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(_vm.cliente, "ciudad", $event.target.value)
+                          _vm.$set(_vm.cliente, "barrio", $event.target.value)
                         }
                       }
                     }),
                     _vm._v(" "),
                     _c("form-error", {
-                      attrs: { errores: _vm.errores, campo: "ciudad" }
+                      attrs: { errores: _vm.errores, campo: "barrio" }
                     })
                   ],
                   1
@@ -41396,43 +41241,43 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("label", { attrs: { for: "celular" } }, [_vm._v("Celular")]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "form-group has-default" },
-                  [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.cliente.celular,
-                          expression: "cliente.celular"
-                        }
-                      ],
-                      staticClass: "form-control form-control-default",
-                      class: { "is-invalid": _vm.errores["celular"] },
-                      attrs: { type: "text", placeholder: "Celular" },
-                      domProps: { value: _vm.cliente.celular },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.cliente, "celular", $event.target.value)
-                        }
+              _c(
+                "div",
+                { staticClass: "col-md-6" },
+                [
+                  _c("label", { attrs: { for: "nacimiento" } }, [
+                    _vm._v("Fecha de Nacimiento: ")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.cliente.nacimiento,
+                        expression: "cliente.nacimiento"
                       }
-                    }),
-                    _vm._v(" "),
-                    _c("form-error", {
-                      attrs: { errores: _vm.errores, campo: "celular" }
-                    })
-                  ],
-                  1
-                )
-              ])
+                    ],
+                    staticClass: "form-control form-control-default",
+                    class: { "is-invalid": _vm.errores["nacimiento"] },
+                    attrs: { type: "date" },
+                    domProps: { value: _vm.cliente.nacimiento },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.cliente, "nacimiento", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("form-error", {
+                    attrs: { errores: _vm.errores, campo: "nacimiento" }
+                  })
+                ],
+                1
+              )
             ]),
             _vm._v(" "),
             _vm._m(0)
@@ -43208,25 +43053,17 @@ var render = function() {
           "tbody",
           _vm._l(_vm.clientes, function(cliente) {
             return _c("tr", { key: cliente.id }, [
-              _c("td", [
-                _vm._v(
-                  _vm._s(_vm.tipo_doc(cliente)) +
-                    ": " +
-                    _vm._s(cliente.documento)
-                )
-              ]),
-              _vm._v(" "),
               _c("td", [_vm._v(_vm._s(cliente.nombre))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(cliente.apellidos))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(cliente.direccion))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(cliente.ciudad))]),
+              _c("td", [_vm._v(_vm._s(cliente.barrio))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(cliente.telefono))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(cliente.celular))]),
+              _c("td", [_vm._v(_vm._s(cliente.nacimiento))]),
               _vm._v(" "),
               _c(
                 "td",
@@ -43270,19 +43107,17 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _c("th", [_vm._v("Documento")]),
-      _vm._v(" "),
       _c("th", [_vm._v("Nombre")]),
       _vm._v(" "),
       _c("th", [_vm._v("Apellidos")]),
       _vm._v(" "),
       _c("th", [_vm._v("Dirección")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Ciudad")]),
+      _c("th", [_vm._v("Barrio")]),
       _vm._v(" "),
       _c("th", [_vm._v("Telefono")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Celular")]),
+      _c("th", [_vm._v("Fecha de Nacimiento")]),
       _vm._v(" "),
       _c("th", [_vm._v("Opciones")])
     ])
@@ -60511,7 +60346,7 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! c:\xampp\htdocs\Postres_Rosy\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Postres_Rosy\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

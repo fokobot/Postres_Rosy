@@ -12,11 +12,7 @@ class ClienteController extends Controller
   public function index()
   {
     $clientes = Cliente::all();
-    $tipos_de_documento = \App\TipoDeDocumento::all();
-    return response()->json([
-      'clientes'          => $clientes,
-      'tipos_de_documento' => $tipos_de_documento
-    ]);
+    return response()->json($clientes);
   }
 
   public function show(Cliente $cliente)
@@ -27,28 +23,24 @@ class ClienteController extends Controller
   public function store(SaveClienteRequest $request)
   {
     $cliente                          = new Cliente;
-    $cliente->tipo_de_documento_id    = $request->tipo_de_documento_id;
-    $cliente->documento               = $request->documento;
     $cliente->nombre                  = $request->nombre;
     $cliente->apellidos               = $request->apellidos;
     $cliente->direccion               = $request->direccion;
-    $cliente->ciudad                  = $request->ciudad;
+    $cliente->barrio                  = $request->barrio;
     $cliente->telefono                = $request->telefono;
-    $cliente->celular                 = $request->celular;
+    $cliente->nacimiento              = $request->nacimiento;
     $cliente->save();
     return response()->json(['mensaje' => 'Cliente creado con éxito.'], Response::HTTP_OK);
   }
 
   public function update(SaveClienteRequest $request, Cliente $cliente)
   {
-    $cliente->tipo_de_documento_id    = $request->tipo_de_documento_id;
-    $cliente->documento               = $request->documento;
     $cliente->nombre                  = $request->nombre;
     $cliente->apellidos               = $request->apellidos;
     $cliente->direccion               = $request->direccion;
-    $cliente->ciudad                  = $request->ciudad;
+    $cliente->barrio                  = $request->barrio;
     $cliente->telefono                = $request->telefono;
-    $cliente->celular                 = $request->celular;
+    $cliente->nacimiento              = $request->nacimiento;
     $cliente->save();
     return response()->json(['mensaje' => 'Cliente editado con éxito.'], Response::HTTP_OK);
   }
