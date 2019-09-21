@@ -48,9 +48,14 @@
           <div class="col-md-6">
             <div class="form-group has-default">
               <label for="telefono">Telefono</label>
-              <input type="text" v-model="cliente.telefono" placeholder="Teléfono" 
-              class="form-control form-control-default" :class="{ 'is-invalid': errores['telefono'] }" />
-              <form-error :errores="errores" :campo="'telefono'"></form-error>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                </div>
+                <input type="text" v-model="cliente.telefono" placeholder="Teléfono" 
+                class="form-control form-control-default" :class="{ 'is-invalid': errores['telefono'] }" />
+                <form-error :errores="errores" :campo="'telefono'"></form-error>
+                </div>
             </div>
           </div>
           <div class="col-md-6">

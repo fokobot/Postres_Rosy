@@ -29,15 +29,13 @@ class VentaController extends Controller
     {
         DB::beginTransaction();
         try {
-            $cliente                             = new Cliente;
-            $cliente->tipo_de_documento_id       = $request->tipo_de_documento_id;
-            $cliente->documento                  = $request->documento;
-            $cliente->nombre                     = $request->nombre;
-            $cliente->apellidos                  = $request->apellidos;
-            $cliente->direccion                  = $request->direccion;
-            $cliente->ciudad                     = $request->ciudad;
-            $cliente->telefono                   = $request->telefono;
-            $cliente->celular                    = $request->celular;
+            $cliente                          = new Cliente;
+            $cliente->nombre                  = $request->nombre;
+            $cliente->apellidos               = $request->apellidos;
+            $cliente->direccion               = $request->direccion;
+            $cliente->barrio                  = $request->barrio;
+            $cliente->telefono                = $request->telefono;
+            $cliente->nacimiento              = $request->nacimiento;
             $cliente->save();
 
             $venta = new Venta;

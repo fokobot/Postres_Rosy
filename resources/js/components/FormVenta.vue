@@ -9,25 +9,6 @@
     <div class="card-body">
       <form method="POST" @submit.prevent="registrarVenta" novalidate  class="needs-validation">
         <div class="form-row">
-          <div class="col-md-6 form-group">
-            <label class="sr-only">Tipo de Documento</label>
-            <select class="form-control" :class="{ 'is-invalid': errores['tipo_de_documento_id'] }" v-model="venta.tipo_de_documento_id">
-              <option v-for="tipo in tipos_de_documento" :value="tipo.id" :key="tipo.id">{{tipo.abreviatura}} - {{tipo.nombre}}</option>
-            </select>
-            <form-error :errores="errores" :campo="'tipo_de_documento_id'"></form-error>
-          </div>
-          <div class="form-group col-md-6">
-            <label class="sr-only">Documento</label>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-id-card"></i></span>
-              </div>
-              <input type="text" :class="{ 'is-invalid': errores['documento'] }" placeholder="Documento" class="form-control" v-model="venta.documento" required>
-            </div>
-            <form-error :errores="errores" :campo="'documento'"></form-error>
-          </div>
-        </div>
-        <div class="form-row">
           <div class="form-group col-md-6">
             <label class="sr-only">Nombre</label>
             <input type="text" :class="{ 'is-invalid': errores['nombre'] }" placeholder="Nombre" class="form-control" v-model="venta.nombre" required>
@@ -46,9 +27,9 @@
             <form-error :errores="errores" :campo="'direccion'"></form-error>
           </div>
           <div class="form-group col-md-6">
-            <label class="sr-only">Ciudad</label>
-            <input type="text" :class="{ 'is-invalid': errores['ciudad'] }" placeholder="Ciudad" class="form-control" v-model="venta.ciudad" required>
-            <form-error :errores="errores" :campo="'ciudad'"></form-error>
+            <label class="sr-only">Barrio</label>
+            <input type="text" :class="{ 'is-invalid': errores['barrio'] }" placeholder="Barrio" class="form-control" v-model="venta.barrio" required>
+            <form-error :errores="errores" :campo="'barrio'"></form-error>
           </div>
         </div>
         <div class="form-row">
@@ -63,14 +44,9 @@
             </div>
           </div>
           <div class="form-group col-md-6">
-            <label class="sr-only">Celular</label>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-mobile-alt"></i></span>
-              </div>
-              <input type="text" :class="{ 'is-invalid': errores['celular'] }" placeholder="Celular" class="form-control" v-model="venta.celular" required>
-            </div>
-            <form-error :errores="errores" :campo="'celular'"></form-error>
+            <label class="sr-only">Fecha de Nacimiento</label>
+            <input type="date" :class="{ 'is-invalid': errores['nacimiento'] }" class="form-control" v-model="venta.nacimiento" required>
+            <form-error :errores="errores" :campo="'nacimiento'"></form-error>
           </div>
         </div>
         <hr>
@@ -99,7 +75,6 @@
       productos: [],
       venta: {},
       errores: [],
-      tipos_de_documento: []
     }},
     methods: {
       registrarVenta: function(){
