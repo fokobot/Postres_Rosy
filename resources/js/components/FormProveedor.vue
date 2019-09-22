@@ -33,10 +33,11 @@
             </div>
             <div class="form-group col-md-4">
               <label for="ciudad">Ciudad</label>
-              <select v-if="!proveedor.departamento > 0" class="form-control" disabled>
-                <option value="1">Seleccione un departamento...</option>
+              <select v-if="!proveedor.departamento > 0 || departamentos.length == 0" class="form-control" disabled>
+                <option value="-1">Seleccione un departamento...</option>
               </select>
-              <select v-model="proveedor.ciudad_id" class="form-control" v-else>
+              <select v-model="proveedor.ciudad" class="form-control" v-else>
+                <option value="-1" selected>Seleccione un departamento...</option>
                 <option v-for="ciudad in departamentos[proveedor.departamento-1].ciudades" :key="ciudad.id" :value="ciudad.id">
                   {{ciudad.nombre}}
                 </option>

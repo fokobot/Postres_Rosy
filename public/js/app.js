@@ -2811,6 +2811,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'FormProducto',
   mounted: function mounted() {
@@ -3582,11 +3583,6 @@ __webpack_require__.r(__webpack_exports__);
     url: function url(verb, id) {
       return "/proveedores/".concat(id, "/").concat(verb);
     },
-    estado: function estado(proveedor) {
-      return this.estados.find(function (item) {
-        return item.id == proveedor.estado_id;
-      }).nombre;
-    },
     eliminar: function eliminar(id) {
       var _this2 = this;
 
@@ -3602,8 +3598,7 @@ __webpack_require__.r(__webpack_exports__);
           $.notify(res.data.mensaje, 'success');
         })["catch"](function (err) {
           if (err.response && err.response.status === 422) {
-            //TODO PONER EL ERROR DEVUELTO POR EL SERVIDOR.
-            $.notify("Error al eliminar.", 'warn');
+            $.notify(err.response.data.mensaje, 'warn');
           } else {
             $.notify("Error desconocido al eliminar", 'danger');
           }
@@ -42975,12 +42970,12 @@ var render = function() {
               _c("div", { staticClass: "form-group col-md-4" }, [
                 _c("label", { attrs: { for: "ciudad" } }, [_vm._v("Ciudad")]),
                 _vm._v(" "),
-                !_vm.proveedor.departamento > 0
+                !_vm.proveedor.departamento > 0 || _vm.departamentos.length == 0
                   ? _c(
                       "select",
                       { staticClass: "form-control", attrs: { disabled: "" } },
                       [
-                        _c("option", { attrs: { value: "1" } }, [
+                        _c("option", { attrs: { value: "-1" } }, [
                           _vm._v("Seleccione un departamento...")
                         ])
                       ]
@@ -42992,8 +42987,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.proveedor.ciudad_id,
-                            expression: "proveedor.ciudad_id"
+                            value: _vm.proveedor.ciudad,
+                            expression: "proveedor.ciudad"
                           }
                         ],
                         staticClass: "form-control",
@@ -43009,7 +43004,7 @@ var render = function() {
                               })
                             _vm.$set(
                               _vm.proveedor,
-                              "ciudad_id",
+                              "ciudad",
                               $event.target.multiple
                                 ? $$selectedVal
                                 : $$selectedVal[0]
@@ -43017,24 +43012,33 @@ var render = function() {
                           }
                         }
                       },
-                      _vm._l(
-                        _vm.departamentos[_vm.proveedor.departamento - 1]
-                          .ciudades,
-                        function(ciudad) {
-                          return _c(
-                            "option",
-                            { key: ciudad.id, domProps: { value: ciudad.id } },
-                            [
-                              _vm._v(
-                                "\n                " +
-                                  _vm._s(ciudad.nombre) +
-                                  "\n              "
-                              )
-                            ]
-                          )
-                        }
-                      ),
-                      0
+                      [
+                        _c("option", { attrs: { value: "-1", selected: "" } }, [
+                          _vm._v("Seleccione un departamento...")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(
+                          _vm.departamentos[_vm.proveedor.departamento - 1]
+                            .ciudades,
+                          function(ciudad) {
+                            return _c(
+                              "option",
+                              {
+                                key: ciudad.id,
+                                domProps: { value: ciudad.id }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                " +
+                                    _vm._s(ciudad.nombre) +
+                                    "\n              "
+                                )
+                              ]
+                            )
+                          }
+                        )
+                      ],
+                      2
                     )
               ]),
               _vm._v(" "),

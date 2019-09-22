@@ -56,11 +56,6 @@
       url: function (verb, id) {
         return `/proveedores/${id}/${verb}`;
       },
-      estado: function (proveedor) {
-        return this.estados.find(function (item) {
-          return item.id == proveedor.estado_id;
-        }).nombre;
-      },
       eliminar: function (id) {
         bootbox.confirm("¿Realmente desea eliminar este proveedor?", result => {
           if (!result) return;
@@ -74,8 +69,7 @@
             })
             .catch(err => {
               if (err.response && err.response.status === 422){
-                //TODO PONER EL ERROR DEVUELTO POR EL SERVIDOR.
-                $.notify("Error al eliminar.", 'warn')
+                $.notify(err.response.data.mensaje, 'warn')
               } else {
                 $.notify("Error desconocido al eliminar", 'danger');
               }

@@ -13,4 +13,9 @@ class Proveedor extends Model
     {
         return $this->hasMany('App\MateriaPrima', 'proveedor_id');
     }
+
+    public function ciudad()
+    {
+        return $this->belongsTo('App\Ciudad', 'ciudad_id');
+    }
 }

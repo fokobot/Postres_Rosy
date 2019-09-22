@@ -24,7 +24,13 @@ class SaveProveedorRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'razon_social'  => 'required|max:30',
+            'ciudad'        => 'exists:ciudades,id',
+            'telefono'      => 'required|max:30',
+            'direccion'     => 'required|max:30',
+            'gerente'       => 'required|max:50',
+            'edad_rc'       => 'required|max:20',
+            'email'         => 'required|max:50'
         ];
     }
 }
