@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Cliente;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveClienteRequest;
+use App\Http\Resources\ClienteResource;
 use Illuminate\Http\Response;
 
 class ClienteController extends Controller
@@ -12,12 +13,12 @@ class ClienteController extends Controller
   public function index()
   {
     $clientes = Cliente::all();
-    return response()->json($clientes);
+    return ClienteResource::collection($clientes);
   }
 
   public function show(Cliente $cliente)
   {
-    return response()->json($cliente);
+    return new ClienteResource($cliente);
   }
 
   public function store(SaveClienteRequest $request)
