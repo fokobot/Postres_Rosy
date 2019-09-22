@@ -6,6 +6,8 @@ use App\DetalleGasto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveGastoRequest;
 use App\Gasto;
+use App\Http\Resources\EstadoGastoResource;
+use App\Http\Resources\GastoResource;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -15,15 +17,15 @@ class GastoController extends Controller
   {
     $gastos = Gasto::all();
     $estados = \App\EstadoGasto::all();
-    return response()->json([
-      'gastos'       => $gastos,
-      'estados'      => $estados
+    return response([
+      'gastos'       => GastoResource::collection($gastos),
+      'estados'      => EstadoGastoResource::collection($estados)
     ]);
   }
 
   public function show(Gasto $gasto)
   {
-    return response()->json($gasto);
+    return new GastoResource($gasto);
   }
 
   public function store(SaveGastoRequest $request)
@@ -35,8 +37,8 @@ class GastoController extends Controller
       $gasto->fecha                 = $request->fecha;
       $gasto->estado_gasto_id       = $request->estado;
       $gasto->valor_total           = 0;
-        // TODO Verificar si este ArrayMap es necesario.
-      $productos = array_map("static::lista_productos", $request->productos);
+      // TODO Verificar si este ArrayMap es necesario.
+      $productos = array_map('static::lista_productos', $request->productos);
       $gasto->save();
       $gasto->productos()->saveMany($productos);
       DB::commit();

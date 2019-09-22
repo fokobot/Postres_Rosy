@@ -7,31 +7,37 @@
     </router-link>
   </div>
   <div class="card-body">
-    <table class="table table-hover">
-      <thead>
-        <th>Descripcion</th>
-        <th>Valor</th>
-        <th>Estado</th>
-        <th>Fecha</th>
-        <th>Opciones</th>
-      </thead>
-      <tbody>
-        <tr v-for="gasto in gastos" :key="gasto.id">
-          <td>{{gasto.descripcion}}</td>
-          <td>{{gasto.valor}}</td>
-          <td>{{estado(gasto)}}</td>
-          <td>{{gasto.fecha}}</td>
-          <td>
-            <router-link class="btn btn-sm btn-success" :to="url('edit', gasto.id)">
-  						<i class="fa fa-edit" ></i>
-  					</router-link>
-            <a class="btn btn-sm btn-danger" href="#" @click="eliminar(gasto.id)">
-              <i class="fa fa-trash"></i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <th>#</th>
+          <th>Proveedor</th>
+          <th>Valor</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Opciones</th>
+        </thead>
+        <tbody>
+          <tr v-for="gasto in gastos" :key="gasto.id" :class="color(gasto)">
+            <td>{{gasto.id | zerofill}}</td>
+            <td>{{gasto.proveedor.razon_social}}</td>
+            <td>{{gasto.total | currency}}</td>
+            <td>{{estado(gasto).nombre}}</td>
+            <td>{{gasto.fecha}}</td>
+            <td>
+              <router-link class="btn btn-sm btn-success" :to="url('edit', gasto.id)">
+                <i class="fa fa-edit" ></i>
+              </router-link>
+              &nbsp;
+              <a class="btn btn-sm btn-danger" href="#" @click="eliminar(gasto.id)">
+                <i class="fa fa-trash"></i>
+              </a>
+              &nbsp;
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 </template>
@@ -55,8 +61,11 @@
       },
       estado: function (gasto) {
         return this.estados.find(function (item) {
-          return item.id == gasto.estado_id;
-        }).nombre;
+          return item.id == gasto.estado;
+        });
+      },
+      color: function(gasto){
+        return `table-${this.estado(gasto).color}`;
       },
       eliminar: function (id) {
         bootbox.confirm("¿Realmente desea eliminar este gasto?", result => {
@@ -71,8 +80,7 @@
             })
             .catch(err => {
               if (err.response && err.response.status === 422){
-                //TODO PONER EL ERROR DEVUELTO POR EL SERVIDOR.
-                $.notify("Error al eliminar.", 'warn')
+                $.notify(err.response.data.mensaje, 'warn')
               } else {
                 $.notify("Error desconocido al eliminar", 'danger');
               }

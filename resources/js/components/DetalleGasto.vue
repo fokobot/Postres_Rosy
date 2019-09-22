@@ -74,10 +74,11 @@
 
 <script>
   export default {
-    props: ['errores'],
+    name: 'DetalleGasto',
+    props: ['iProductos', 'errores'],
     data() {
       return {
-        productos : [],
+        productos: this.iProductos,
         edition: [],
         nombre: '',
         valor: 0,

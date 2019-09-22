@@ -8,7 +8,7 @@
         </router-link>
       </div>
       <div class="card-body">
-        <form method="POST" @submit.prevent="save" novalidate  class="needs-validation">
+        <form method="POST" @submit.prevent="save" novalidate  class="needs-validation" v-if="!loading">
           <div class="form-row">
             <div class="form-group has-default col-md-12">
               <label for="nombre">Proveedor</label>
@@ -46,13 +46,16 @@
               <form-error :errores="errores" :campo="'fecha'"></form-error>
             </div>
           </div>
-          <detalle-gasto @updatedProductos="updateProductos" :errores="errores"></detalle-gasto>
+          <detalle-gasto @updatedProductos="updateProductos" :errores="errores" :iProductos="productos"></detalle-gasto>
           <div class="form-row">
             <div class="col-md-12">
               <button type="submit" class="btn btn-block btn-success">Registrar Gasto</button>
             </div>
           </div>
         </form>
+        <div class="text-center" v-else>
+          <b-spinner variant="primary" type="grow" label="Cargando..." style="width: 6rem; height: 6rem;"></b-spinner>
+        </div>
       </div>
     </div>
   </div>
@@ -62,7 +65,7 @@
   import DetalleGasto from './DetalleGasto';
 
   export default {
-    name: 'FormProducto',
+    name: 'FormGasto',
     components: {
       'detalle-gasto': DetalleGasto
     },
@@ -71,9 +74,11 @@
       this.getEstados(id);
       this.$set(this.gasto, 'id', id);
       this.show(this.gasto.id)
+      this.loading = true;
       axios.get('/api/proveedores')
         .then(res => {
           this.proveedores = res.data;
+          this.loading = false;
         });
     },
     data() { return {
@@ -81,13 +86,15 @@
       estados: [],
       errores: [],
       productos: [],
-      proveedores: []
+      proveedores: [],
+      loading: true
     }}, 
     methods: {
       show: function(id) {
         if (id <= 0) { return ; }
         axios.get(`/api/gastos/${id}`).then(res => {
           this.gasto = res.data;
+          this.productos = this.gasto.productos
         }).catch(err => {
           $.notify("Error desconocido..");
         });

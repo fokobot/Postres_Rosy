@@ -12,9 +12,15 @@ window.bootbox = require('bootbox');
 window.Vue = require('vue');
 
 const VueRouter = require('vue-router').default;
-Vue.use(VueRouter);
+import BootstrapVue from 'bootstrap-vue'
 import routes from './routes';
 import './filters.js';
+
+Vue.use(VueRouter);
+// bootstrap and bootstrap-vue
+Vue.use(BootstrapVue);
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.component('form-error', require('./components/ValidationError.vue').default);
 

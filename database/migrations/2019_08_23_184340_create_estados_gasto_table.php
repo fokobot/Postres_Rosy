@@ -15,8 +15,8 @@ class CreateEstadosGastoTable extends Migration
     {
         Schema::create('estados_gasto', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombre');
-            $table->timestamps();
+            $table->string('nombre', 30);
+            $table->string('color', 10);
         });
     }
 

@@ -12,8 +12,8 @@ class EstadosGastoTableSeeder extends Seeder
     public function run()
     {
         DB::table('estados_gasto')->insert([
-          ['nombre' => 'Pendiente'],
-          ['nombre' => 'Pago'],
+          ['nombre' => 'Pendiente', 'color' => 'warning'],
+          ['nombre' => 'Pago',      'color' => 'success'],
         ]);
     }
 }
