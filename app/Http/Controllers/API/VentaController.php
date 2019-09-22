@@ -9,7 +9,8 @@ use App\Producto;
 use App\Venta;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveVentaRequest;
-use Illuminate\Http\Request;
+use App\Http\Resources\EstadoVentaResource;
+use App\Http\Resources\VentaResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
 
@@ -19,10 +20,15 @@ class VentaController extends Controller
     {
       $ventas = \App\Venta::all()->load('cliente');
       $estados = \App\EstadoVenta::all();
-      return response()->json([
-        'ventas'       => $ventas,
-        'estados'      => $estados
+      return response([
+          'ventas'       => VentaResource::collection($ventas),
+          'estados'      => EstadoVentaResource::collection($estados)
       ]);
+    }
+
+    public function show(Venta $venta)
+    {
+        return new VentaResource($venta);
     }
 
     public function store(SaveVentaRequest $request)

@@ -11,6 +11,7 @@
   <div class="card-body">
     <table class="table table-hover">
       <thead>
+        <th>#</th>
         <th>Cliente</th>
         <th>Vendedor</th>
         <th>Fecha</th>
@@ -20,15 +21,16 @@
       </thead>
       <tbody>
         <tr v-for= "venta in ventas" :key="venta.id">
+          <td>{{venta.id | zerofill}}</td>
           <td>{{nombre_cliente(venta.cliente)}}</td>
-          <td>{{venta.vendedor}}</td>
+          <td>{{venta.vendedor.nombre}} {{venta.vendedor.apellidos}}</td>
           <td>{{venta.fecha}}</td>
-          <td>{{venta.valor_total}}</td>
+          <td>{{venta.total | currency}}</td>
           <td>{{estado(venta)}}</td>
           <td>
-            <a class="btn btn-sm btn-primary" href="#" @click="show(venta)">
+            <router-link class="btn btn-sm btn-primary" :to="url('', venta.id)" @click="show(venta)">
               <i class="fa fa-eye"></i>
-            </a>
+            </router-link>
             <a class="btn btn-sm btn-success" :href="url('edit', venta.id)">
               <i class="fa fa-edit" ></i>
             </a>
@@ -58,19 +60,16 @@
     }},
     methods: {
       url: function (verb, id) {
-        return `ventas/${id}/${verb}`;
+        if(verb != "") {verb = `/${verb}`}
+        return `ventas/${id}${verb}`;
       },
       estado: function (venta) {
         return this.estados.find(function (item) {
-          return item.id == venta.estado_venta_id;
+          return item.id == venta.estado;
         }).nombre;
       },
       nombre_cliente: function (cliente) {
         return `${cliente.nombre} ${cliente.apellidos}`;
-      },
-      show: function (venta) {
-        console.log('Mostrar Venta');
-        // DO SOMETHING
       },
       eliminar: function (id) {
         bootbox.confirm("¿Realmente desea eliminar esta venta?", result => {

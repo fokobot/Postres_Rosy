@@ -14,12 +14,15 @@ const FormProducto = require('./components/FormProducto.vue').default;
 const FormProveedor = require('./components/FormProveedor.vue').default;
 const FormEmpleado = require('./components/FormEmpleado.vue').default;
 
+const ShowVenta = require('./components/ShowVenta').default;
+
 const routes = [
     { path: '/clientes', component: ListaClientes},
     { path: '/clientes/new', component: FormCliente},
     { path: '/clientes/:id/edit', component: FormCliente},
     { path: '/ventas/new', component: FormVenta},
     { path: '/ventas', component: ListaVentas },
+    { path: '/ventas/:id', component: ShowVenta },
     { path: '/trabajos', component: ListaTrabajos },
     { path: '/trabajos/:id/edit', name: 'EditarTrabajo', component: FormTrabajo},
     { path: '/trabajos/new', component: FormTrabajo },

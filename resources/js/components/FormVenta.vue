@@ -50,8 +50,8 @@
           </div>
         </div>
         <hr>
-        <form-detalleventa @updatedProductos="updateProductos" :errores="errores">
-        </form-detalleventa>
+        <detalle-venta @updatedProductos="updateProductos" :errores="errores">
+        </detalle-venta>
         <hr>
         <div class="row">
           <div class="col-md-12">
@@ -64,8 +64,12 @@
 </template>
 
 <script>
+  import DetalleVenta from './DetalleVenta';
   export default {
     name: 'FormVenta',
+    components: {
+      'detalle-venta': DetalleVenta
+    },
     mounted() {
       axios
       .get('/api/tipos_de_documento/')
