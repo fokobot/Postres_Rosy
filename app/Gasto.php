@@ -24,4 +24,10 @@ class Gasto extends Model
     {
       return $this->hasMany('App\DetalleGasto');
     }
+
+    // TODO Clases Usuario-Empleado
+    public function empleado()
+    {
+      return $this->belongsTo('App\User', 'empleado_id');
+    }
 }

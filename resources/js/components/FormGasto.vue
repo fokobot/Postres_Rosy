@@ -49,7 +49,13 @@
           <detalle-gasto @updatedProductos="updateProductos" :errores="errores" :iProductos="productos"></detalle-gasto>
           <div class="form-row">
             <div class="col-md-12">
-              <button type="submit" class="btn btn-block btn-success">Registrar Gasto</button>
+              <b-button block variant="success" :disabled="saving" type="submit">
+                <span v-if="saving">
+                  <b-spinner small type="grow"></b-spinner>
+                  Guardando...
+                </span>
+                <span v-else>Registrar Gasto</span>
+              </b-button>
             </div>
           </div>
         </form>
@@ -87,7 +93,8 @@
       errores: [],
       productos: [],
       proveedores: [],
-      loading: true
+      loading: true,
+      saving: false
     }}, 
     methods: {
       show: function(id) {
@@ -100,11 +107,11 @@
         });
       },
       save: function() {
+        this.saving = true;
         // TODO Edición de Gastos (id asignada)
         let extra = this.gasto.id == 0 ? '' : `/${this.gasto.id}/edit`;
         this.gasto['_method'] = this.gasto.id == 0 ? 'post' : 'put';
         this.$set(this.gasto, 'productos', this.productos);
-        console.log(this.gasto);
         axios.post('/api/gastos' + extra, this.gasto).then(res => {
           this.errores = [];
           $.notify(res.data.mensaje, "success");
@@ -118,7 +125,9 @@
             console.log(err)
             $.notify("Error desconocido.");
           }
-        });
+        }).finally(() => {
+          this.saving = false;
+        }) ;
       },  
       getEstados: function(id) {
         axios.get(`/api/gastos/estados`).then(res => {

@@ -18,6 +18,7 @@ class GastoResource extends JsonResource
             'id'            => $this->id,
             'proveedor_id'  => $this->proveedor_id,
             'proveedor'     => new ProveedorResource($this->proveedor),
+            'empleado'      => new UserResource($this->empleado),
             'fecha'         => $this->fecha,
             'total'         => $this->valor_total,
             'estado'        => $this->estado_gasto_id,

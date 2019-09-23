@@ -36,6 +36,7 @@ class GastoController extends Controller
       $gasto->proveedor_id          = $request->proveedor;
       $gasto->fecha                 = $request->fecha;
       $gasto->estado_gasto_id       = $request->estado;
+      $gasto->empleado_id           = 1; // TODO FIX
       $gasto->valor_total           = 0;
       // TODO Verificar si este ArrayMap es necesario.
       $productos = array_map('static::lista_productos', $request->productos);

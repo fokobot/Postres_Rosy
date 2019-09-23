@@ -25,6 +25,10 @@
             <td>{{estado(gasto).nombre}}</td>
             <td>{{gasto.fecha}}</td>
             <td>
+              <router-link class="btn btn-sm btn-primary" :to="url('', gasto.id)">
+                <i class="fa fa-eye" ></i>
+              </router-link>
+              &nbsp;
               <router-link class="btn btn-sm btn-success" :to="url('edit', gasto.id)">
                 <i class="fa fa-edit" ></i>
               </router-link>
@@ -57,7 +61,8 @@
     }},
     methods: {
       url: function (verb, id) {
-        return `/gastos/${id}/${verb}`;
+        if(verb=='') verb = `/${verb}`;
+        return `/gastos/${id}${verb}`;
       },
       estado: function (gasto) {
         return this.estados.find(function (item) {

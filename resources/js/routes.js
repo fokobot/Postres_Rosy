@@ -15,6 +15,7 @@ const FormProveedor = require('./components/FormProveedor.vue').default;
 const FormEmpleado = require('./components/FormEmpleado.vue').default;
 
 const ShowVenta = require('./components/ShowVenta').default;
+const ShowGasto = require('./components/ShowGasto').default;
 
 const routes = [
     { path: '/clientes', component: ListaClientes},
@@ -28,6 +29,7 @@ const routes = [
     { path: '/trabajos/new', component: FormTrabajo },
     { path: '/gastos', component: ListaGastos},
     { path: '/gastos/new', component: FormGasto},
+    { path: '/gastos/:id', component: ShowGasto},
     { path: '/gastos/:id/edit', component: FormGasto},
     { path: '/productos', component: ListaProductos},
     { path: '/productos/new', component: FormProducto},
