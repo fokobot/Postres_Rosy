@@ -1,13 +1,12 @@
 <template>
-  <div class="col-md-8">
-    <div class="card">
-      <div class="card-header">
+    <b-card>
+      <template v-slot:header>
         {{proveedor.id > 0 ? 'Editar' : 'Nuevo'}} Proveedor
         <router-link class="btn btn-sm btn-primary float-right" to="/proveedores">
           <i class="fa fa-list" ></i> Proveedores
         </router-link>
-      </div>
-      <div class="card-body">
+      </template>
+      <b-card-text>
         <form method="POST" @submit.prevent="save" novalidate  class="needs-validation">
           <div class="form-row">
             <div class="from-group has-default col-md-6">
@@ -79,9 +78,8 @@
             </div>
           </div>
         </form>
-      </div>
-    </div>
-  </div>
+      </b-card-text>
+    </b-card>
 </template>
 
 <script>
@@ -122,7 +120,11 @@
         axios.post('/api/proveedores' + extra, this.proveedor).then(res => {
           this.errores = [];
           $.notify(res.data.mensaje, "success");
-          this.$router.push('/proveedores');
+          if(this.$route.query.next){
+            this.$router.push(this.$route.query.next);
+          } else {
+            this.$router.push('/proveedores');
+          }
         }).catch(err => { 
           let errores = err.response;
           if (errores && errores.status === 422){

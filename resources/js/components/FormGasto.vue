@@ -1,70 +1,69 @@
 <template>
-  <div class="col-md-8">
-    <div class="card">
-      <div class="card-header">
-        {{gasto.id > 0 ? 'Editar' : 'Nuevo'}} Gasto
-        <router-link class="btn btn-sm btn-primary float-right" to="/gastos">
-          <i class="fa fa-list" ></i> Gastos
-        </router-link>
-      </div>
-      <div class="card-body">
-        <form method="POST" @submit.prevent="save" novalidate  class="needs-validation" v-if="!loading">
-          <div class="form-row">
-            <div class="form-group has-default col-md-12">
-              <label for="nombre">Proveedor</label>
-              <select v-model="gasto.proveedor" class="form-control form-control-default" :class="{ 'is-invalid': errores['proveedor'] }" >
-                <option value="-1">Seleccione una opción...</option>
-                <option v-for="proveedor in proveedores" :key="proveedor.id" :value="proveedor.id">
-                   {{proveedor.razon_social}}
-                </option>
-              </select>
-              <form-error :errores="errores" :campo="'proveedor'"></form-error>
-            </div>
+  <b-card>
+    <template v-slot:header>
+      {{gasto.id > 0 ? 'Editar' : 'Nuevo'}} Gasto
+      <router-link class="btn btn-sm btn-primary float-right" to="/gastos">
+        <i class="fa fa-list" ></i> Gastos
+      </router-link>
+    </template>
+    <b-card-text>
+      <form method="POST" @submit.prevent="save" novalidate  class="needs-validation" v-if="!loading">
+        <div class="form-row">
+          <div class="form-group has-default col-md-12">
+            <label for="nombre">Proveedor</label>
+            <select v-model="gasto.proveedor" class="form-control form-control-default" :class="{ 'is-invalid': errores['proveedor'] }" >
+              <option value="-1">Seleccione una opción...</option>
+              <option v-for="proveedor in proveedores" :key="proveedor.id" :value="proveedor.id">
+                  {{proveedor.razon_social}}
+              </option>
+            </select>
+            <span>¿No encuentras el proveedor? <router-link :to="{name: 'nuevo-proveedor', query: {next: '/gastos/new'}}">Crea un nuevo proveedor</router-link>.</span>
+            <form-error :errores="errores" :campo="'proveedor'"></form-error>
           </div>
-          <div class="form-row">
-            <div class="form-group has-default col-md-4">
-              <label for="valor">Valor</label>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">$</span>
-                </div>
-                <input type="text" :value="total | currency" class="form-control form-control-default" disabled>
-              </div>
-            </div>
-            <div class="form-group has-default col-md-4">
-              <label for="estado">Estado del Gasto</label>
-              <select v-model="gasto.estado" class="form-control form-control-default" :class="{ 'is-invalid': errores['estado'] }">
-                <option v-for="estado in estados" :key="estado.id" :value="estado.id">
-                  {{estado.nombre}}
-                </option>
-              </select>
-              <form-error :errores="errores" :campo="'estado'"></form-error>
-            </div>
-            <div class="form-group col-md-4">
-              <label for="fecha">Fecha: </label>
-              <input type="date" class="form-control form-control-default" v-model="gasto.fecha" :class="{ 'is-invalid': errores['fecha'] }" >
-              <form-error :errores="errores" :campo="'fecha'"></form-error>
-            </div>
-          </div>
-          <detalle-gasto @updatedProductos="updateProductos" :errores="errores" :iProductos="productos"></detalle-gasto>
-          <div class="form-row">
-            <div class="col-md-12">
-              <b-button block variant="success" :disabled="saving" type="submit">
-                <span v-if="saving">
-                  <b-spinner small type="grow"></b-spinner>
-                  Guardando...
-                </span>
-                <span v-else>Registrar Gasto</span>
-              </b-button>
-            </div>
-          </div>
-        </form>
-        <div class="text-center" v-else>
-          <b-spinner variant="primary" type="grow" label="Cargando..." style="width: 6rem; height: 6rem;"></b-spinner>
         </div>
+        <div class="form-row">
+          <div class="form-group has-default col-md-4">
+            <label for="valor">Valor</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input type="text" :value="total | currency" class="form-control form-control-default" disabled>
+            </div>
+          </div>
+          <div class="form-group has-default col-md-4">
+            <label for="estado">Estado del Gasto</label>
+            <select v-model="gasto.estado" class="form-control form-control-default" :class="{ 'is-invalid': errores['estado'] }">
+              <option v-for="estado in estados" :key="estado.id" :value="estado.id">
+                {{estado.nombre}}
+              </option>
+            </select>
+            <form-error :errores="errores" :campo="'estado'"></form-error>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="fecha">Fecha: </label>
+            <input type="date" class="form-control form-control-default" v-model="gasto.fecha" :class="{ 'is-invalid': errores['fecha'] }" >
+            <form-error :errores="errores" :campo="'fecha'"></form-error>
+          </div>
+        </div>
+        <detalle-gasto @updatedProductos="updateProductos" :errores="errores" :iProductos="productos"></detalle-gasto>
+        <div class="form-row">
+          <div class="col-md-12">
+            <b-button block variant="success" :disabled="saving" type="submit">
+              <span v-if="saving">
+                <b-spinner small type="grow"></b-spinner>
+                Guardando...
+              </span>
+              <span v-else>Registrar Gasto</span>
+            </b-button>
+          </div>
+        </div>
+      </form>
+      <div class="text-center" v-else>
+        <b-spinner variant="primary" type="grow" label="Cargando..." style="width: 6rem; height: 6rem;"></b-spinner>
       </div>
-    </div>
-  </div>
+    </b-card-text>
+  </b-card>
 </template>
 
 <script>
@@ -80,10 +79,10 @@
       this.getEstados(id);
       this.$set(this.gasto, 'id', id);
       this.show(this.gasto.id)
-      this.loading = true;
       axios.get('/api/proveedores')
         .then(res => {
           this.proveedores = res.data;
+        }).finally(() => {
           this.loading = false;
         });
     },
@@ -93,6 +92,7 @@
       errores: [],
       productos: [],
       proveedores: [],
+      showFormProveedor: false,
       loading: true,
       saving: false
     }}, 

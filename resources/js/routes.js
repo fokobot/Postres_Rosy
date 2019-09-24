@@ -35,7 +35,7 @@ const routes = [
     { path: '/productos/new', component: FormProducto},
     { path: '/productos/:id/edit', component: FormProducto},
     { path: '/proveedores', component: ListaProveedores},
-    { path: '/proveedores/new', component: FormProveedor},
+    { path: '/proveedores/new', component: FormProveedor, name: 'nuevo-proveedor'},
     { path: '/proveedores/:id/edit', component: FormProveedor},
     { path: '/empleados', component: ListaEmpleados},
     { path: '/empleados/new', component: FormEmpleado},
