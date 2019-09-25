@@ -104,7 +104,11 @@
         axios.post('/api/clientes' + extra, this.cliente).then(res => {
           this.errores = [];
           $.notify(res.data.mensaje, "success");
-          this.$router.push('/clientes');
+          if(this.$route.query.next){
+            this.$router.push(this.$route.query.next)
+          } else {
+            this.$router.push('/clientes')
+          }
         }).catch(err => {
           let errores = err.response;
           if (errores && errores.status === 422){

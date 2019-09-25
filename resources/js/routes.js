@@ -19,7 +19,7 @@ const ShowGasto = require('./components/ShowGasto').default;
 
 const routes = [
     { path: '/clientes', component: ListaClientes},
-    { path: '/clientes/new', component: FormCliente},
+    { path: '/clientes/new', component: FormCliente, name: 'nuevo-cliente'},
     { path: '/clientes/:id/edit', component: FormCliente},
     { path: '/ventas/new', component: FormVenta},
     { path: '/ventas', component: ListaVentas },

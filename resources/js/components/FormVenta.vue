@@ -9,46 +9,17 @@
     <div class="card-body">
       <form method="POST" @submit.prevent="registrarVenta" novalidate  class="needs-validation">
         <div class="form-row">
-          <div class="form-group col-md-6">
-            <label class="sr-only">Nombre</label>
-            <input type="text" :class="{ 'is-invalid': errores['nombre'] }" placeholder="Nombre" class="form-control" v-model="venta.nombre" required>
-            <form-error :errores="errores" :campo="'nombre'"></form-error>
+          <div class="col-md-12">
+            <label>Cliente</label>
+            <v-select 
+              :options="lista_clientes" 
+              v-model="venta.cliente"
+              label="nombre"
+              :reduce="cliente => cliente.id">
+              </v-select>
           </div>
-          <div class="form-group col-md-6">
-            <label class="sr-only">Apellidos</label>
-            <input type="text" :class="{ 'is-invalid': errores['apellidos'] }" placeholder="Apellidos" class="form-control" v-model="venta.apellidos" required>
-            <form-error :errores="errores" :campo="'apellidos'"></form-error>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label class="sr-only">Dirección</label>
-            <input type="text" :class="{ 'is-invalid': errores['direccion'] }" placeholder="Dirección" class="form-control" v-model="venta.direccion" required>
-            <form-error :errores="errores" :campo="'direccion'"></form-error>
-          </div>
-          <div class="form-group col-md-6">
-            <label class="sr-only">Barrio</label>
-            <input type="text" :class="{ 'is-invalid': errores['barrio'] }" placeholder="Barrio" class="form-control" v-model="venta.barrio" required>
-            <form-error :errores="errores" :campo="'barrio'"></form-error>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label class="sr-only">Teléfono</label>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-phone"></i></span>
-              </div>
-              <input type="text" :class="{ 'is-invalid': errores['telefono'] }" placeholder="Teléfono" class="form-control" v-model="venta.telefono" required>
-              <form-error :errores="errores" :campo="'telefono'"></form-error>
-            </div>
-          </div>
-          <div class="form-group col-md-6">
-            <label class="sr-only">Fecha de Nacimiento</label>
-            <input type="date" :class="{ 'is-invalid': errores['nacimiento'] }" class="form-control" v-model="venta.nacimiento" required>
-            <form-error :errores="errores" :campo="'nacimiento'"></form-error>
-          </div>
-        </div>
+          <span>¿No encuentras el cliente? <router-link :to="{name: 'nuevo-cliente', query: {next: '/ventas/new'}}">Crea un nuevo cliente</router-link>.</span>
+        </div> 
         <hr>
         <detalle-venta @updatedProductos="updateProductos" :errores="errores">
         </detalle-venta>
@@ -74,11 +45,20 @@
       axios
       .get('/api/tipos_de_documento/')
       .then(response => (this.tipos_de_documento = response.data, this.venta.tipo_de_documento_id = response.data[0].id))
+      axios
+      .get('/api/clientes/')
+      .then(res => {
+        this.clientes = res.data
+      }).finally(() => {
+        this.loadingClientes = false;
+      });
     },
     data () { return {
+      clientes: [],
       productos: [],
       venta: {},
       errores: [],
+      loadingClientes: true
     }},
     methods: {
       registrarVenta: function(){
@@ -101,6 +81,12 @@
         });
       }, updateProductos(productos){
         this.productos = productos;
+      }
+    }, computed: {
+      lista_clientes: function() {
+        return this.clientes.map(function(T){
+          return {id: T.id, nombre: `${T.nombre} ${T.apellidos}`};
+        });
       }
     }
   }

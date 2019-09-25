@@ -13,12 +13,19 @@ window.Vue = require('vue');
 
 const VueRouter = require('vue-router').default;
 import BootstrapVue from 'bootstrap-vue'
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
+
 import routes from './routes';
 import './filters.js';
 
 Vue.use(VueRouter);
 // bootstrap and bootstrap-vue
 Vue.use(BootstrapVue);
+// vue select
+Vue.use(vSelect);
+Vue.component('v-select', vSelect);
+
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
