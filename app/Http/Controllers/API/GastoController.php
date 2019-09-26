@@ -37,9 +37,12 @@ class GastoController extends Controller
       $gasto->fecha                 = $request->fecha;
       $gasto->estado_gasto_id       = $request->estado;
       $gasto->empleado_id           = 1; // TODO FIX
-      $gasto->valor_total           = 0;
       // TODO Verificar si este ArrayMap es necesario.
-      $productos = array_map('static::lista_productos', $request->productos);
+      $productos = collect(array_map('static::lista_productos', $request->productos));
+      $gasto->valor_total = $productos->reduce(function($accum, $item){
+        return $accum +  $item->valor_unitario * $item->cantidad;
+      });
+      
       $gasto->save();
       $gasto->productos()->saveMany($productos);
       DB::commit();
