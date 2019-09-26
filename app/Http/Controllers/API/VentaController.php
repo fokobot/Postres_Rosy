@@ -35,22 +35,15 @@ class VentaController extends Controller
     {
         DB::beginTransaction();
         try {
-            $cliente                          = new Cliente;
-            $cliente->nombre                  = $request->nombre;
-            $cliente->apellidos               = $request->apellidos;
-            $cliente->direccion               = $request->direccion;
-            $cliente->barrio                  = $request->barrio;
-            $cliente->telefono                = $request->telefono;
-            $cliente->nacimiento              = $request->nacimiento;
-            $cliente->save();
-
             $venta = new Venta;
-            $venta->cliente_id                  = $cliente->id;
-            $venta->vendedor_id                 = 1;//Auth::user()->id;
-            $venta->estado_venta_id             = 1;
-            $venta->valor_total                 = 0;
-
-            $productos = array_map("static::lista_productos", $request->productos);
+            $venta->cliente_id                  = $request->cliente;
+            $venta->vendedor_id                 = 1; //  Auth::user()->id;
+            $venta->estado_venta_id             = 1; // TODO fix
+            
+            $productos = collect(array_map("static::lista_productos", $request->productos));
+            $venta->valor_total = $productos->reduce(function($accum, $item){
+                return $accum + $item->cantidad * $item->valor;
+            });
             $venta->save();
             $venta->productos()->saveMany($productos);
             DB::commit();
