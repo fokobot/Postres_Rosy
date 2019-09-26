@@ -1,80 +1,119 @@
 <template>
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-header">
+  <b-col>
+    <b-card>
+      <template v-slot:header>
         {{cliente.id != 0 ? 'Editar' : 'Nuevo'}} Cliente
         <router-link class="btn btn-sm btn-primary float-right" to="/clientes">
           <i class="fa fa-list" ></i> Clientes
         </router-link>
-      </div>
-      <div class="card-body">
-        <form method="POST" @submit.prevent="save" novalidate  class="needs-validation">
-        <div class="form-row">
-          <div class="col-md-6">
-            <label for="nombre">Nombre</label>
-            <div class="form-group has-default">
-              <input type="text" v-model="cliente.nombre" placeholder="Nombre"
-              class="form-control form-control-default" :class="{ 'is-invalid': errores['nombre'] }"/>
-              <form-error :errores="errores" :campo="'nombre'"></form-error>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <label for="apellidos">Apellidos</label>
-            <div class="form-group has-default">
-              <input type="text" v-model="cliente.apellidos" placeholder="Apellidos" class="form-control form-control-default" :class="{ 'is-invalid': errores['apellidos'] }" />
-              <form-error :errores="errores" :campo="'apellidos'"></form-error>
-            </div>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="col-md-6">
-            <label for="direccion">Dirección</label>
-            <div class="form-group has-default">
-              <input type="text" v-model="cliente.direccion" placeholder="Dirección"
-              class="form-control form-control-default" :class="{ 'is-invalid': errores['direccion'] }" />
-              <form-error :errores="errores" :campo="'direccion'"></form-error>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <label for="barrio">Barrio</label>
-            <div class="form-group has-default">
-              <input type="text" v-model="cliente.barrio" placeholder="Barrio"
-              class="form-control form-control-default" :class="{ 'is-invalid': errores['barrio'] }" />
-              <form-error :errores="errores" :campo="'barrio'"></form-error>
-            </div>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="col-md-6">
-            <div class="form-group has-default">
-              <label for="telefono">Telefono</label>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-phone"></i></span>
-                </div>
-                <input type="text" v-model="cliente.telefono" placeholder="Teléfono" 
-                class="form-control form-control-default" :class="{ 'is-invalid': errores['telefono'] }" />
-                <form-error :errores="errores" :campo="'telefono'"></form-error>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-              <label for="nacimiento">Fecha de Nacimiento: </label>
-              <input type="date" class="form-control form-control-default" v-model="cliente.nacimiento" :class="{ 'is-invalid': errores['nacimiento'] }" >
-              <form-error :errores="errores" :campo="'nacimiento'"></form-error>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="col-md-12">
-            <button type="submit" class="btn btn-block btn-success">
-              Registrar Cliente
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+      </template>
+      <b-card-text>
+        <b-form method="POST" @submit.prevent="save" novalidate  class="needs-validation">
+          <b-form-row>
+            <b-col cols="6">
+              <b-form-group
+                label="Nombre"
+                label-for="nombre">
+                <b-form-input
+                  id="nombre"
+                  placeholder="Nombre"
+                  v-model="cliente.nombre" 
+                  class="form-control form-control-default" 
+                  :state="errores['nombre']  ? false : (true && sent)">
+                </b-form-input>
+                <form-error :errores="errores" :campo="'nombre'"></form-error>
+              </b-form-group>
+            </b-col>
+            <b-col cols="6">
+              <b-form-group
+                label="Apellidos"
+                label-for="apellidos">
+                <b-form-input
+                  id="apellidos"
+                  placeholder="Apellidos" 
+                  v-model="cliente.apellidos"
+                  :state="errores['apellidos'] ? false : (true && sent)">
+                </b-form-input>
+                <form-error :errores="errores" :campo="'apellidos'"></form-error>
+              </b-form-group>
+            </b-col>
+          </b-form-row>
+          <b-form-row>
+            <b-col cols="6">
+              <b-form-group
+                label="Dirección"
+                label-for="direccion">
+                <b-form-input type="text"
+                  id="direccion"
+                  placeholder="Dirección"
+                  v-model="cliente.direccion"
+                  :state="errores['direccion'] ? false : (true && sent)">
+                </b-form-input>
+                <form-error :errores="errores" :campo="'direccion'"></form-error>
+              </b-form-group>
+            </b-col>
+            <b-col cols="6">
+              <b-form-group
+                label="Barrio"
+                label-for="barrio">
+                <b-form-input
+                  id="barrio"
+                  type="text"
+                  placeholder="Barrio"
+                  v-model="cliente.barrio"
+                  :state="errores['barrio'] ? false : (true && sent)">
+                </b-form-input>
+                <form-error :errores="errores" :campo="'barrio'"></form-error>
+              </b-form-group>
+            </b-col>
+          </b-form-row>
+          <b-form-row>
+            <b-col cols="6">
+              <b-form-group
+                label="Teléfono"
+                label-for="telefono">
+                <b-input-group>
+                  <template v-slot:prepend>
+                    <b-input-group-text><i class="fa fa-phone"></i></b-input-group-text>
+                  </template>
+                  <b-form-input
+                    id="telefono"
+                    type="text"
+                    placeholder="Teléfono" 
+                    v-model="cliente.telefono"
+                    :state="errores['telefono'] ? false : (true && sent)">
+                  </b-form-input>
+                  <form-error :errores="errores" :campo="'telefono'"></form-error>
+                </b-input-group>
+              </b-form-group>
+            </b-col>
+            <b-col cols="6">
+              <b-form-group
+                label="Fecha de Nacimiento"
+                label-for="fecha_de_nacimiento">
+                <b-form-input
+                  id="fecha_de_nacimiento"
+                  type="date"
+                  v-model="cliente.nacimiento" 
+                  :state="errores['nacimiento'] ? false : (true && sent)" >
+                </b-form-input>
+                <form-error :errores="errores" :campo="'nacimiento'"></form-error>
+              </b-form-group>
+            </b-col>
+          </b-form-row>
+          <b-form-row>
+            <b-button block variant="success" :disabled="saving" type="submit">
+              <span v-if="saving">
+                <b-spinner small type="grow"></b-spinner>
+                Guardando...
+              </span>
+              <span v-else>Registrar Cliente</span>
+            </b-button>
+          </b-form-row>
+        </b-form>
+      </b-card-text>
+    </b-card>
+  </b-col>
 </template>
 
 <script>
@@ -87,7 +126,9 @@
     },
     data() { return {
       cliente: {},
-      errores: []
+      errores: [],
+      saving: false,
+      sent: null
     }},
     methods: {
       show: function(id) {
@@ -99,6 +140,7 @@
         });
       },
       save: function() {
+        this.saving = true;
         let extra = this.cliente.id == 0 ? '' : `/${this.cliente.id}/edit`;
         this.cliente['_method'] = this.cliente.id == 0 ? 'post' : 'put';
         axios.post('/api/clientes' + extra, this.cliente).then(res => {
@@ -118,6 +160,9 @@
             console.log(err)
             $.notify("Error desconocido.");
           }
+        }).finally(() => {
+          this.sent = true;
+          this.saving = false;
         });
       }
     }
