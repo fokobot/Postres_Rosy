@@ -3,26 +3,32 @@
     <label>
       <b>Lista de Productos</b>
     </label>
-    <div class="row">
+    <b-row @keydown.enter.prevent="addProducto">
       <div class="form-group col-md-6">
         <label for="producto">Producto</label>
-        <select :disabled="productos.length==0" v-model="productoactual" class="form-control">
-          <option v-for="producto in productos" :key="producto.id" :value="producto.id">
-            {{producto.nombre}}
-          </option>
-        </select>
+        <v-select id="producto"
+          :options="productos"
+          label="nombre"
+          v-model="productoactual"
+          :disabled="productos.length===0">
+        </v-select>
       </div>
       <div class="form-group col-md-4">
-        <label>Cantidad</label>
-        <input :disabled="productos.length==0" min="1" @keydown.enter.prevent="addProducto" type="number" v-model.number="unidades" class="form-control" />
+        <label>Cantidad {{productos.length}}</label>
+        <b-input :disabled="productos.length==0" min="1"  type="number" v-model.number="unidades"></b-input>
       </div>
       <div class="form-group col-md-2">
         <label style="color: white;">FIX THIS</label>
-        <button :disabled="!productoactual || productos.length==0 || productoactual <= 0" type="button" @click.prevent="addProducto" class="btn btn-block btn-sm btn-primary">
+        <b-button
+          block
+          variant="primary"
+          size="sm"
+          :disabled="!productoactual || productos.length==0 || productoactual <= 0" 
+          @click.prevent="addProducto">
           <i class="fa fa-plus"></i>
-        </button>
+        </b-button>
       </div>
-    </div>
+    </b-row>
     <div class="alert alert-danger" v-if="errores['productos']">
       {{ errores.productos[0] }}
     </div>
@@ -35,20 +41,26 @@
         <th>Opciones</th>
       </thead>
       <tbody>
-        <tr v-for="producto in escogidos" :key="producto.id">
-          <td>{{producto.nombre}} {{producto.edition}}</td>
+        <tr v-for="(producto, index) in escogidos" :key="producto.id">
+          <td>{{producto.nombre}}</td>
           <td>$ {{valorProducto(producto) | currency}}</td>
           <td>
-            <input class="form-control" type="number" min="1" v-if="edition[producto.id]" v-model="producto.cantidad" @keydown.enter.prevent="editarProducto(producto)"/>
+            <b-input
+              type="number"
+              min="1" 
+              v-model.number="producto.cantidad"
+              @keydown.enter.prevent="editarProducto(producto)"
+              v-if="producto.edition">
+            </b-input>
             <span v-else>{{producto.cantidad}}</span>
           </td>
           <td>$ {{producto.cantidad * valorProducto(producto) | currency}}</td>
           <td>
             <button class="btn btn-sm btn-primary" type="button" @click="editarProducto(producto)">
-              <i class="fa fa-edit" v-if="!edition[producto.id]"></i>
+              <i class="fa fa-edit" v-if="!producto.edition"></i>
               <i class="fa fa-save" v-else></i>
             </button>
-            <button class="btn btn-sm btn-danger" type="button" @click="eliminarProducto(producto.id)">
+            <button class="btn btn-sm btn-danger" type="button" @click="eliminarProducto(index)">
               <i class="fa fa-trash"></i>
             </button>
           </td>
@@ -72,50 +84,43 @@
     mounted () {
       axios
       .get('/api/productos/')
-      .then(response => (this.productos = response.data, this.productoactual = this.productos[0].id))
+      .then(response => {
+        this.productos = response.data;
+        this.productoactual = this.productos[0] || {};
+      });
     },
     data() { return {
       productos : [],
       escogidos: [],
       edition: [],
-      productoactual: 0,
-      unidades: 1,
-      total: 0.0
+      productoactual: {},
+      unidades: 1
     }},
     methods: {
       addProducto: function() {
-        var pactual = this.productoactual;
-        var index = this.productos.findIndex(function(el) {
-          return el.id == pactual;
+        var index = this.productos.findIndex(el =>  {
+          return el.id == this.productoactual.id;
         });
-        var item = this.productos[index];
-        item.cantidad = Math.max(1, Math.abs(this.unidades));
-        this.edition[item.id] = false;
+        this.$set(this.productoactual, 'cantidad', Math.max(1, Math.abs(this.unidades)));
+        this.$set(this.productoactual, 'edition', false);
+        // quitar el producto de la lista de escogibles
+        console.log(this.productos.length)
         this.productos.splice(index, 1);
-        this.escogidos.push(item);
-        this.total += item.cantidad * this.valorProducto(item);
-        this.productoactual = this.productos.length === 0 ? 0 : this.productos[0].id;
+        console.log(this.productos.length)
+        // añadir el producto a la lista de escogidos
+        this.escogidos.push(this.productoactual);
+        // actualizar el valor del producto actual
+        this.productoactual = this.productos.length === 0 ? {} : this.productos[0];
       },
       editarProducto: function(producto){
-        this.$set(this.edition, producto.id, !this.edition[producto.id]);
-        this.total= this.escogidos.reduce(function(sum, current, index, vector){
-          current.cantidad = Math.max(1, Math.abs(current.cantidad));
-          return sum + this.valorProducto(current) * current.cantidad;
-        }.bind(this), 0);
+        this.$set(producto, 'edition', !producto.edition);
       },
-      eliminarProducto: function(id) {
-        var index = this.escogidos.findIndex(function(el) {
-          return el.id == id;
-        });
+      eliminarProducto: function(index) {
         var item = this.escogidos[index];
         if (item){
-          this.edition[item.id] = false;
-          this.unidades = item.cantidad;
           this.escogidos.splice(index, 1);
-          this.total -= item.cantidad * this.valorProducto(item);
-          delete item['cantidad'];
           this.productos.push(item)
-          this.productoactual = item.id;
+          this.productoactual = item;
         }
       },
       valorProducto: function(producto, cantidad){
@@ -129,6 +134,12 @@
     watch: {
       escogidos: function() {
         this.$emit("updatedProductos", this.escogidos);
+      }
+    }, computed: {
+      total: function(){
+        return this.escogidos.reduce((sum, item) => {
+          return sum + this.valorProducto(item, item.cantidad) * item.cantidad;
+        }, 0);
       }
     }
   }
