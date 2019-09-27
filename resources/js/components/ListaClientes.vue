@@ -24,14 +24,14 @@
           <td>{{cliente.direccion}}</td>
           <td>{{cliente.barrio}}</td>
           <td>{{cliente.telefono}}</td>
-          <td>{{cliente.nacimiento}}</td>
+          <td>{{cliente.fecha_de_nacimiento}}</td>
           <td>
-          <router-link class="btn btn-sm btn-success" :to="url('edit', cliente.id)">
-						<i class="fa fa-edit" ></i>
-					</router-link>
-          <a class="btn btn-sm btn-danger" href="#" @click="eliminar(cliente.id)">
-            <i class="fa fa-trash"></i>
-          </a>
+            <router-link class="btn btn-sm btn-success" :to="url('edit', cliente.id)">
+              <i class="fa fa-edit" ></i>
+            </router-link>
+            <a class="btn btn-sm btn-danger" href="#" @click="eliminar(cliente.id)">
+              <i class="fa fa-trash"></i>
+            </a>
           </td>
         </tr>
       </tbody>

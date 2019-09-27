@@ -18,4 +18,9 @@ class Cliente extends Model
     public function compras(){
         return $this->hasMany('App\Venta', 'cliente_id');
     }
+
+    public function tipo_de_documento()
+    {
+        return $this->belongsTo('App\TipoDeDocumento', 'tipo_de_documento_id');
+    }
 }

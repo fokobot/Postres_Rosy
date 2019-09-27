@@ -24,24 +24,30 @@ class ClienteController extends Controller
   public function store(SaveClienteRequest $request)
   {
     $cliente                          = new Cliente;
+    $cliente->tipo_de_documento_id    = $request->tipo_de_documento;
+    $cliente->documento               = $request->documento;
     $cliente->nombre                  = $request->nombre;
     $cliente->apellidos               = $request->apellidos;
     $cliente->direccion               = $request->direccion;
     $cliente->barrio                  = $request->barrio;
     $cliente->telefono                = $request->telefono;
-    $cliente->nacimiento              = $request->nacimiento;
+    $cliente->fecha_de_nacimiento     = $request->fecha_de_nacimiento;
+    $cliente->email                   = $request->email;
     $cliente->save();
     return response()->json(['mensaje' => 'Cliente creado con éxito.'], Response::HTTP_OK);
   }
 
   public function update(SaveClienteRequest $request, Cliente $cliente)
   {
+    $cliente->tipo_de_documento_id    = $request->tipo_de_documento;
+    $cliente->documento               = $request->documento;
     $cliente->nombre                  = $request->nombre;
     $cliente->apellidos               = $request->apellidos;
     $cliente->direccion               = $request->direccion;
     $cliente->barrio                  = $request->barrio;
     $cliente->telefono                = $request->telefono;
-    $cliente->nacimiento              = $request->nacimiento;
+    $cliente->fecha_de_nacimiento     = $request->fecha_de_nacimiento;
+    $cliente->email                   = $request->email;
     $cliente->save();
     return response()->json(['mensaje' => 'Cliente editado con éxito.'], Response::HTTP_OK);
   }

@@ -10,9 +10,42 @@
       <b-card-text>
         <b-form method="POST" @submit.prevent="save" novalidate  class="needs-validation">
           <b-form-row>
+            <b-col>
+              <b-form-group
+                label="Tipo de Documento"
+                label-for="tipo_de_documento">
+                <b-form-select
+                  id="tipos_de_documento" 
+                  :options="tipos_de_documento"
+                  text-field="nombre" 
+                  value-field="id"
+                  v-model="cliente.tipo_de_documento"
+                  :state="errores['tipo_de_documento']  ? false : (true && sent)">
+                  <template v-slot:first>
+                    <option value="">-- Seleccione el tipo de documento --</option>
+                  </template>
+                </b-form-select>
+                <form-error :errores="errores" :campo="'tipo_de_documento'"></form-error>
+              </b-form-group>
+            </b-col>
+            <b-col>
+              <b-form-group
+                label="Documento"
+                label-for="documento">
+                <b-form-input 
+                  v-model="cliente.documento"
+                  id="documento"
+                  placeholder="Documento"
+                  :state="errores['documento']  ? false : (true && sent)">
+                </b-form-input>
+                <form-error :errores="errores" :campo="'documento'"></form-error>
+              </b-form-group>
+            </b-col>
+          </b-form-row>
+          <b-form-row>
             <b-col cols="6">
               <b-form-group
-                label="Nombre"
+                label="Nombre*"
                 label-for="nombre">
                 <b-form-input
                   id="nombre"
@@ -26,7 +59,7 @@
             </b-col>
             <b-col cols="6">
               <b-form-group
-                label="Apellidos"
+                label="Apellidos*"
                 label-for="apellidos">
                 <b-form-input
                   id="apellidos"
@@ -39,9 +72,9 @@
             </b-col>
           </b-form-row>
           <b-form-row>
-            <b-col cols="6">
+            <b-col cols="3">
               <b-form-group
-                label="Dirección"
+                label="Dirección*"
                 label-for="direccion">
                 <b-form-input type="text"
                   id="direccion"
@@ -52,9 +85,9 @@
                 <form-error :errores="errores" :campo="'direccion'"></form-error>
               </b-form-group>
             </b-col>
-            <b-col cols="6">
+            <b-col cols="3">
               <b-form-group
-                label="Barrio"
+                label="Barrio*"
                 label-for="barrio">
                 <b-form-input
                   id="barrio"
@@ -66,11 +99,25 @@
                 <form-error :errores="errores" :campo="'barrio'"></form-error>
               </b-form-group>
             </b-col>
+            <b-col cols="6">
+              <b-form-group
+                label="Email"
+                label-for="email">
+                <b-form-input
+                  id="email"
+                  type="email"
+                  placeholder="Correo Electrónico"
+                  v-model="cliente.email"
+                  :state="errores['email'] ? false : (true && sent)">
+                </b-form-input>
+                <form-error :errores="errores" :campo="'email'"></form-error>
+              </b-form-group>
+            </b-col>
           </b-form-row>
           <b-form-row>
             <b-col cols="6">
               <b-form-group
-                label="Teléfono"
+                label="Teléfono*"
                 label-for="telefono">
                 <b-input-group>
                   <template v-slot:prepend>
@@ -89,15 +136,15 @@
             </b-col>
             <b-col cols="6">
               <b-form-group
-                label="Fecha de Nacimiento"
+                label="Fecha de Nacimiento*"
                 label-for="fecha_de_nacimiento">
                 <b-form-input
                   id="fecha_de_nacimiento"
                   type="date"
-                  v-model="cliente.nacimiento" 
-                  :state="errores['nacimiento'] ? false : (true && sent)" >
+                  v-model="cliente.fecha_de_nacimiento" 
+                  :state="errores['fecha_de_nacimiento'] ? false : (true && sent)" >
                 </b-form-input>
-                <form-error :errores="errores" :campo="'nacimiento'"></form-error>
+                <form-error :errores="errores" :campo="'fecha_de_nacimiento'"></form-error>
               </b-form-group>
             </b-col>
           </b-form-row>
@@ -122,12 +169,24 @@
     mounted() {
       var id = parseInt(this.$route.params.id) || 0;
       this.$set(this.cliente, 'id', id);
-      this.show(this.cliente.id)
+      this.show(this.cliente.id);
+      axios.get('/api/tipos_de_documento')
+        .then(res => {
+          this.tipos_de_documento = res.data;
+        }).catch(err => {
+          console.log(err);
+        }).finally(() => {
+          this.loadingClientes = false;
+        });
     },
     data() { return {
-      cliente: {},
+      tipos_de_documento: [],
+      cliente: {
+        tipo_de_documento: ""
+      },
       errores: [],
       saving: false,
+      loadingClientes: true,
       sent: null
     }},
     methods: {

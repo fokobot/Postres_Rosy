@@ -15,13 +15,16 @@ class ClienteResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'            => $this->id,
-            'nombre'        => $this->nombre,
-            'apellidos'     => $this->apellidos,
-            'barrio'        => $this->barrio,
-            'nacimiento'    => $this->nacimiento,
-            'direccion'     => $this->direccion,
-            'telefono'      => $this->telefono,
+            'id'                    => $this->id,
+            'documento'             => $this->documento,
+            'tipo_de_documento'     => $this->tipo_de_documento_id,
+            'nombre'                => $this->nombre,
+            'apellidos'             => $this->apellidos,
+            'barrio'                => $this->barrio,
+            'fecha_de_nacimiento'   => $this->fecha_de_nacimiento,
+            'direccion'             => $this->direccion,
+            'telefono'              => $this->telefono,
+            'email'                 => $this->email
         ];
     }
 }
