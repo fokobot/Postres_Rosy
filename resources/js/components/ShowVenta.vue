@@ -7,7 +7,7 @@
       </router-link>
     </div>
     <div class="card-body">
-      <div class="row">
+      <div class="row" v-if="!loading">
         <div class="col-md-6 table-responsive">
           <h4 class="sub-header">Vendedor</h4>
           <table class="table" >
@@ -43,6 +43,15 @@
           </table>
         </div> 
       </div>
+      <div class="text-center" v-else>
+        <b-spinner
+          variant="primary"
+          type="grow"
+          label="Cargando..."
+          style="width: 6rem; height: 6rem;">
+        Cargando...
+        </b-spinner>
+      </div>
       <hr />
       <detalle-venta :productos="venta.productos" :total="venta.total"></detalle-venta>
     </div>
@@ -62,9 +71,10 @@
       .get(`/api/ventas/${this.$route.params.id}`)
       .then(res => {
           this.venta = res.data
-          this.loading = false;
       }).catch(err => {
         console.log('Error', err);
+      }).finally(() => {
+        this.loading = false;
       });
     },
     data () { return {

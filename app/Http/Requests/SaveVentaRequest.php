@@ -27,7 +27,9 @@ class SaveVentaRequest extends FormRequest
             'productos'             => 'array|min:1',
             'productos.*.id'        => 'exists:productos,id',
             'productos.*.cantidad'  => 'numeric|min:0',
-            'cliente'               => 'exists:clientes,id'
+            'cliente'               => 'exists:clientes,id',
+            'fecha'                 => 'required|date',
+            'direccion'             => 'required|max:40'
         ];
 
     }

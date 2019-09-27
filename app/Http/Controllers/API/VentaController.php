@@ -18,12 +18,18 @@ class VentaController extends Controller
 {
     public function index()
     {
-      $ventas = \App\Venta::all()->load('cliente');
-      $estados = \App\EstadoVenta::all();
-      return response([
-          'ventas'       => VentaResource::collection($ventas),
-          'estados'      => EstadoVentaResource::collection($estados)
-      ]);
+        $ventas = \App\Venta::all()->load('cliente');
+        $estados = \App\EstadoVenta::all();
+        return response([
+            'ventas'       => VentaResource::collection($ventas),
+            'estados'      => EstadoVentaResource::collection($estados)
+        ]);
+    }
+
+    public function estados()
+    {
+        $estados = \App\EstadoVenta::all();
+        return EstadoVentaResource::collection($estados);
     }
 
     public function show(Venta $venta)
@@ -37,11 +43,13 @@ class VentaController extends Controller
         try {
             $venta = new Venta;
             $venta->cliente_id                  = $request->cliente;
-            $venta->vendedor_id                 = 1; //  Auth::user()->id;
-            $venta->estado_venta_id             = 1; // TODO fix
-            
+            $venta->vendedor_id                 = 1; // TODO Auth::user()->id;
+            $venta->estado_venta_id             = $request->estado; // TODO fix
+            $venta->fecha                       = $request->fecha;
+            $venta->direccion                   = $request->direccion;
+
             $productos = collect(array_map("static::lista_productos", $request->productos));
-            $venta->valor_total = $productos->reduce(function($accum, $item){
+            $venta->valor_total = $productos->reduce(function ($accum, $item) {
                 return $accum + $item->cantidad * $item->valor;
             });
             $venta->save();
@@ -60,11 +68,12 @@ class VentaController extends Controller
 
     public function destroy(Venta $venta)
     {
-      $venta->delete();
-      return response()->json(['mensaje' => 'Venta eliminada con éxito.'], Response::HTTP_OK);
+        $venta->delete();
+        return response()->json(['mensaje' => 'Venta eliminada con éxito.'], Response::HTTP_OK);
     }
 
-    private static function lista_productos($producto){
+    private static function lista_productos($producto)
+    {
         $detallecompra                   = new ProductoVenta;
         $detallecompra->producto_id      = $producto['id'];
         $detallecompra->cantidad         = $producto['cantidad'];

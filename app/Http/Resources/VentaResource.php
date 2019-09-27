@@ -20,7 +20,8 @@ class VentaResource extends JsonResource
             'vendedor'  => new UserResource($this->vendedor),
             'total'     => $this->valor_total,
             'productos' => ProductosVentaResource::collection($this->productos),
-            'estado'    => $this->estado_venta_id
+            'estado'    => $this->estado_venta_id,
+            'fecha'     => $this->fecha
         ];
     }
 }

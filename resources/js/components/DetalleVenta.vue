@@ -14,7 +14,7 @@
         </v-select>
       </div>
       <div class="form-group col-md-4">
-        <label>Cantidad {{productos.length}}</label>
+        <label>Cantidad</label>
         <b-input :disabled="productos.length==0" min="1"  type="number" v-model.number="unidades"></b-input>
       </div>
       <div class="form-group col-md-2">
