@@ -20,12 +20,14 @@
                   text-field="nombre" 
                   value-field="id"
                   v-model="tipo_de_documento"
-                  :state="errores['tipo_de_documento']  ? false : (true && sent)">
+                  :state="hasError('tipo_de_documento')" >
                   <template v-slot:first>
                     <option value="0">-- Seleccione el tipo de documento --</option>
                   </template>
                 </b-form-select>
-                <form-error :errores="errores" :campo="'tipo_de_documento'"></form-error>
+                <b-form-invalid-feedback id="errores-tipo_de_documento">
+                  {{error('tipo_de_documento')}}
+                </b-form-invalid-feedback>
               </b-form-group>
             </b-col>
             <b-col>
@@ -36,9 +38,11 @@
                   v-model="documento"
                   id="documento"
                   placeholder="Documento"
-                  :state="errores['documento']  ? false : (true && sent)">
+                  :state="hasError('documento')" >
                 </b-form-input>
-                <form-error :errores="errores" :campo="'documento'"></form-error>
+                <b-form-invalid-feedback id="errores-documento">
+                  {{error('documento')}}
+                </b-form-invalid-feedback>
               </b-form-group>
             </b-col>
           </b-form-row>
@@ -52,9 +56,11 @@
                   placeholder="Nombre"
                   v-model="nombre" 
                   class="form-control form-control-default" 
-                  :state="errores['nombre']  ? false : (true && sent)">
+                  :state="hasError('nombre')" >
                 </b-form-input>
-                <form-error :errores="errores" :campo="'nombre'"></form-error>
+                <b-form-invalid-feedback id="errores-nombre">
+                  {{error('nombre')}}
+                </b-form-invalid-feedback>
               </b-form-group>
             </b-col>
             <b-col cols="6">
@@ -65,9 +71,11 @@
                   id="apellidos"
                   placeholder="Apellidos" 
                   v-model="apellidos"
-                  :state="errores['apellidos'] ? false : (true && sent)">
+                  :state="hasError('apellidos')" >
                 </b-form-input>
-                <form-error :errores="errores" :campo="'apellidos'"></form-error>
+                <b-form-invalid-feedback id="errores-apellidos">
+                  {{error('apellidos')}}
+                </b-form-invalid-feedback>
               </b-form-group>
             </b-col>
           </b-form-row>
@@ -80,9 +88,11 @@
                   id="direccion"
                   placeholder="Dirección"
                   v-model="direccion"
-                  :state="errores['direccion'] ? false : (true && sent)">
+                  :state="hasError('direccion')" >
                 </b-form-input>
-                <form-error :errores="errores" :campo="'direccion'"></form-error>
+                <b-form-invalid-feedback id="errores-direccion">
+                  {{error('direccion')}}
+                </b-form-invalid-feedback>
               </b-form-group>
             </b-col>
             <b-col cols="3">
@@ -94,9 +104,11 @@
                   type="text"
                   placeholder="Barrio"
                   v-model="barrio"
-                  :state="errores['barrio'] ? false : (true && sent)">
+                  :state="hasError('barrio')" >
                 </b-form-input>
-                <form-error :errores="errores" :campo="'barrio'"></form-error>
+                <b-form-invalid-feedback id="errores-barrio">
+                  {{error('barrio')}}
+                </b-form-invalid-feedback>
               </b-form-group>
             </b-col>
             <b-col cols="6">
@@ -108,9 +120,11 @@
                   type="email"
                   placeholder="Correo Electrónico"
                   v-model="email"
-                  :state="errores['email'] ? false : (true && sent)">
+                  :state="hasError('email')" >
                 </b-form-input>
-                <form-error :errores="errores" :campo="'email'"></form-error>
+                <b-form-invalid-feedback id="errores-email">
+                  {{error('email')}}
+                </b-form-invalid-feedback>
               </b-form-group>
             </b-col>
           </b-form-row>
@@ -128,9 +142,11 @@
                     type="text"
                     placeholder="Teléfono" 
                     v-model="telefono"
-                    :state="errores['telefono'] ? false : (true && sent)">
+                    :state="hasError('telefono')" >
                   </b-form-input>
-                  <form-error :errores="errores" :campo="'telefono'"></form-error>
+                  <b-form-invalid-feedback id="errores-telefono">
+                    {{error('telefono')}}
+                  </b-form-invalid-feedback>
                 </b-input-group>
               </b-form-group>
             </b-col>
@@ -142,9 +158,11 @@
                   id="fecha_de_nacimiento"
                   type="date"
                   v-model="fecha_de_nacimiento" 
-                  :state="errores['fecha_de_nacimiento'] ? false : (true && sent)" >
+                  :state="hasError('fecha_de_nacimiento')" >
                 </b-form-input>
-                <form-error :errores="errores" :campo="'fecha_de_nacimiento'"></form-error>
+                <b-form-invalid-feedback id="errores-fecha_de_nacimiento">
+                  {{error('fecha_de_nacimiento')}}
+                </b-form-invalid-feedback>
               </b-form-group>
             </b-col>
           </b-form-row>
@@ -166,9 +184,11 @@
 <script>
   import { mapGetters } from 'vuex';
   import { mapFields }   from 'vuex-map-fields';
+  import getErrors from '../mixins';
 
   export default {
     name: 'FormCliente',
+    mixins: [getErrors],
     mounted() {
       this.$store.dispatch('fetchTiposDeDoc');      
       var id = parseInt(this.$route.params.id) || 0;

@@ -25,7 +25,6 @@ let actions = {
         commit('FETCH', res.data);
       })
     } else {
-      console.log('fetch default');
       commit('FETCH', defaultCliente)
     }
   },

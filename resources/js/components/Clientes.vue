@@ -31,9 +31,9 @@
               :to="{name: 'editar-cliente', params: {id: cliente.id}}">
               <i class="fa fa-edit" ></i>
             </router-link>
-            <a class="btn btn-sm btn-danger" href="#" @click="eliminar(cliente)">
+            <button class="btn btn-sm btn-danger" href="#" @click="eliminar(cliente)">
               <i class="fa fa-trash"></i>
-            </a>
+            </button>
           </td>
         </tr>
       </tbody>

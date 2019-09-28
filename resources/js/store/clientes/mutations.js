@@ -34,9 +34,11 @@ let mutations = {
     let index = state.clientes.findIndex(item => item.id == cliente.id);
     state.clientes.splice(index, 1);
   },
-  SAVING(state, sent){
+  SAVING(state){
     Vue.set(state, 'saving', !state.saving);
-    Vue.set(state, 'sent', true)
+    if(!state.saving){
+      Vue.set(state, 'sent', true)
+    }
   },
   ERROR(state, errores){
     Vue.set(state, 'errores', errores);
