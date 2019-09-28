@@ -26,10 +26,12 @@
           <td>{{cliente.telefono}}</td>
           <td>{{cliente.fecha_de_nacimiento}}</td>
           <td>
-            <router-link class="btn btn-sm btn-success" :to="url('edit', cliente.id)">
+            <router-link 
+              class="btn btn-sm btn-success" 
+              :to="{name: 'editar-cliente', params: {id: cliente.id}}">
               <i class="fa fa-edit" ></i>
             </router-link>
-            <a class="btn btn-sm btn-danger" href="#" @click="eliminar(cliente.id)">
+            <a class="btn btn-sm btn-danger" href="#" @click="eliminar(cliente)">
               <i class="fa fa-trash"></i>
             </a>
           </td>
@@ -41,38 +43,21 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
+
   export default {
-    name: 'ListaClientes',
+    name: 'Clientes',
     mounted() {
-      axios
-        .get('/api/clientes/')
-        .then(response => (this.clientes = response.data)).catch(err => $.notify('Ha ocurrido un error desconocido.', 'error'));
+      this.$store.dispatch('clientes/fetchAll');      
     },
-    data(){ return {
-      clientes:  []
-    }},
+    computed: mapGetters({
+      clientes: 'clientes/clientes'
+    }),
     methods: {
-      url: function (verb, id) {
-        return `/clientes/${id}/${verb}`;
-      },
-      eliminar: function (id) {
+      eliminar(cliente) {
         bootbox.confirm("¿Realmente desea eliminar este cliente?", result => {
           if (!result) return;
-          axios.delete('/api/clientes/' + id)
-          .then(res => {
-            let index = this.clientes.findIndex(function (item) {
-              return item.id == id;
-            });
-            this.clientes.splice(index, 1);
-            $.notify(res.data.mensaje , 'success');
-          })
-          .catch(err => {
-            if (err.response && err.response.status === 422){
-              $.notify(err.response.data.mensaje, 'warn')
-            } else {
-              $.notify("Error desconocido al eliminar.", 'danger');
-            }
-          });
+          this.$store.dispatch('clientes/delete', cliente);
         });
       }
     }

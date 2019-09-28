@@ -34,7 +34,10 @@ class ClienteController extends Controller
     $cliente->fecha_de_nacimiento     = $request->fecha_de_nacimiento;
     $cliente->email                   = $request->email;
     $cliente->save();
-    return response()->json(['mensaje' => 'Cliente creado con éxito.'], Response::HTTP_OK);
+    return response()->json([
+      'cliente' => new ClienteResource($cliente),
+      'mensaje' => 'Cliente creado con éxito.'
+    ], Response::HTTP_OK);
   }
 
   public function update(SaveClienteRequest $request, Cliente $cliente)
@@ -49,12 +52,15 @@ class ClienteController extends Controller
     $cliente->fecha_de_nacimiento     = $request->fecha_de_nacimiento;
     $cliente->email                   = $request->email;
     $cliente->save();
-    return response()->json(['mensaje' => 'Cliente editado con éxito.'], Response::HTTP_OK);
+    return response()->json([
+      'cliente' => new ClienteResource($cliente),
+      'mensaje' => 'Cliente editado con éxito.'
+    ], Response::HTTP_OK);
   }
 
   public function destroy(Cliente $cliente)
   {
-    if ($cliente->compras()->count() > 0){
+    if ($cliente->compras()->count() > 0) {
       $mensaje = 'No es posible eliminar el cliente, tiene compras asociadas.';
       $status = Response::HTTP_UNPROCESSABLE_ENTITY;
     } else {

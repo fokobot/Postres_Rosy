@@ -1,45 +1,118 @@
-const ListaClientes = require('./components/ListaClientes.vue').default;
-const ListaTrabajos = require('./components/ListaTrabajos').default;
-const ListaVentas = require('./components/ListaVentas.vue').default;
-const ListaGastos = require('./components/ListaGastos.vue').default;
-const ListaProductos = require('./components/ListaProductos.vue').default;
-const ListaProveedores = require('./components/ListaProveedores.vue').default;
-const ListaEmpleados = require('./components/ListaEmpleados.vue').default;
+import Vue          from 'vue'
+import VueRouter    from 'vue-router'
 
-const FormCliente = require('./components/FormCliente.vue').default;
-const FormVenta = require('./components/FormVenta.vue').default;
-const FormTrabajo = require('./components/FormTrabajo.vue').default;
-const FormGasto = require('./components/FormGasto.vue').default;
-const FormProducto = require('./components/FormProducto.vue').default;
-const FormProveedor = require('./components/FormProveedor.vue').default;
-const FormEmpleado = require('./components/FormEmpleado.vue').default;
+Vue.use(VueRouter)
 
-const ShowVenta = require('./components/ShowVenta').default;
-const ShowGasto = require('./components/ShowGasto').default;
-
-const routes = [
-    { path: '/clientes', component: ListaClientes},
-    { path: '/clientes/new', component: FormCliente, name: 'nuevo-cliente'},
-    { path: '/clientes/:id/edit', component: FormCliente},
-    { path: '/ventas/new', component: FormVenta},
-    { path: '/ventas', component: ListaVentas },
-    { path: '/ventas/:id', component: ShowVenta },
-    { path: '/trabajos', component: ListaTrabajos },
-    { path: '/trabajos/:id/edit', name: 'EditarTrabajo', component: FormTrabajo},
-    { path: '/trabajos/new', component: FormTrabajo },
-    { path: '/gastos', component: ListaGastos},
-    { path: '/gastos/new', component: FormGasto},
-    { path: '/gastos/:id', component: ShowGasto},
-    { path: '/gastos/:id/edit', component: FormGasto},
-    { path: '/productos', component: ListaProductos},
-    { path: '/productos/new', component: FormProducto},
-    { path: '/productos/:id/edit', component: FormProducto},
-    { path: '/proveedores', component: ListaProveedores},
-    { path: '/proveedores/new', component: FormProveedor, name: 'nuevo-proveedor'},
-    { path: '/proveedores/:id/edit', component: FormProveedor},
-    { path: '/empleados', component: ListaEmpleados},
-    { path: '/empleados/new', component: FormEmpleado},
-    { path: '/empleados/:id/edit', component: FormEmpleado},
+const routes = [{
+        path: '/clientes',
+        name: 'clientes',
+        component: () => import('./components/Clientes.vue')
+    },
+    {
+        path: '/clientes/new',
+        name: 'nuevo-cliente',
+        component: () => import('./components/FormCliente.vue')
+    },
+    {
+        path: '/clientes/:id/edit',
+        name: 'editar-cliente',
+        component: () => import('./components/FormCliente.vue')
+    },
+    {
+        path: '/ventas/new',
+        name: 'nueva-venta',
+        component: () => import('./components/FormVenta')
+    },
+    {
+        path: '/ventas',
+        name: 'ventas',
+        component: () => import('./components/ListaVentas')
+    },
+    {
+        path: '/ventas/:id',
+        name: 'mostrar-venta',
+        component: () => import('./components/ShowVenta')
+    },
+    {
+        path: '/trabajos',
+        name: 'trabajos',
+        component: () => import('./components/ListaTrabajos')
+    },
+    {
+        path: '/trabajos/:id/edit',
+        name: 'EditarTrabajo',
+        component: () => import('./components/FormTrabajo')
+    },
+    {
+        path: '/trabajos/new',
+        name: 'nuevo-trabajo',
+        component: () => import('./components/FormTrabajo')
+    },
+    {
+        path: '/gastos',
+        name: 'gastos',
+        component: () => import('./components/ListaGastos')
+    },
+    {
+        path: '/gastos/new',
+        name: 'nuevo-gasto',
+        component: () => import('./components/FormGasto')
+    },
+    {
+        path: '/gastos/:id',
+        name: 'mostrar-gasto',
+        component: () => import('./components/ShowGasto')
+    },
+    {
+        path: '/gastos/:id/edit',
+        name: 'editar-gasto',
+        component: () => import('./components/FormGasto')
+    },
+    {
+        path: '/productos',
+        name: 'productos',
+        component: () => import('./components/ListaProductos')
+    },
+    {
+        path: '/productos/new',
+        name: 'nuevo-producto',
+        component: () => import('./components/FormProducto')
+    },
+    {
+        path: '/productos/:id/edit',
+        name: 'editar-producto',
+        component: () => import('./components/FormProducto')
+    },
+    {
+        path: '/proveedores',
+        name: 'proveedores',
+        component: () => import('./components/ListaProveedores')
+    },
+    {
+        path: '/proveedores/new',
+        name: 'nuevo-proveedor',
+        component: () => import('./components/FormProveedor')
+    },
+    {
+        path: '/proveedores/:id/edit',
+        name: 'editar-proveedor',
+        component: () => import('./components/FormProveedor')
+    },
+    {
+        path: '/empleados',
+        name: 'empleados',
+        component: () => import('./components/ListaEmpleados')
+    },
+    {
+        path: '/empleados/new',
+        name: 'nuevo-empleado',
+        component: () => import('./components/FormEmpleado')
+    },
+    {
+        path: '/empleados/:id/edit',
+        name: 'editar-empleado',
+        component: () => import('./components/FormEmpleado')
+    },
 ];
 
-export default routes;
+export default new VueRouter({routes});

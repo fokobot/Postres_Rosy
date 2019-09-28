@@ -1,38 +1,38 @@
 "use strict";
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 
+// TODO organizar
 require('./bootstrap');
 require('./notify');
 window.bootbox = require('bootbox');
 
 window.Vue = require('vue');
 
-const VueRouter = require('vue-router').default;
+import { sync } from 'vuex-router-sync';
+// Boostrap-Vue
 import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+// Vue-Select
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
-
-import routes from './routes';
+// Routes
+import store from './store/index';
+// Filters
 import './filters.js';
 
-Vue.use(VueRouter);
 // bootstrap and bootstrap-vue
 Vue.use(BootstrapVue);
 // vue select
 Vue.use(vSelect);
 Vue.component('v-select', vSelect);
+// Show form validations errors
+const FormError = () => import('./components/ValidationError');
+Vue.component('form-error', FormError);
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-
-Vue.component('form-error', require('./components/ValidationError.vue').default);
-
-const router = new VueRouter({routes});
+import router from './routes';
+const unsync = sync(store, router); // done. Returns an unsync callback fn
 
 const app = new Vue({
-  router
+  router,
+  store
 }).$mount('#app')
