@@ -1,114 +1,141 @@
 <template>
-  <div class="col-md-6">
+  <b-col>
     <div class="card">
       <div class="card-header">
-        {{ producto.id != 0 ? 'Editar' : 'Nuevo'}} Producto
+        {{ producto.id ? 'Editar' : 'Nuevo'}} Producto
         <router-link class="btn btn-sm btn-primary float-right" to="/productos">
-          <i class="fa fa-list" ></i> Productos
+          <i class="fa fa-list"></i> Productos
         </router-link>
       </div>
       <div class="card-body">
-        <form method="POST" @submit.prevent="save" novalidate  class="needs-validation">
-          <div class="form-row">
-            <div class="col-md-12">
+        <form method="POST" @submit.prevent="save" novalidate class="needs-validation">
+          <b-form-row>
+            <b-col>
               <label for="nombre">Nombre del producto</label>
               <div class="form-group has-default">
-                <input type="text" v-model="producto.nombre" placeholder="Nombre"
-                class="form-control form-control-default" :class="{ 'is-invalid': errores['nombre'] }">
-                <form-error :errores="errores" :campo="'nombre'"></form-error>
+                <b-form-input
+                  type="text"
+                  v-model="nombre"
+                  placeholder="Nombre"
+                  :state="hasError('nombre')">
+                </b-form-input>
+                <b-form-invalid-feedback id="errores-nombre">
+                  {{error('nombre')}}
+                </b-form-invalid-feedback>
               </div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="col-md-12">
+            </b-col>
+          </b-form-row>
+          <b-form-row>
+            <b-col>
               <label for="valordetal">Valor al detal</label>
               <div class="form-group has-default">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">$</span>
                   </div>
-                  <input type="text" v-model="producto.valordetal" placeholder="3000"
-                  class="form-control form-control-default" :class="{ 'is-invalid': errores['valordetal'] }">
-                  <form-error :errores="errores" :campo="'valordetal'"></form-error>
+                  <b-form-input
+                    id="valordetal"
+                    type="text"
+                    v-model="valordetal"
+                    placeholder="3000"
+                    :state="hasError('valordetal')"
+                    required>
+                  </b-form-input>
+                  <b-form-invalid-feedback id="errores-valordetal">
+                    {{error('valordetal')}}
+                  </b-form-invalid-feedback>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="col-md-12">
+            </b-col>
+          </b-form-row>
+          <b-form-row>
+            <b-col>
               <label for="valormayor">Valor al por mayor</label>
               <div class="form-group has-default">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">$</span>
                   </div>
-                  <input type="text" v-model="producto.valormayor" placeholder="2000"
-                  class="form-control form-control-default" :class="{ 'is-invalid': errores['valormayor'] }">
-                  <form-error :errores="errores" :campo="'valormayor'"></form-error>
+                  <b-form-input
+                    id="valormayor"
+                    type="text"
+                    v-model="valormayor"
+                    placeholder="2000"
+                    :state="hasError('valormayor')"
+                    required>
+                  </b-form-input>
+                  <b-form-invalid-feedback id="errores-mayorvalor">
+                    {{error('mayorvalor')}}
+                  </b-form-invalid-feedback>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="col-md-12">
+            </b-col>
+          </b-form-row>
+          <b-form-row>
+            <b-col>
               <label for="minimopormayor">Cantidad minima al por mayor</label>
               <div class="form-group has-default">
-                <input type="text" v-model="producto.minimopormayor" placeholder="6"
-                class="form-control form-control-default" :class="{ 'is-invalid': errores['minimopormayor'] }">
-                <form-error :errores="errores" :campo="'minimopormayor'"></form-error>
+                <b-form-input
+                  id="minimopormayor"
+                  type="text"
+                  v-model="minimopormayor"
+                  placeholder="1000"
+                  :state="hasError('minimopormayor')"
+                  aria-describedby="input-live-help errores-minimopormayor">
+                </b-form-input>
+                <b-form-invalid-feedback id="errores-minimopormayor">
+                  {{error('minimopormayor')}}
+                </b-form-invalid-feedback>
               </div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="col-md-12">
+            </b-col>
+          </b-form-row>
+          <b-form-row>
+            <b-col>
               <button type="submit" class="btn btn-block btn-success">Registrar Producto</button>
-            </div>
-          </div>
+            </b-col>
+          </b-form-row>
         </form>
       </div>
     </div>
-  </div>
+  </b-col>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
+  import {mapFields}  from 'vuex-map-fields';
+  import getErrors  from '../mixins';
+
   export default {
     name: 'FormProducto',
+    mixins: [getErrors],
     mounted() {
-      var id =parseInt(this.$route.params.id) || 0;
-      this.$set(this.producto, 'id', id);
-      this.show(this.producto.id)
+      var id = parseInt(this.$route.params.id) || 0;
+      this.$store.dispatch('productos/fetch', id);
     },
-    data() {return {
-      producto: {},
-      errores: []
-    }}, 
+    computed: {
+      ...mapFields('productos', [
+        'producto.id',
+        'producto.nombre',
+        'producto.valormayor',
+        'producto.valordetal',
+        'producto.minimopormayor'
+      ]),
+      ...mapGetters({
+        producto: 'productos/producto',
+        errores:  'productos/errores',
+        sent:     'productos/sent',
+        saving:   'productos/saving'
+      })
+    },
     methods: {
-      show: function(id) {
-        if (id <= 0) { return ; }
-        axios.get(`/api/productos/${id}`).then(res => {
-          this.producto = res.data;
-        }).catch(err => {
-          $.notify("Error desconocido..");
-        });
-      },
       save: function() {
-        let extra = this.producto.id == 0 ? '' : `/${this.producto.id}/edit`;
-        this.producto['_method'] = this.producto.id == 0 ? 'post' : 'put';
-        axios.post('/api/productos' + extra, this.producto).then(res => {
-          this.errores = [];
-          $.notify(res.data.mensaje, "success");
-          this.$router.push('/productos');
-        }).catch(err => { 
-          let errores = err.response;
-          if (errores && errores.status === 422){
-            $.notify("Errores de validación.", "warn");
-            this.errores = errores.data.errors;
-          } else {
-            console.log(err)
-            $.notify("Error desconocido.");
-          }
-        });
-      }
+        if (this.producto.id && this.producto.id > 0){
+          this.$store.dispatch('productos/update', this.producto);
+        } else {
+          this.$store.dispatch('productos/save', this.producto);
+        }
+      },
+      
     }
   }
 </script>

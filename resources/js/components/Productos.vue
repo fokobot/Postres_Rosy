@@ -22,12 +22,12 @@
           <td>{{producto.valormayor | currency}}</td>
           <td>{{producto.minimopormayor}}</td>
           <td>
-          <router-link class="btn btn-sm btn-success" :to="url('edit', producto.id)">
+          <router-link class="btn btn-sm btn-success" :to="{name: 'editar-producto', params: {id: producto.id}}">
             <i class="fa fa-edit" ></i>
           </router-link>
-          <a class="btn btn-sm btn-danger" href="#" @click="eliminar(producto.id)">
+          <button class="btn btn-sm btn-danger" @click="eliminar(producto)">
             <i class="fa fa-trash"></i>
-          </a>
+          </button>
           </td>
         </tr>
       </tbody>
@@ -37,39 +37,24 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
+
   export default {
-    name: 'ListaProductos',
+    name: 'Productos',
     mounted() {
-      axios
-        .get('/api/productos/')
-        .then(response => (this.productos = response.data))
+      this.$store.dispatch('productos/fetchAll');
     },
-    data(){ return {
-      productos:  []
-    }},
+    computed: {
+      ...mapGetters({
+        productos: 'productos/productos'
+      })
+    },
     methods: {
-      url: function (verb, id) {
-        return `/productos/${id}/${verb}`;
-      },
-      eliminar: function (id) {
+      eliminar(producto) {
         bootbox.confirm("¿Realmente desea eliminar este producto?", result => {
           if (!result) return;
-          axios.delete('/api/productos/' + id)
-          .then(res => {
-            let index = this.productos.findIndex(function (item) {
-              return item.id == id;
-            });
-            this.productos.splice(index, 1);
-            $.notify(res.data.mensaje , 'success');
-          })
-          .catch(err => {
-            if (err.response && err.response.status === 422){
-              $.notify(err.response.data.mensaje, 'warn')
-            } else {
-              $.notify("Error desconocido al eliminar", 'danger');
-            }
-          })
-        });
+          this.$store.dispatch('productos/delete', producto);
+        })
       }
     }
   }

@@ -71,7 +71,7 @@ const routes = [{
     {
         path: '/productos',
         name: 'productos',
-        component: () => import('./components/ListaProductos')
+        component: () => import('./components/Productos')
     },
     {
         path: '/productos/new',

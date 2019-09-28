@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import moduloClientes from './clientes/index';
-import moduloSettings from './settings/index';
+import moduloClientes   from './clientes/index';
+import moduloSettings   from './settings/index';
+import moduloProductos  from './productos/index';
 
 Vue.use(Vuex);
 
@@ -11,6 +12,10 @@ export default new Vuex.Store({
         clientes: {
             namespaced: true,
             ...moduloClientes
+        },
+        productos: {
+            namespaced: true,
+            ...moduloProductos
         },
         settings: {
             namespaced: false,
