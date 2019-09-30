@@ -75,7 +75,7 @@ Route::group(['prefix' => 'ventas'], function (){
 	Route::get('/estados', 'API\VentaController@estados');
 	Route::post('/', 'API\VentaController@store');
 	Route::get('/{venta}', 'API\VentaController@show');
-	Route::delete('ventas/{venta}', 'API\VentaController@destroy');
+	Route::delete('/{venta}', 'API\VentaController@destroy');
 });
 
 /******************************************************/

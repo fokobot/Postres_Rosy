@@ -10,8 +10,8 @@
       <div class="row" v-if="!loading">
         <div class="col-md-6 table-responsive">
           <h4 class="sub-header">Vendedor</h4>
-          <table class="table" >
-             <tr>
+          <table class="table">
+            <tr>
               <th>#</th>
               <td>{{venta.vendedor.id | zerofill}}</td>
             </tr>
@@ -24,10 +24,10 @@
               <td>{{venta.vendedor.email}}</td>
             </tr>
           </table>
-        </div> 
+        </div>
         <div class="col-md-6 table-responsive">
           <h4 class="sub-header">Cliente</h4>
-          <table class="table" >
+          <table class="table">
             <tr>
               <th>Nombre</th>
               <td>{{venta.cliente.nombre}} {{venta.cliente.apellidos}}</td>
@@ -41,16 +41,15 @@
               <td>Barrio {{venta.cliente.barrio}}. {{venta.cliente.direccion}}</td>
             </tr>
           </table>
-        </div> 
+        </div>
       </div>
       <div class="text-center" v-else>
         <b-spinner
           variant="primary"
           type="grow"
           label="Cargando..."
-          style="width: 6rem; height: 6rem;">
-        Cargando...
-        </b-spinner>
+          style="width: 6rem; height: 6rem;"
+        >Cargando...</b-spinner>
       </div>
       <hr />
       <detalle-venta :productos="venta.productos" :total="venta.total"></detalle-venta>
@@ -59,27 +58,20 @@
 </template>
 
 <script>
-  import ShowDetalleVenta from './ShowDetalleVenta';
+import ShowDetalleVenta from "./ShowDetalleVenta";
+import { mapGetters } from "vuex";
 
-  export default {
-    name: 'ShowVenta',
-    components: {
-      'detalle-venta': ShowDetalleVenta
-    },
-    mounted() {
-      axios
-      .get(`/api/ventas/${this.$route.params.id}`)
-      .then(res => {
-          this.venta = res.data
-      }).catch(err => {
-        console.log('Error', err);
-      }).finally(() => {
-        this.loading = false;
-      });
-    },
-    data () { return {
-      venta: {},
-      loading: true
-    }}
-  }
+export default {
+  name: "ShowVenta",
+  components: {
+    "detalle-venta": ShowDetalleVenta
+  },
+  mounted() {
+    this.$store.dispatch("ventas/fetch", this.$route.params.id);
+  },
+  computed: mapGetters({
+    venta: "ventas/venta",
+    loading: "ventas/loading"
+  })
+};
 </script>

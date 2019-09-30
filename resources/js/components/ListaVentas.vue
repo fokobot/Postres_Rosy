@@ -28,15 +28,15 @@
           <td>{{venta.total | currency}}</td>
           <td>{{estado(venta)}}</td>
           <td>
-            <router-link class="btn btn-sm btn-primary" :to="url('', venta.id)" @click="show(venta)">
+            <router-link class="btn btn-sm btn-primary" :to="{name:'mostrar-venta', params: {id: venta.id}}" @click="show(venta)">
               <i class="fa fa-eye"></i>
             </router-link>
-            <a class="btn btn-sm btn-success" :href="url('edit', venta.id)">
+            <a class="btn btn-sm btn-success" :href="{name:'editar-venta', params: {id: venta.id}}">
               <i class="fa fa-edit" ></i>
             </a>
-            <a class="btn btn-sm btn-danger" href="#" @click="eliminar(venta.id)">
+            <button class="btn btn-sm btn-danger" @click="eliminar(venta)">
               <i class="fa fa-trash"></i>
-            </a>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -46,23 +46,18 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
+
   export default {
     name: 'ListaVentas',
     mounted() {
-      axios
-        .get('/api/ventas/')
-        .then(response => (this.ventas = response.data['ventas'], this.estados = response.data['estados']))
-        .catch(err => $.notify('Ha ocurrido un error desconocido.', 'error'))
+      this.$store.dispatch('ventas/fetchAll');
     },
-    data: function(){ return {
-      ventas:  [],
-      estados: []
-    }},
+    computed: mapGetters({
+      ventas: 'ventas/ventas',
+      estados: 'ventas/estados'
+    }),
     methods: {
-      url: function (verb, id) {
-        if(verb != "") {verb = `/${verb}`}
-        return `ventas/${id}${verb}`;
-      },
       estado: function (venta) {
         return this.estados.find(function (item) {
           return item.id == venta.estado;
@@ -71,24 +66,10 @@
       nombre_cliente: function (cliente) {
         return `${cliente.nombre} ${cliente.apellidos}`;
       },
-      eliminar: function (id) {
+      eliminar: function (venta) {
         bootbox.confirm("¿Realmente desea eliminar esta venta?", result => {
           if (!result) return;
-          axios.delete('/api/ventas/' + id)
-          .then(res => {
-            let index = this.ventas.findIndex(function (item) {
-              return item.id == id;
-            });
-            this.ventas.splice(index, 1);
-            $.notify(res.data.mensaje , 'success');
-          }).catch(err => {
-            if (err.response && err.response.status === 422){
-              // PONER EL ERROR DEVUELTO POR EL SERVIDOR.
-              $.notify("Error al eliminar.", 'warn')
-            } else {
-              $.notify("Error desconocido al eliminar", 'danger');
-            }
-          });
+          this.$store.dispatch('ventas/delete', venta);
         });
       }
     }

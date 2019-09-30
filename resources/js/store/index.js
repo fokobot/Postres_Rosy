@@ -4,6 +4,7 @@ import moduloClientes from './clientes/index';
 import moduloSettings from './settings/index';
 import moduloProductos from './productos/index';
 import moduloProveedores from './proveedores/index';
+import moduloVentas from './ventas/index';
 
 Vue.use(Vuex);
 
@@ -21,6 +22,10 @@ export default new Vuex.Store({
         proveedores: {
             namespaced: true,
             ...moduloProveedores
+        },
+        ventas: {
+            namespaced: true,
+            ...moduloVentas
         },
         settings: {
             namespaced: false,
