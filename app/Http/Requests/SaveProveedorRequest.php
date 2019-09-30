@@ -30,7 +30,7 @@ class SaveProveedorRequest extends FormRequest
             'direccion'     => 'required|max:30',
             'gerente'       => 'required|max:50',
             'edad_rc'       => 'required|max:20',
-            'email'         => 'required|max:50'
+            'email'         => 'required|email|max:50'
         ];
     }
 }

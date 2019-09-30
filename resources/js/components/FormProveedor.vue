@@ -1,141 +1,175 @@
 <template>
-    <b-card>
-      <template v-slot:header>
-        {{proveedor.id > 0 ? 'Editar' : 'Nuevo'}} Proveedor
-        <router-link class="btn btn-sm btn-primary float-right" to="/proveedores">
-          <i class="fa fa-list" ></i> Proveedores
-        </router-link>
-      </template>
-      <b-card-text>
-        <form method="POST" @submit.prevent="save" novalidate  class="needs-validation">
-          <div class="form-row">
-            <div class="from-group has-default col-md-6">
-                <label for="razon_social">Razón Social</label>
-                <input type="text" v-model="proveedor.razon_social" placeholder="Razón Social"
-                class="form-control form-control-default" :class="{ 'is-invalid': errores['razon_social'] }" />
-                <form-error :errores="errores" :campo="'razon_social'"></form-error>
-            </div>
-            <div class="form-group has-default col-md-6">
-              <label for="gerente">Gerente</label>
-              <input type="text" placeholder="Gerente" class="form-control form-control-default" v-model="proveedor.gerente" :class="{ 'is-invalid': errores['gerente'] }" >
-              <form-error :errores="errores" :campo="'gerente'"></form-error>
-            </div>
+  <b-card>
+    <template v-slot:header>
+      {{proveedor.id > 0 ? 'Editar' : 'Nuevo'}} Proveedor
+      <router-link class="btn btn-sm btn-primary float-right" to="/proveedores">
+        <i class="fa fa-list"></i> Proveedores
+      </router-link>
+    </template>
+    <b-card-text>
+      <form method="POST" @submit.prevent="save" novalidate class="needs-validation">
+        <div class="form-row">
+          <div class="from-group has-default col-md-6">
+            <label for="razon_social">Razón Social</label>
+            <b-form-input
+              id="razon_social"
+              type="text"
+              v-model="razon_social"
+              placeholder="Razón Social"
+              :state="hasError('razon_social')"
+            ></b-form-input>
+            <b-form-invalid-feedback id="errores-razon_social">{{error('razon_social')}}</b-form-invalid-feedback>
           </div>
-          <div class="form-row">
-            <div class="from-group col-md-4">
-              <label for="departamento">Departamento</label>
-              <select v-model="proveedor.departamento" class="form-control" @change="proveedor.ciudad_id = departamentos[proveedor.departamento-1].ciudades[0].id">
-                <option v-for="departamento in departamentos" :key="departamento.id" :value="departamento.id">
-                  {{departamento.nombre}}
-                </option>
-              </select>
-            </div>
-            <div class="form-group col-md-4">
-              <label for="ciudad">Ciudad</label>
-              <select v-if="!proveedor.departamento > 0 || departamentos.length == 0" class="form-control" disabled>
-                <option value="-1">Seleccione un departamento...</option>
-              </select>
-              <select v-model="proveedor.ciudad" class="form-control" v-else>
-                <option value="-1" selected>Seleccione un departamento...</option>
-                <option v-for="ciudad in departamentos[proveedor.departamento-1].ciudades" :key="ciudad.id" :value="ciudad.id">
-                  {{ciudad.nombre}}
-                </option>
-              </select>
-            </div>
-            <div class="form-group has-default col-md-4">
-              <label for="direccion">Dirección</label>
-              <input type="text" v-model="proveedor.direccion" placeholder="Dirección"
-              class="form-control form-control-default" :class="{ 'is-invalid': errores['direccion'] }" />
-              <form-error :errores="errores" :campo="'direccion'"></form-error>
-            </div>
+          <div class="form-group has-default col-md-6">
+            <label for="gerente">Gerente</label>
+            <b-form-input
+              id="gerente"
+              type="text"
+              placeholder="Gerente"
+              v-model="gerente"
+              :state="hasError('gerente')"
+            />
+            <b-form-invalid-feedback id="errores-gerente">{{error('gerente')}}</b-form-invalid-feedback>
           </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="email">Email</label>
-              <input type="email" placeholder="Email" class="form-control form-control-default" v-model="proveedor.email" :class="{ 'is-invalid': errores['email'] }" >
-              <form-error :errores="errores" :campo="'email'"></form-error>
-            </div>
-            <div class="form-group has-default col-md-3">
-              <label for="telefono">Teléfono</label>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-phone"></i></span>
-                </div>
-                <input type="text" v-model="proveedor.telefono" placeholder="Teléfono"
-                class="form-control form-control-default" :class="{ 'is-invalid': errores['telefono'] }">
-                <form-error :errores="errores" :campo="'telefono'"></form-error>
-              </div>
-            </div>
-             <div class="form-group col-md-3">
-              <label for="edad_rc">Edad RC</label>
-              <input type="edad_rc" placeholder="Edad RC" class="form-control form-control-default" v-model="proveedor.edad_rc" :class="{ 'is-invalid': errores['edad_rc'] }" >
-              <form-error :errores="errores" :campo="'edad_rc'"></form-error>
-            </div>
+        </div>
+        <div class="form-row">
+          <b-col cols="4">
+            <b-form-group
+              label="Departamentos"
+              label-for="departamentos">
+              <v-select
+                id="departamentos" 
+                :options="departamentos"
+                label="nombre" 
+                v-model="departamento"
+                :state="hasError('departamento')" >
+              </v-select>
+              <b-form-invalid-feedback id="errores-departamento">
+                {{error('departamento')}}
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+          <div class="form-group col-md-4">
+            <label for="ciudad">Ciudad</label>
+            <v-select
+              id="ciudades"
+              :options="ciudades"
+              label="nombre"
+              v-model="ciudad"
+              :reduce="ciudad => ciudad.id"
+            ></v-select>
           </div>
-          <div class="form-row">
-            <div class="col-md-12">
-              <button type="submit" class="btn btn-block btn-success">Registrar Proveedor</button>
-            </div>
+          <div class="form-group has-default col-md-4">
+            <label for="direccion">Dirección</label>
+            <b-form-input
+              type="text"
+              v-model="direccion"
+              placeholder="Dirección"
+              :state="hasError('direccion')"
+            ></b-form-input>
+            <b-form-invalid-feedback id="errores-direccion">{{error('direccion')}}</b-form-invalid-feedback>
           </div>
-        </form>
-      </b-card-text>
-    </b-card>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="email">Email</label>
+            <b-form-input
+              type="email"
+              placeholder="Email"
+              v-model="email"
+              :state="hasError('email')"
+            ></b-form-input>
+            <b-form-invalid-feedback id="errores-email">{{error('email')}}</b-form-invalid-feedback>
+          </div>
+          <div class="form-group has-default col-md-3">
+            <label for="telefono">Teléfono</label>
+            <b-input-group>
+              <template v-slot:prepend>
+                <b-input-group-text>
+                  <i class="fa fa-phone"></i>
+                </b-input-group-text>
+              </template>
+              <b-form-input
+                id="telefono"
+                type="text"
+                placeholder="Teléfono"
+                v-model="telefono"
+                :state="hasError('telefono')"
+              ></b-form-input>
+              <b-form-invalid-feedback id="errores-telefono">{{error('telefono')}}</b-form-invalid-feedback>
+            </b-input-group>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="edad_rc">Edad RC</label>
+            <b-form-input
+              id="edad_rc"
+              type="text"
+              placeholder="Edad RC"
+              v-model="edad_rc"
+              :state="hasError('edad_rc')"
+            />
+            <b-form-invalid-feedback id="errores-edad_rc">{{error('edad_rc')}}</b-form-invalid-feedback>
+          </div>
+        </div>
+        <b-form-row>
+          <b-button block variant="success" :disabled="saving" type="submit">
+            <span v-if="saving">
+              <b-spinner small type="grow"></b-spinner>Guardando...
+            </span>
+            <span v-else>Registrar Proveedor</span>
+          </b-button>
+        </b-form-row>
+      </form>
+    </b-card-text>
+  </b-card>
 </template>
 
 <script>
-  export default {
-    name: 'FormProducto',
-    mounted() {
-      var id = parseInt(this.$route.params.id) || 0;
-      this.$set(this.proveedor, 'id', id);
-      this.show(this.proveedor.id)
+import { mapGetters } from "vuex";
+import { mapFields } from "vuex-map-fields";
+import getErrors from "../mixins";
 
-      axios.get('/api/departamentos')
-        .then(res => {
-          this.departamentos = res.data;
-          if(id == 0) {
-            this.$set(this.proveedor, 'departamento',  this.departamentos[0].id);
-            this.$set(this.proveedor, 'ciudad_id',  this.departamentos[0].ciudades[0].id);
-          }
-          // TODO Seleccionar el departamento cuando va a editar al cargar la info del proveedor
-        });
+export default {
+  name: "FormProveedor",
+  mixins: [getErrors],
+  mounted() {
+    this.$store.dispatch("fetchDepartamentos");
+    var id = parseInt(this.$route.params.id) || 0;
+    this.$store.dispatch("proveedores/fetch", id);
+  },
+  computed: {
+    ciudades(){
+      console.log('hi')
+      if(this.departamento) return this.departamento.ciudades;
+      return [];
     },
-    data() { return {
-      proveedor: {},
-      departamentos: [],
-      errores: []
-    }}, 
-    methods: {
-      show: function(id) {
-        if (id <= 0) { return ; }
-        axios.get(`/api/proveedores/${id}`).then(res => {
-          this.proveedor = res.data;
-        }).catch(err => {
-          $.notify("Error desconocido..");
-        });
-      },
-      save: function() {
-        let extra = this.proveedor.id == 0 ? '' : `/${this.proveedor.id}/edit`;
-        this.proveedor['_method'] = this.proveedor.id == 0 ? 'post' : 'put';
-        axios.post('/api/proveedores' + extra, this.proveedor).then(res => {
-          this.errores = [];
-          $.notify(res.data.mensaje, "success");
-          if(this.$route.query.next){
-            this.$router.push(this.$route.query.next);
-          } else {
-            this.$router.push('/proveedores');
-          }
-        }).catch(err => { 
-          let errores = err.response;
-          if (errores && errores.status === 422){
-            $.notify("Errores de validación.", "warn");
-            this.errores = errores.data.errors;
-          } else {
-            console.log(err)
-            $.notify("Error desconocido.");
-          }
-        });
+    ...mapFields('proveedores', [
+      'proveedor.id',
+      'proveedor.razon_social',
+      'proveedor.gerente',
+      'proveedor.direccion',
+      'proveedor.departamento',
+      'proveedor.ciudad',
+      'proveedor.telefono',
+      'proveedor.edad_rc',
+      'proveedor.email'
+    ]),
+    ...mapGetters({
+      departamentos: 'departamentos',
+      proveedor: 'proveedores/proveedor',
+      errores: 'proveedores/errores',
+      saving: 'proveedores/saving',
+      sent: 'proveedores/sent'
+    })
+  },
+  methods: {
+    save: function() {
+      if (this.proveedor.id && this.proveedor.id > 0) {
+        this.$store.dispatch('proveedores/update', this.proveedor);
+      } else {
+        this.$store.dispatch('proveedores/save', this.proveedor);
       }
     }
   }
+};
 </script>

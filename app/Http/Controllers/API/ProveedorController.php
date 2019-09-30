@@ -33,7 +33,10 @@ class ProveedorController extends Controller
         $proveedor->edad_rc         = $request->edad_rc;
         $proveedor->save();
 
-        return response()->json(['mensaje' => 'Proveedor creado con éxito.'], Response::HTTP_OK);
+        return response()->json([
+            'proveedor' => $proveedor,
+            'mensaje'   => 'Proveedor creado con éxito.'
+        ], Response::HTTP_OK);
     }
 
     public function update(SaveProveedorRequest $request, Proveedor $proveedor)
@@ -47,7 +50,10 @@ class ProveedorController extends Controller
         $proveedor->edad_rc         = $request->edad_rc;
         $proveedor->save();
 
-        return response()->json(['mensaje' => 'Proveedor editado con éxito.'], Response::HTTP_OK);
+        return response()->json([
+            'proveedor' => $proveedor,
+            'mensaje'   => 'Proveedor editado con éxito.'
+        ], Response::HTTP_OK);
     }
 
     public function destroy(Proveedor $proveedor)

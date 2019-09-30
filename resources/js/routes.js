@@ -86,7 +86,7 @@ const routes = [{
     {
         path: '/proveedores',
         name: 'proveedores',
-        component: () => import('./components/ListaProveedores')
+        component: () => import('./components/Proveedores')
     },
     {
         path: '/proveedores/new',
