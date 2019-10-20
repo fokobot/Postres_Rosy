@@ -15,10 +15,10 @@ class ProductoGastoResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'        => $this->id,
-            'nombre'    => $this->producto,
-            'cantidad'  => $this->cantidad,
-            'valor'     => $this->valor_unitario,
+            'id'       => $this->id,
+            'producto' => $this->producto,
+            'cantidad' => $this->cantidad,
+            'valor'    => $this->valor_unitario,
         ];
     }
 }

@@ -16,12 +16,11 @@ class CreateEmpleadosTable extends Migration
         Schema::create('empleados', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('persona_id');
-            $table->string('nombre_de_conyuge', 30)->nullable();
+            $table->string('conyuge', 30)->nullable();
             $table->unsignedInteger('estado_civil_id');
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('tipo_de_documento_id')->references('id')->on('tipos_de_documento');
             $table->foreign('estado_civil_id')->references('id')->on('estados_civiles');
         });
     }
