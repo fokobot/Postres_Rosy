@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\UserRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable, SoftDeletes;
+    use UserRoles;
 
 
     /**
@@ -42,10 +44,5 @@ class User extends Authenticatable
     public function persona()
     {
         return $this->belongsTo('App\Persona');
-    }
-
-    public function role()
-    {
-        return $this->belongsTo('App\Role');
     }
 }
