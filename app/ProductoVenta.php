@@ -24,5 +24,4 @@ class ProductoVenta extends Model
     return $this->belongsTo('App\Producto', 'producto_id');
   }
 
-  use SoftDeletes;
 }

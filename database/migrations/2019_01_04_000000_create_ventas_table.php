@@ -14,11 +14,11 @@ class CreateVentasTable extends Migration
     public function up()
     {
         Schema::create('ventas', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->date('fecha');
             $table->string('direccion', 40)->nullable();
-            $table->unsignedBigInteger('cliente_id');
-            $table->unsignedBigInteger('vendedor_id');
+            $table->unsignedInteger('cliente_id');
+            $table->unsignedInteger('vendedor_id');
             $table->double('valor_total', 8, 2)->default(0.0);
             $table->unsignedInteger('estado_venta_id');
             $table->softDeletes();

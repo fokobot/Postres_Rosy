@@ -14,18 +14,18 @@ class CreateGastosTable extends Migration
     public function up()
     {
         Schema::create('gastos', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('empleado_id');
-            $table->unsignedBigInteger('proveedor_id');
+            $table->increments('id');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('proveedor_id');
             $table->date('fecha');
-            $table->double('valor_total', 10, 2);
-            $table->unsignedBigInteger('estado_gasto_id');
+            $table->double('valor_total', 12, 2);
+            $table->unsignedInteger('estado_gasto_id');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('estado_gasto_id')->references('id')->on('estados_gasto');
             $table->foreign('proveedor_id')->references('id')->on('proveedores');
-            // TODO REFERENCES EMPLEADOS
-            $table->foreign('empleado_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

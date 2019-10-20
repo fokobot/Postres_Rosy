@@ -4,11 +4,13 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
+
 
     /**
      * The attributes that are mass assignable.
@@ -37,8 +39,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function nombre_completo()
+    public function persona()
     {
-      return $this->nombre . ' ' . $this->apellidos;
+        return $this->belongsTo('App\Persona');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo('App\Role');
     }
 }

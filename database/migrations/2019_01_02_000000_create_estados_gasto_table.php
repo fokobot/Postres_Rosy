@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTrabajosTable extends Migration
+class CreateEstadosGastoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateTrabajosTable extends Migration
      */
     public function up()
     {
-        Schema::create('trabajos', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nombre');
-            $table->double('costo', 10, 2);
+        Schema::create('estados_gasto', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nombre', 30);
+            $table->string('color', 10);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateTrabajosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trabajos');
+        Schema::dropIfExists('estados_gasto');
     }
 }

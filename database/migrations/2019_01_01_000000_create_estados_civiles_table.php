@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductosTable extends Migration
+class CreateEstadosCivilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateProductosTable extends Migration
      */
     public function up()
     {
-        Schema::create('productos', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nombre', 40);
-            $table->double('valordetal', 8, 2);
-            $table->double('valormayor', 8, 2);
-            $table->integer('minimopormayor');
+        Schema::create('estados_civiles', function (Blueprint $table) {
+            $table->increments('id');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -31,6 +27,6 @@ class CreateProductosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('productos');
+        Schema::dropIfExists('estados_civiles');
     }
 }

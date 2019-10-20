@@ -14,18 +14,15 @@ class CreateEmpleadosTable extends Migration
     public function up()
     {
         Schema::create('empleados', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedInteger('tipo_de_documento_id');
-            $table->string('documento', 30);
-            $table->string('nombres', 30);
-            $table->string('apellidos', 30);
-            $table->string('direccion', 30);
-            $table->string('barrio', 30);
-            $table->string('telefono', 30);
-            $table->string('ocupacion', 30);
+            $table->increments('id');
+            $table->unsignedInteger('persona_id');
+            $table->string('nombre_de_conyuge', 30)->nullable();
+            $table->unsignedInteger('estado_civil_id');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('tipo_de_documento_id')->references('id')->on('tipos_de_documento');
+            $table->foreign('estado_civil_id')->references('id')->on('estados_civiles');
         });
     }
 

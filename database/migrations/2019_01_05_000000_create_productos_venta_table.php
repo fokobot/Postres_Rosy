@@ -14,17 +14,15 @@ class CreateProductosVentaTable extends Migration
     public function up()
     {
         Schema::create('productos_venta', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('producto_id');
-            $table->unsignedBigInteger('venta_id');
+            $table->unsignedInteger('producto_id');
+            $table->unsignedInteger('venta_id');
             $table->double('valor', 8, 2);
             $table->unsignedInteger('cantidad');
-            $table->softDeletes();
             $table->timestamps();
 
+            $table->unique(['producto_id', 'venta_id']);
             $table->foreign('producto_id')->references('id')->on('productos');
             $table->foreign('venta_id')->references('id')->on('ventas');
-            $table->unique(['producto_id', 'venta_id']);
         });
     }
 

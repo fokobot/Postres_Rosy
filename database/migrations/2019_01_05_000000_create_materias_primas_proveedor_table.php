@@ -14,9 +14,10 @@ class CreateMateriasPrimasProveedorTable extends Migration
     public function up()
     {
         Schema::create('materias_primas_proveedor', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('nombre', 30);
-            $table->unsignedBigInteger('proveedor_id');
+            $table->unsignedInteger('proveedor_id');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('proveedor_id')->references('id')->on('proveedores');

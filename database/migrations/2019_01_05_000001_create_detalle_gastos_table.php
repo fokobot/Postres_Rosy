@@ -14,13 +14,13 @@ class CreateDetalleGastosTable extends Migration
     public function up()
     {
         Schema::create('detalle_gastos', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('gasto_id');
+            $table->unsignedInteger('gasto_id');
             $table->string('producto', 40);
             $table->double('cantidad', 8, 2);
             $table->double('valor_unitario', 10, 2);
             $table->timestamps();
 
+            $table->unique(['gasto_id', 'producto']);
             $table->foreign('gasto_id')->references('id')->on('gastos');
         });
     }

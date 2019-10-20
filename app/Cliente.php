@@ -3,24 +3,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cliente extends Model
 {
-    protected $fillable = [
-        'nombre', 'apellidos', 'direccion', 'barrio', 'telefono', 'nacimiento'
-    ];
 
-    public function nombre_completo()
+    use SoftDeletes;
+
+    public function persona()
     {
-      return $this->nombre . ' ' . $this->apellidos;
+        return $this->belongsTo('App\Persona');
     }
 
-    public function compras(){
+    public function compras()
+    {
         return $this->hasMany('App\Venta', 'cliente_id');
-    }
-
-    public function tipo_de_documento()
-    {
-        return $this->belongsTo('App\TipoDeDocumento', 'tipo_de_documento_id');
     }
 }

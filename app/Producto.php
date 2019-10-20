@@ -10,7 +10,7 @@ class Producto extends Model
   use SoftDeletes;
 
   protected $fillable = [
-      'nombre', 'valordetal', 'valormayor', 'minimopormayor',
+    'nombre', 'valordetal', 'valormayor', 'minimopormayor',
   ];
 
   public function detalles()
@@ -21,7 +21,7 @@ class Producto extends Model
   public static function precio($id, $cantidad)
   {
     $producto = static::find($id);
-    if($cantidad >= $producto->minimopormayor){
+    if ($cantidad >= $producto->minimopormayor) {
       return $producto->valormayor;
     }
     return $producto->valordetal;

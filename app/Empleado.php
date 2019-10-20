@@ -3,15 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Empleado extends Model
 {
-    protected $fillable = [
-        'tipo_de_documento', 'documento', 'nombres', 'apellidos', 'direccion', 'barrio', 'telefono', 'ocupacion'
-    ];
+    use SoftDeletes;
 
-    public function tipo_de_documento()
+    public function persona()
     {
-    	return $this->belongsTo('App\TipoDeDocumento');
+        return $this->belongsTo('App\Persona');
+    }
+
+    public function estado_civil()
+    {
+        return $this->belongsTo('App\EstadoCivil');
     }
 }

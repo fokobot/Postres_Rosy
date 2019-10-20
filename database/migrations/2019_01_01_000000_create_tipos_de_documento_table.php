@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEstadosGastoTable extends Migration
+class CreateTiposDeDocumentoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateEstadosGastoTable extends Migration
      */
     public function up()
     {
-        Schema::create('estados_gasto', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('tipos_de_documento', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('nombre', 30);
-            $table->string('color', 10);
+            $table->string('abreviatura', 4);
         });
     }
 
@@ -27,6 +27,6 @@ class CreateEstadosGastoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estados_gasto');
+        Schema::dropIfExists('tipos_de_documento');
     }
 }
