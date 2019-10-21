@@ -15,7 +15,7 @@ class CreateEstadosCivilesTable extends Migration
     {
         Schema::create('estados_civiles', function (Blueprint $table) {
             $table->increments('id');
-            $table->increments('nombre');
+            $table->string('nombre', 20);
             $table->softDeletes();
             $table->timestamps();
         });
