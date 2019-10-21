@@ -10,6 +10,9 @@ let getters = {
   saving: state => {
     return state.saving
   },
+  loading: state => {
+    return state.loading
+  },
   errores: state => {
     return state.errores
   },

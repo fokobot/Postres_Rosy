@@ -1,41 +1,29 @@
-let defaultCliente = {
-  id: 0,
-  tipo_de_documento: 0,
-  nombre: '',
-  apellidos: '',
-  email: '',
-  direccion: '',
-  barrio: '',
-  telefono: '',
-  fecha_de_nacimiento: ''
-}
-
 let actions = {
-  fetchAll({commit}) {
+  fetchAll({ commit }) {
+    commit('LOADING', true)
     axios.get('/api/clientes')
       .then(res => {
         commit('FETCH_ALL', res.data)
+        commit('LOADING', false)
       }).catch(err => {
         console.log(err)
       })
   },
-  fetch({commit}, id){
-    if (id && id > 0){
+  fetch({ commit }, id) {
+    if (id && id > 0) {
       axios.get(`/api/clientes/${id}`).then(res => {
         commit('FETCH', res.data);
       })
-    } else {
-      commit('FETCH', defaultCliente)
     }
   },
-  save({commit}, cliente) {
-    commit('SAVING');
+  save({ commit }, cliente) {
+    commit('SAVING', true);
     axios.post('/api/clientes', cliente).then(res => {
       $.notify(res.data.mensaje, "success");
       commit('CREATE', res.data.cliente)
     }).catch(err => {
       let errores = err.response;
-      if (errores && errores.status === 422){
+      if (errores && errores.status === 422) {
         $.notify("Errores de validación.", "warn");
         commit('ERROR', errores.data.errors);
       } else {
@@ -43,18 +31,18 @@ let actions = {
         $.notify("Error desconocido.");
       }
     }).finally(() => {
-      commit('SAVING');
+      commit('SAVING', false);
     });
   },
-  update({commit}, cliente){
+  update({ commit }, cliente, index) {
     cliente['_method'] = 'put';
-    commit('SAVING');
+    commit('SAVING', true);
     axios.post(`/api/clientes/${cliente.id}/edit`, cliente).then(res => {
       $.notify(res.data.mensaje, "success");
-      commit('UPDATE', cliente)
+      commit('UPDATE', res.data.cliente, index)
     }).catch(err => {
       let errores = err.response;
-      if (errores && errores.status === 422){
+      if (errores && errores.status === 422) {
         $.notify("Errores de validación.", "warn");
         commit('ERROR', errores.data.errors);
       } else {
@@ -62,16 +50,16 @@ let actions = {
         $.notify("Error desconocido.");
       }
     }).finally(() => {
-      commit('SAVING');
+      commit('SAVING', false);
     });
   },
-  delete({commit}, cliente){
-    axios.delete(`/api/clientes/${cliente.id}`)
+  delete({ commit, state }, index) {
+    axios.delete(`/api/clientes/${state.clientes[index].id}`)
       .then(res => {
-        $.notify(res.data.mensaje , 'success');
-        commit('DELETE', cliente);
+        $.notify(res.data.mensaje, 'success');
+        commit('DELETE', index);
       }).catch(err => {
-        if (err.response && err.response.status === 422){
+        if (err.response && err.response.status === 422) {
           $.notify(err.response.data.mensaje, 'warn')
         } else {
           console.log(err)

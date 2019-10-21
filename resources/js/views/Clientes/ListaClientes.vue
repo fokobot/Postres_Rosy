@@ -17,26 +17,27 @@
         <th>Fecha de Nacimiento</th>
         <th>Opciones</th>
       </thead>
-      <tbody>
+      <tbody v-if="!loading">
         <tr v-for="cliente in clientes" :key="cliente.id">
-          <td>{{cliente.nombre}}</td>
-          <td>{{cliente.apellidos}}</td>
-          <td>{{cliente.direccion}}</td>
-          <td>{{cliente.barrio}}</td>
-          <td>{{cliente.telefono}}</td>
-          <td>{{cliente.fecha_de_nacimiento}}</td>
+          <td>{{cliente.persona.nombre}}</td>
+          <td>{{cliente.persona.apellidos}}</td>
+          <td>{{cliente.persona.direccion}}</td>
+          <td>{{cliente.persona.barrio}}</td>
+          <td>{{cliente.persona.telefono}}</td>
+          <td>{{cliente.persona.fecha_de_nacimiento}}</td>
           <td>
             <router-link 
               class="btn btn-sm btn-success" 
               :to="{name: 'editar-cliente', params: {id: cliente.id}}">
               <i class="fa fa-edit" ></i>
             </router-link>
-            <button class="btn btn-sm btn-danger" href="#" @click="eliminar(cliente)">
+            <button class="btn btn-sm btn-danger" href="#" @click="eliminar(index)">
               <i class="fa fa-trash"></i>
             </button>
           </td>
         </tr>
       </tbody>
+      <FilaCargando :cols="7" v-else />
     </table>
   </div>
 </div>
@@ -44,14 +45,19 @@
 
 <script>
   import {mapGetters} from 'vuex';
+  import FilaCargando from '../../components/FilaCargando';
 
   export default {
     name: 'Clientes',
+    components: { FilaCargando },
     mounted() {
-      this.$store.dispatch('clientes/fetchAll');      
+      if(this.clientes.length === 0){
+        this.$store.dispatch('clientes/fetchAll');      
+      }
     },
     computed: mapGetters({
-      clientes: 'clientes/clientes'
+      clientes: 'clientes/clientes',
+      loading: 'clientes/loading'
     }),
     methods: {
       eliminar(cliente) {
