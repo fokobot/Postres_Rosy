@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('tipos_de_documento', 'API\TipoDeDocumentoController@index');
+Route::get('estados_civiles', 'API\EstadoCivilController@index');
 Route::get('productos', 'API\ProductoController@index');
 Route::delete('productos/{producto}', 'API\ProductoController@destroy');
 
@@ -62,7 +63,7 @@ Route::group(['prefix' => 'trabajos'], function() {
 	Route::delete('/{trabajo}', 'API\TrabajoController@destroy');
 });
 
-Route::group(['prefix' => 'empleados'], function() {
+Route::middleware('auth:api')->prefix('empleados')->group(function() {
 	Route::get('/', 'API\EmpleadoController@index');
 	Route::post('/', 'API\EmpleadoController@store');
 	Route::get('/{empleado}', 'API\EmpleadoController@show');

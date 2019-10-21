@@ -41,7 +41,7 @@ trait UserRoles
 	 */
 	public function hasRole($name)
 	{
-		$roles = $this->roles_all()->pluck('name')->toArray();
+		$roles = $this->roles_all()->pluck('slug')->toArray();
 		foreach ((is_array($name) ? $name : [$name]) as $role) {
 			if (in_array($role, $roles)) {
 				return true;
@@ -56,7 +56,7 @@ trait UserRoles
 	 */
 	public function setRole($name)
 	{
-		$role = Role::where('name', '=', $name)->first();
+		$role = Role::where('slug', '=', $name)->first();
 		if ($role) {
 			$this->role()->associate($role);
 			$this->save();
