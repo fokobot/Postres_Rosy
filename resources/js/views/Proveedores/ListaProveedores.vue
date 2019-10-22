@@ -26,12 +26,12 @@
             <td>{{proveedor.email}}</td>
             <td>{{proveedor.edad_rc}}</td>
             <td>
-              <router-link
+              <!-- <router-link
                 class="btn btn-sm btn-success"
                 :to="{name: 'editar-proveedor', params: {id: proveedor.id}}"
               >
                 <i class="fa fa-edit"></i>
-              </router-link>
+              </router-link> -->
               <button class="btn btn-sm btn-danger" href="#" @click="eliminar(index)">
                 <i class="fa fa-trash"></i>
               </button>
@@ -50,6 +50,7 @@ import FilaCargando from '../../components/FilaCargando';
 
 export default {
   name: "Proveedores",
+  components: {FilaCargando},
   mounted() {
     this.$store.dispatch("proveedores/fetchAll");
   },

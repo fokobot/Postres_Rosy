@@ -6,27 +6,29 @@ let defaultProveedor = {
   email: '',
   telefono: '',
   edad_rc: '',
-  departamento: null,
   ciudad: null
 }
 
 let actions = {
   fetchAll({ commit, state }) {
+    commit('LOADING', true)
     if (state.proveedores.length === 0 || _.sample([true, false])) {
       axios.get('/api/proveedores')
         .then(res => {
           commit('FETCH_ALL', res.data)
         }).catch(err => {
           console.log(err)
-        })
+        }).finally(() => commit('LOADING', false))
+    } else {
+      commit('LOADING', false)
     }
   },
-  fetch({ commit, state }, index) {
+  fetch({ commit }, id) {
     if (id && id > 0) {
-      axios.get(`/api/proveedores/${state.proveedores[index].id}`).then(res => {
+      axios.get(`/api/proveedores/${id}`).then(res => {
         commit('FETCH', res.data);
       })
-    }
+    } else commit('FETCH', defaultProveedor)
   },
   save({ commit }, proveedor) {
     commit('SAVING', true);
@@ -63,7 +65,7 @@ let actions = {
       commit('SAVING', false);
     });
   },
-  delete({ commit, state}, index) {
+  delete({ commit, state }, index) {
     axios.delete(`/api/proveedores/${state.proveedores[index].id}`)
       .then(res => {
         $.notify(res.data.mensaje, 'success');

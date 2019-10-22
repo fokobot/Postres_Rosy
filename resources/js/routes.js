@@ -72,17 +72,17 @@ const routes = [
   {
     path: "/proveedores",
     name: "proveedores",
-    component: () => import("./components/Proveedores")
+    component: () => import("./views/Proveedores/ListaProveedores")
   },
   {
     path: "/proveedores/new",
     name: "nuevo-proveedor",
-    component: () => import("./components/FormProveedor")
+    component: () => import("./views/Proveedores/FormProveedor")
   },
   {
     path: "/proveedores/:id/edit",
     name: "editar-proveedor",
-    component: () => import("./components/FormProveedor")
+    component: () => import("./views/Proveedores/FormProveedor")
   },
   {
     path: "/clientes",

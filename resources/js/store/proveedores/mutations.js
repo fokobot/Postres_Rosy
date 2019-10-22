@@ -1,4 +1,5 @@
 import router from '../../routes';
+import { updateField } from 'vuex-map-fields';
 
 let mutations = {
   CREATE(state, proveedor) {
@@ -26,7 +27,9 @@ let mutations = {
   },
   FETCH(state, proveedor) {
     let index = state.proveedores.findIndex(item => item.id == proveedor.id);
+    if (index == -1) index = state.proveedores.length;
     Vue.set(state.proveedores, index, proveedor);
+    Vue.set(state, 'proveedor', proveedor);
     Vue.set(state, 'sent', null);
   },
   DELETE(state, index) {
@@ -38,12 +41,13 @@ let mutations = {
       Vue.set(state, 'sent', true)
     }
   },
-  SAVING(state, loading) {
+  LOADING(state, loading) {
     Vue.set(state, 'loading', loading);
   },
   ERROR(state, errores) {
     Vue.set(state, 'errores', errores);
   },
+  updateField
 }
 
 export default mutations;

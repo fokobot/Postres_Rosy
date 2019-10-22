@@ -8,7 +8,8 @@ const moduloProveedores = {
     proveedor: {},
     errores: [],
     saving: false,
-    sent: null
+    sent: null,
+    loading: false
   },
   getters: {
     proveedor: state => {
@@ -25,6 +26,9 @@ const moduloProveedores = {
     },
     sent: state => {
         return state.sent
+    },
+    loading: state => {
+      return state.loading
     },
     getField
   },
