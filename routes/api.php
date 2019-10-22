@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('tipos_de_documento', 'API\TipoDeDocumentoController@index');
 Route::get('estados_civiles', 'API\EstadoCivilController@index');
+Route::get('estados_gasto', 'API\EstadoGastoController@index');
 Route::get('productos', 'API\ProductoController@index');
 Route::delete('productos/{producto}', 'API\ProductoController@destroy');
 

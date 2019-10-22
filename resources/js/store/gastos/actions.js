@@ -1,26 +1,26 @@
 let actions = {
   fetchAll({ commit }) {
-    axios.get('/api/productos')
+    commit('LOADING', true)
+    axios.get('/api/gastos')
       .then(res => {
         commit('FETCH_ALL', res.data)
+        commit('LOADING', false)
       }).catch(err => {
         console.log(err)
       })
   },
   fetch({ commit }, id) {
     if (id && id > 0) {
-      axios.get(`/api/productos/${id}`).then(res => {
+      axios.get(`/api/gastos/${id}`).then(res => {
         commit('FETCH', res.data);
       })
-    } else {
-      commit('FETCH', {})
     }
   },
-  save({ commit }, producto) {
-    commit('SAVING');
-    axios.post('/api/productos', producto).then(res => {
+  save({ commit }, gasto) {
+    commit('SAVING', true);
+    axios.post('/api/gastos', gasto).then(res => {
       $.notify(res.data.mensaje, "success");
-      commit('CREATE', res.data.producto)
+      commit('CREATE', res.data.gasto)
     }).catch(err => {
       let errores = err.response;
       if (errores && errores.status === 422) {
@@ -31,15 +31,15 @@ let actions = {
         $.notify("Error desconocido.");
       }
     }).finally(() => {
-      commit('SAVING');
+      commit('SAVING', false);
     });
   },
-  update({ commit }, producto) {
-    producto['_method'] = 'put';
-    commit('SAVING');
-    axios.post(`/api/productos/${producto.id}/edit`, producto).then(res => {
+  update({ commit }, gasto) {
+    gasto['_method'] = 'put';
+    commit('SAVING', true);
+    axios.post(`/api/gastos/${gasto.id}/edit`, gasto).then(res => {
       $.notify(res.data.mensaje, "success");
-      commit('UPDATE', producto)
+      commit('UPDATE', gasto)
     }).catch(err => {
       let errores = err.response;
       if (errores && errores.status === 422) {
@@ -50,14 +50,14 @@ let actions = {
         $.notify("Error desconocido.");
       }
     }).finally(() => {
-      commit('SAVING');
+      commit('SAVING', false);
     });
   },
-  delete({ commit }, producto) {
-    axios.delete(`/api/productos/${producto.id}`)
+  delete({ commit, state }, index) {
+    axios.delete(`/api/gastos/${state.gastos[index].id}`)
       .then(res => {
         $.notify(res.data.mensaje, 'success');
-        commit('DELETE', producto);
+        commit('DELETE', index);
       }).catch(err => {
         if (err.response && err.response.status === 422) {
           $.notify(err.response.data.mensaje, 'warn')

@@ -6,6 +6,8 @@ const moduloSettings = {
     loadingDepartamentos: false,
     estados_civiles: [],
     loadingEstadosCiv: false,
+    estados_gasto: [],
+    loadingEstadosGasto: false
   },
   getters: {
     tipos_de_documento: state => {
@@ -25,7 +27,13 @@ const moduloSettings = {
     },
     loadingloadingEstadosCiv: state => {
       return state.loadingEstadosCiv;
-    }
+    },
+    estados_gasto: state => {
+      return state.estados_gasto
+    },
+    loadingloadingEstadosGasto: state => {
+      return state.loadingEstadosGasto;
+    },
   },
   mutations: {
     FETCH_TIPOS_DE_DOC(state, tipos_de_documento) {
@@ -45,6 +53,12 @@ const moduloSettings = {
     },
     SW_LOADING_ESTADOS_CIVILES(state, loading) {
       Vue.set(state, 'loadingEstadosCiv', loading)
+    },
+    FETCH_ESTADOS_GASTO(state, estados) {
+      Vue.set(state, 'estados_gasto', estados);
+    },
+    SW_LOADING_ESTADOS_GASTO(state, loading) {
+      Vue.set(state, 'loadingEstadosGasto', loading)
     },
   },
   actions: {
@@ -85,6 +99,18 @@ const moduloSettings = {
           console.log(err);
         }).finally(() => {
           commit('SW_LOADING_ESTADOS_CIVILES', false);
+        });
+    },
+    // -- cargando los estados civiles -- //
+    fetchEstadosGasto({ commit }) {
+      commit('SW_LOADING_ESTADOS_GASTO', true);
+      axios.get('/api/estados_gasto')
+        .then(res => {
+          commit('FETCH_ESTADOS_GASTO', res.data);
+        }).catch(err => {
+          console.log(err);
+        }).finally(() => {
+          commit('SW_LOADING_ESTADOS_GASTO', false);
         });
     },
   },

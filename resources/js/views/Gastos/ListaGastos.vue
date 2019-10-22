@@ -33,7 +33,7 @@
                 <i class="fa fa-edit" ></i>
               </router-link>
               &nbsp;
-              <a class="btn btn-sm btn-danger" href="#" @click="eliminar(gasto.id)">
+              <a class="btn btn-sm btn-danger" href="#" @click="eliminar(index)">
                 <i class="fa fa-trash"></i>
               </a>
               &nbsp;
@@ -72,24 +72,10 @@
       color: function(gasto){
         return `table-${this.estado(gasto).color}`;
       },
-      eliminar: function (id) {
+      eliminar: function (index) {
         bootbox.confirm("¿Realmente desea eliminar este gasto?", result => {
           if (!result) return;
-          axios.delete('/api/gastos/' + id)
-            .then(res => {
-              let index = this.gastos.findIndex(function (item) {
-                return item.id == id;
-              });
-              this.gastos.splice(index, 1);
-              $.notify(res.data.mensaje , 'success');
-            })
-            .catch(err => {
-              if (err.response && err.response.status === 422){
-                $.notify(err.response.data.mensaje, 'warn')
-              } else {
-                $.notify("Error desconocido al eliminar", 'danger');
-              }
-            })
+          this.$store.dispatch('gastos/delete', index);
         });
       }
     }

@@ -37,22 +37,22 @@ const routes = [
   {
     path: "/gastos",
     name: "gastos",
-    component: () => import("./components/ListaGastos")
+    component: () => import("./views/Gastos/ListaGastos")
   },
   {
     path: "/gastos/new",
     name: "nuevo-gasto",
-    component: () => import("./components/FormGasto")
+    component: () => import("./views/Gastos/FormGasto")
   },
   {
     path: "/gastos/:id",
     name: "mostrar-gasto",
-    component: () => import("./components/ShowGasto")
+    component: () => import("./views/Gastos/ShowGasto")
   },
   {
     path: "/gastos/:id/edit",
     name: "editar-gasto",
-    component: () => import("./components/FormGasto")
+    component: () => import("./views/Gastos/FormGasto")
   },
   {
     path: "/productos",
