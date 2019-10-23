@@ -16,7 +16,7 @@ class Gasto extends Model
 
   public function estado()
   {
-    return $this->belongsTo('App\EstadoGasto');
+    return $this->belongsTo('App\EstadoGasto', 'estado_gasto_id');
   }
 
   public function proveedor()
@@ -36,6 +36,6 @@ class Gasto extends Model
 
   public function empleado()
   {
-    return $this->usuario->persona->empleado;
+    return $this->usuario->persona->empleado();
   }
 }

@@ -21,7 +21,7 @@ class GastoResource extends JsonResource
             'usuario'      => new UserResource($this->empleado),
             'fecha'        => $this->fecha,
             'total'        => $this->valor_total,
-            'estado'       => $this->estado_gasto_id,
+            'estado'       => $this->estado,
             'productos'    => ProductoGastoResource::collection($this->productos)
         ];
     }
