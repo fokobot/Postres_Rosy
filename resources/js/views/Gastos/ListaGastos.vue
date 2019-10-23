@@ -18,12 +18,12 @@
             <th>Opciones</th>
           </thead>
           <tbody v-if="!loading">
-            <tr v-for="gasto in gastos" :key="gasto.id" :class="gasto.estado.color">
+            <tr v-for="(gasto, index) in gastos" :key="gasto.id" :class="gasto.estado.color">
               <td>{{gasto.id | zerofill}}</td>
               <td>{{gasto.proveedor.razon_social}}</td>
               <td>{{gasto.total | currency}}</td>
               <td>{{gasto.estado.nombre}}</td>
-              <td>{{gasto.fecha}}</td>
+              <td>{{gasto.fecha | moment("LL")}}</td>
               <td>
                 <router-link class="btn btn-sm btn-primary" :to="{name: 'mostrar-gasto', params:{id: gasto.id}}">
                   <i class="fa fa-eye"></i>
@@ -31,9 +31,9 @@
                 <router-link class="btn btn-sm btn-success" :to="{name:'editar-gasto', params:{id: gasto.id}}">
                   <i class="fa fa-edit"></i>
                 </router-link>&nbsp;
-                <a class="btn btn-sm btn-danger" href="#" @click="eliminar(index)">
+                <button type="button" class="btn btn-sm btn-danger" @click="eliminar(index)">
                   <i class="fa fa-trash"></i>
-                </a>
+                </button>
                 &nbsp;
               </td>
             </tr>

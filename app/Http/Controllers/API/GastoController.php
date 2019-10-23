@@ -9,6 +9,7 @@ use App\Gasto;
 use App\Http\Resources\EstadoGastoResource;
 use App\Http\Resources\GastoResource;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class GastoController extends Controller
@@ -33,7 +34,7 @@ class GastoController extends Controller
       $gasto->proveedor_id    = $request->proveedor;
       $gasto->fecha           = $request->fecha;
       $gasto->estado_gasto_id = $request->estado;
-      $gasto->user_id         = 1;                    // TODO FIX
+      $gasto->user_id         = Auth::user()->id;
       // TODO Verificar si este ArrayMap es necesario.
       $productos = [];
       $total = 0;
@@ -48,6 +49,7 @@ class GastoController extends Controller
       $gasto->productos()->saveMany($productos);
       DB::commit();
       return response()->json([
+        'gasto'   => new GastoResource($gasto),
         'mensaje' => 'Gasto registrado con éxito.'
       ], Response::HTTP_OK);
     } catch (Exception $e) {

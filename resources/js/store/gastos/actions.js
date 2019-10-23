@@ -1,13 +1,15 @@
 let actions = {
-  fetchAll({ commit }) {
+  fetchAll({ commit, state }) {
     commit('LOADING', true)
-    axios.get('/api/gastos')
-      .then(res => {
-        commit('FETCH_ALL', res.data)
-        commit('LOADING', false)
-      }).catch(err => {
-        console.log(err)
-      })
+    if (state.gastos.length == 0 || _.sample([true, false])) {
+      axios.get('/api/gastos')
+        .then(res => {
+          commit('FETCH_ALL', res.data)
+          commit('LOADING', false)
+        }).catch(err => {
+          console.log(err)
+        })
+    } else commit('LOADING', false)
   },
   fetch({ commit }, id) {
     if (id && id > 0) {

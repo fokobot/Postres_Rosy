@@ -31,7 +31,7 @@ Route::group(['prefix' => 'clientes'], function() {
 	Route::delete('/{cliente}', 'API\ClienteController@destroy');
 });
 
-Route::group(['prefix' => 'gastos'], function() {
+Route::middleware('auth:api')->prefix('gastos')->group(function() {
 	Route::get('/', 'API\GastoController@index');
 	Route::get('/estados', 'API\EstadoGastoController@index');
 	Route::post('/', 'API\GastoController@store');

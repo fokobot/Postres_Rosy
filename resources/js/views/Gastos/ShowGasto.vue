@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header">
-      Gasto {{gasto.id | zerofill}}
+      Gasto #<span v-if="gasto">{{gasto.id | zerofill}}</span>
       <router-link to="/gastos" class="btn btn-primary btn-sm float-right">
         <i class="fa fa-list"></i> Gastos
       </router-link>
@@ -69,24 +69,22 @@ export default {
   },
   mounted() {
     let id = this.$route.params.id;
-
-    let a = this.$store.dispatch('gastos/fetch', id);
-    a.then(() => {
-      Vue.set(this, 'gasto', this.getGastoByID(id));
-      console.log(this.getGastoByID(2));
-      
-      Vue.set(this, 'loading', false)
-    });
+    this.$store.dispatch('gastos/fetch', id);
   },
   computed: {
     ...mapGetters({
       gastos      : 'gastos/gastos',
       getGastoByID: 'gastos/getGastoByID'
-    })
+    }),
+    gasto(){
+      let id = this.$route.params.id;
+      let gasto = this.gastos.find(item => item.id == id)
+      if (gasto) Vue.set(this, 'loading', false)
+      return gasto;
+    },
   },
   data() {
     return {
-      gasto: {},
       loading: true
     };
   },

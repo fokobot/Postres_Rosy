@@ -12,7 +12,7 @@
       </thead>
       <tbody>
         <tr v-for="producto in productos" :key="producto.id">
-          <td>{{producto.nombre}}</td>
+          <td>{{producto.producto}}</td>
           <td>$ {{producto.valor | currency}}</td>
           <td>
             <span>{{producto.cantidad}}</span>

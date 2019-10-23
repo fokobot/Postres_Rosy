@@ -15,7 +15,6 @@ class ProductoGastoResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'       => $this->id,
             'producto' => $this->producto,
             'cantidad' => $this->cantidad,
             'valor'    => $this->valor_unitario,
