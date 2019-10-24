@@ -13,16 +13,18 @@ class ProveedorController extends Controller
     public function index()
     {
         $proveedores = Proveedor::all();
-        return ProveedorResource::collection($proveedores);
+        return response()->json(ProveedorResource::collection($proveedores));
     }
 
     public function show(Proveedor $proveedor)
     {
-        return new ProveedorResource($proveedor);
+        return response()->json(new ProveedorResource($proveedor));
     }
 
     public function store(SaveProveedorRequest $request)
     {
+        DB::beginTransaction();
+        try {
         $proveedor = new Proveedor;
         $proveedor->razon_social    = $request->razon_social;
         $proveedor->telefono        = $request->telefono;
@@ -34,9 +36,13 @@ class ProveedorController extends Controller
         $proveedor->save();
 
         return response()->json([
-            'proveedor' => $proveedor,
+            'proveedor' => new ProveedorResource($proveedor),
             'mensaje'   => 'Proveedor creado con éxito.'
         ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 
     public function update(SaveProveedorRequest $request, Proveedor $proveedor)
