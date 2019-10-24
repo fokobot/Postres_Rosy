@@ -25,9 +25,6 @@ Vue.use(BootstrapVue);
 // vue select
 Vue.use(vSelect);
 Vue.component('v-select', vSelect);
-// Show form validations errors
-const FormError = () => import('./components/ValidationError');
-Vue.component('form-error', FormError);
 
 import router from './routes';
 const unsync = sync(store, router); // done. Returns an unsync callback fn
