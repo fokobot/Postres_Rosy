@@ -13,12 +13,12 @@ class ProductoController extends Controller
     public function index()
     {
       $productos = Producto::all();
-      return response()->json($productos);
+      return response()->json(ProductoResource::collection($productos));
     }
 
     public function show(Producto $producto)
     {
-      return response()->json($producto);
+      return response()->json(new ProductoResource($producto));
     }
 
     public function store(SaveProductoRequest $request)

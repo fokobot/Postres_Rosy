@@ -40,7 +40,7 @@ Route::middleware('auth:api')->prefix('gastos')->group(function() {
 	Route::delete('/{gasto}', 'API\GastoController@destroy');
 });
 
-Route::group(['prefix' => 'productos'], function() {
+Route::middleware('auth:api')->prefix('productos')->group(function() {
 	Route::get('/', 'API\ProductoController@index');
 	Route::post('/', 'API\ProductoController@store');
 	Route::get('/{producto}', 'API\ProductoController@show');
