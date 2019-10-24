@@ -1,23 +1,24 @@
 let actions = {
-  fetchAll({ commit }) {
-    axios.get('/api/productos')
-      .then(res => {
-        commit('FETCH_ALL', res.data)
-      }).catch(err => {
-        console.log(err)
-      })
+  fetchAll({ commit, state }) {
+    commit('LOADING', true)
+    if (state.productos.length === 0 || _.sample([true, false, false])) {
+      axios.get('/api/productos')
+        .then(res => {
+          commit('FETCH_ALL', res.data)
+        }).catch(err => {
+          console.log(err)
+        }).finally(() => commit('LOADING', false))
+    } else commit('LOADING', false)
   },
   fetch({ commit }, id) {
     if (id && id > 0) {
       axios.get(`/api/productos/${id}`).then(res => {
         commit('FETCH', res.data);
       })
-    } else {
-      commit('FETCH', {})
     }
   },
   save({ commit }, producto) {
-    commit('SAVING');
+    commit('SAVING', true);
     axios.post('/api/productos', producto).then(res => {
       $.notify(res.data.mensaje, "success");
       commit('CREATE', res.data.producto)
@@ -30,13 +31,11 @@ let actions = {
         console.log(err)
         $.notify("Error desconocido.");
       }
-    }).finally(() => {
-      commit('SAVING');
-    });
+    }).finally(() => commit('SAVING', false));
   },
   update({ commit }, producto) {
     producto['_method'] = 'put';
-    commit('SAVING');
+    commit('SAVING', true);
     axios.post(`/api/productos/${producto.id}/edit`, producto).then(res => {
       $.notify(res.data.mensaje, "success");
       commit('UPDATE', producto)
@@ -49,9 +48,7 @@ let actions = {
         console.log(err)
         $.notify("Error desconocido.");
       }
-    }).finally(() => {
-      commit('SAVING');
-    });
+    }).finally(() => commit('SAVING', false));
   },
   delete({ commit }, producto) {
     axios.delete(`/api/productos/${producto.id}`)

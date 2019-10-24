@@ -57,17 +57,17 @@ const routes = [
   {
     path: "/productos",
     name: "productos",
-    component: () => import("./components/Productos")
+    component: () => import("./views/Productos/ListaProductos")
   },
   {
     path: "/productos/new",
     name: "nuevo-producto",
-    component: () => import("./components/FormProducto")
+    component: () => import("./views/Productos/FormProducto")
   },
   {
     path: "/productos/:id/edit",
     name: "editar-producto",
-    component: () => import("./components/FormProducto")
+    component: () => import("./views/Productos/FormProducto")
   },
   {
     path: "/proveedores",

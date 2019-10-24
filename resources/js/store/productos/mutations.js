@@ -2,21 +2,21 @@ import router from '../../routes';
 import { updateField } from 'vuex-map-fields';
 
 let mutations = {
-  CREATE(state, producto){
+  CREATE(state, producto) {
     Vue.set(state, 'errores', [])
     state.productos.unshift(producto);
     let next;
-    if(next = this.state.route.query.next){
+    if (next = this.state.route.query.next) {
       router.push(next)
     } else {
       router.push('/productos')
     }
   },
-  UPDATE(state, producto){
+  UPDATE(state, producto) {
     let index = state.productos.findIndex(item => item.id == producto.id);
-    Vue.set(state.productos, index, producto );
+    Vue.set(state.productos, index, producto);
     let next;
-    if(next = this.state.route.query.next){
+    if (next = this.state.route.query.next) {
       router.push(next)
     } else {
       router.push('/productos')
@@ -25,21 +25,24 @@ let mutations = {
   FETCH_ALL(state, productos) {
     Vue.set(state, 'productos', productos);
   },
-  FETCH(state, producto){
+  FETCH(state, producto) {
     Vue.set(state, 'producto', producto);
-				Vue.set(state, 'sent', null);
+    Vue.set(state, 'sent', null);
   },
-  DELETE(state, producto){
+  DELETE(state, producto) {
     let index = state.productos.findIndex(item => item.id == producto.id);
     state.productos.splice(index, 1);
   },
-  SAVING(state, sent){
-				Vue.set(state, 'saving', !state.saving);
-				if(state.saving == false){
-					Vue.set(state, 'sent', true)
-				}
+  SAVING(state, saving) {
+    Vue.set(state, 'saving', saving);
+    if (state.saving == false) {
+      Vue.set(state, 'sent', true)
+    }
   },
-  ERROR(state, errores){
+  LOADING(state, loading){
+    Vue.set(state, 'loading', loading)
+  },
+  ERROR(state, errores) {
     Vue.set(state, 'errores', errores);
   },
   updateField

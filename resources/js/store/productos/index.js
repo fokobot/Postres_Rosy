@@ -8,7 +8,8 @@ const moduloProductos = {
     producto: {},
     errores: [],
     saving: false,
-    sent: null
+    sent: null,
+    loading: false,
   },
   getters: {
     producto: state => {
@@ -25,6 +26,9 @@ const moduloProductos = {
     },
     sent: state => {
         return state.sent
+    },
+    loading: state => {
+      return state.loading
     },
     getField
   },
