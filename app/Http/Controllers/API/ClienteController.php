@@ -6,51 +6,74 @@ use App\Cliente;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveClienteRequest;
 use App\Http\Resources\ClienteResource;
+use App\Persona;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class ClienteController extends Controller
 {
   public function index()
   {
     $clientes = Cliente::all();
-    return ClienteResource::collection($clientes);
+    return response()->json(ClienteResource::collection($clientes));
   }
 
   public function show(Cliente $cliente)
   {
-    return new ClienteResource($cliente);
+    return response()->json(new ClienteResource($cliente));
   }
 
   public function store(SaveClienteRequest $request)
   {
-    $cliente                          = new Cliente;
-    $cliente->tipo_de_documento_id    = $request->tipo_de_documento;
-    $cliente->documento               = $request->documento;
-    $cliente->nombre                  = $request->nombre;
-    $cliente->apellidos               = $request->apellidos;
-    $cliente->direccion               = $request->direccion;
-    $cliente->barrio                  = $request->barrio;
-    $cliente->telefono                = $request->telefono;
-    $cliente->fecha_de_nacimiento     = $request->fecha_de_nacimiento;
-    $cliente->email                   = $request->email;
-    $cliente->save();
-    return response()->json([
-      'cliente' => new ClienteResource($cliente),
-      'mensaje' => 'Cliente creado con éxito.'
-    ], Response::HTTP_OK);
+    DB::beginTransaction();
+    try {
+      // -- persona -- //
+      $persona                       = new Persona;
+      $persona->tipo_de_documento_id = $request->persona['tipo_de_documento'];
+      $persona->documento            = $request->persona['documento'];
+      $persona->nombre               = $request->persona['nombre'];
+      $persona->apellidos            = $request->persona['apellidos'];
+      $persona->direccion            = $request->persona['direccion'];
+      $persona->barrio               = $request->persona['barrio'];
+      $persona->telefono             = $request->persona['telefono'];
+      $persona->celular              = $request->persona['celular'];
+      $persona->ciudad_id            = $request->persona['ciudad'];
+      $persona->fecha_de_nacimiento  = $request->persona['fecha_de_nacimiento'];
+      $persona->save();
+      // -- cliente -- //
+      $cliente                  = new Cliente;
+      $cliente->email           = $request->email;
+      $cliente->estrato_social  = $request->estrato_social;
+      $cliente->persona()->associate($persona);
+      $cliente->save();
+      DB::commit();
+      return response()->json([
+        'cliente' => new ClienteResource($cliente),
+        'mensaje' => 'Cliente creado con éxito.'
+      ], Response::HTTP_OK);
+    } catch (\Throwable $th) {
+      DB::rollBack();
+      throw $th;
+    }
   }
 
   public function update(SaveClienteRequest $request, Cliente $cliente)
   {
-    $cliente->tipo_de_documento_id    = $request->tipo_de_documento;
-    $cliente->documento               = $request->documento;
-    $cliente->nombre                  = $request->nombre;
-    $cliente->apellidos               = $request->apellidos;
-    $cliente->direccion               = $request->direccion;
-    $cliente->barrio                  = $request->barrio;
-    $cliente->telefono                = $request->telefono;
-    $cliente->fecha_de_nacimiento     = $request->fecha_de_nacimiento;
-    $cliente->email                   = $request->email;
+    $persona                       = $cliente->persona;
+    $persona->tipo_de_documento_id = $request->persona['tipo_de_documento'];
+    $persona->documento            = $request->persona['documento'];
+    $persona->nombre               = $request->persona['nombre'];
+    $persona->apellidos            = $request->persona['apellidos'];
+    $persona->direccion            = $request->persona['direccion'];
+    $persona->barrio               = $request->persona['barrio'];
+    $persona->telefono             = $request->persona['telefono'];
+    $persona->celular              = $request->persona['celular'];
+    $persona->ciudad_id            = $request->persona['ciudad'];
+    $persona->fecha_de_nacimiento  = $request->persona['fecha_de_nacimiento'];
+
+    $cliente->email           = $request->email;
+    $cliente->estrato_social  = $request->estrato_social;
+    $cliente->persona()->associate($persona);
     $cliente->save();
     return response()->json([
       'cliente' => new ClienteResource($cliente),

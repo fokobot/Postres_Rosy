@@ -18,7 +18,7 @@ class ClienteResource extends JsonResource
             'id'             => $this->id,
             'email'          => $this->email,
             'estrato_social' => $this->estrato_social,
-            'persona'        => $this->persona
+            'persona'        => new PersonaResource($this->persona)
         ];
     }
 }
