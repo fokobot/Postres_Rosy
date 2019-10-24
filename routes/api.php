@@ -47,7 +47,7 @@ Route::group(['prefix' => 'productos'], function() {
 	Route::delete('/{producto}', 'API\ProductoController@destroy');
 });
 
-Route::group(['prefix' => 'proveedores'], function() {
+Route::middleware('auth:api')->prefix('proveedores')-group(function() {
 	Route::get('/', 'API\ProveedorController@index');
 	Route::post('/', 'API\ProveedorController@store');
 	Route::get('/{proveedor}', 'API\ProveedorController@show');
