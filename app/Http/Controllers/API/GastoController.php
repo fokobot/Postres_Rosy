@@ -6,7 +6,6 @@ use App\DetalleGasto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveGastoRequest;
 use App\Gasto;
-use App\Http\Resources\EstadoGastoResource;
 use App\Http\Resources\GastoResource;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -17,13 +16,12 @@ class GastoController extends Controller
   public function index()
   {
     $gastos = Gasto::all();
-    $estados = \App\EstadoGasto::all();
-    return GastoResource::collection($gastos);
+    return response()->json(GastoResource::collection($gastos));
   }
 
   public function show(Gasto $gasto)
   {
-    return new GastoResource($gasto);
+    return response()->json(new GastoResource($gasto));
   }
 
   public function store(SaveGastoRequest $request)
@@ -62,9 +60,6 @@ class GastoController extends Controller
       ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
   }
-
-  private static function lista_productos($producto)
-  { }
 
   public function update(SaveGastoRequest $request, Gasto $gasto)
   {
