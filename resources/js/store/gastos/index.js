@@ -14,7 +14,6 @@ const moduloGastos = {
       return state.gastos
     },
     getGastoByID: (state) => (id) => {
-      console.log('ESTOY BUSCANDDO EL GASTO PARA ACTUALZIARLO');
       return state.gastos.find(item => item.id == id)
     },
     errores: state => {

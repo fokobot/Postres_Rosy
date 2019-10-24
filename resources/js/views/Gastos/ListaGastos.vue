@@ -28,9 +28,9 @@
                 <router-link class="btn btn-sm btn-primary" :to="{name: 'mostrar-gasto', params:{id: gasto.id}}">
                   <i class="fa fa-eye"></i>
                 </router-link>&nbsp;
-                <router-link class="btn btn-sm btn-success" :to="{name:'editar-gasto', params:{id: gasto.id}}">
+                <!-- <router-link class="btn btn-sm btn-success" :to="{name:'editar-gasto', params:{id: gasto.id}}">
                   <i class="fa fa-edit"></i>
-                </router-link>&nbsp;
+                </router-link>&nbsp; -->
                 <button type="button" class="btn btn-sm btn-danger" @click="eliminar(index)">
                   <i class="fa fa-trash"></i>
                 </button>

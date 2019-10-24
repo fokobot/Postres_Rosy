@@ -35,14 +35,16 @@ class GastoController extends Controller
       $gasto->fecha           = $request->fecha;
       $gasto->estado_gasto_id = $request->estado;
       $gasto->user_id         = Auth::user()->id;
-      // TODO Verificar si este ArrayMap es necesario.
       $productos = [];
       $total = 0;
+      // TODO corregir
+      // SE ESTÁ SUPONIENDO QUE NO HAY TUPLA <PRODUCTO, CANTIDAD> repetida
       for ($i = 0; $i < sizeof($request->productos); $i++) {
         $productos[$i]                   = new DetalleGasto;
         $productos[$i]->producto         = $request->productos[$i]['nombre'];
         $productos[$i]->cantidad         = $request->productos[$i]['cantidad'];
         $productos[$i]->valor_unitario   = $request->productos[$i]['valor'];
+        $total = $total + $productos[$i]->cantidad * $productos[$i]->valor_unitario;
       }
       $gasto->valor_total = $total;
       $gasto->save();
