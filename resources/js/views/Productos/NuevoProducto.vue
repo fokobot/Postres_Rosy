@@ -2,8 +2,8 @@
   <b-col>
     <div class="card">
       <div class="card-header">
-        {{ producto.id ? 'Editar' : 'Nuevo'}} Producto
-        <router-link class="btn btn-sm btn-primary float-right" to="/productos">
+        Nuevo Producto
+        <router-link class="btn btn-sm btn-primary float-right" :to="{name: 'productos'}">
           <i class="fa fa-list"></i> Productos
         </router-link>
       </div>
@@ -15,10 +15,10 @@
               <div class="form-group has-default">
                 <b-form-input
                   type="text"
-                  v-model="nombre"
+                  v-model="producto.nombre"
                   placeholder="Nombre"
                   :state="hasError('nombre')"
-                ></b-form-input>
+                />
                 <b-form-invalid-feedback id="errores-nombre">{{error('nombre')}}</b-form-invalid-feedback>
               </div>
             </b-col>
@@ -34,11 +34,11 @@
                   <b-form-input
                     id="valordetal"
                     type="text"
-                    v-model="valordetal"
+                    v-model="producto.valordetal"
                     placeholder="3000"
                     :state="hasError('valordetal')"
                     required
-                  ></b-form-input>
+                  />
                   <b-form-invalid-feedback id="errores-valordetal">{{error('valordetal')}}</b-form-invalid-feedback>
                 </div>
               </div>
@@ -55,11 +55,11 @@
                   <b-form-input
                     id="valormayor"
                     type="text"
-                    v-model="valormayor"
+                    v-model="producto.valormayor"
                     placeholder="2000"
                     :state="hasError('valormayor')"
                     required
-                  ></b-form-input>
+                  />
                   <b-form-invalid-feedback id="errores-mayorvalor">{{error('mayorvalor')}}</b-form-invalid-feedback>
                 </div>
               </div>
@@ -72,11 +72,11 @@
                 <b-form-input
                   id="minimopormayor"
                   type="text"
-                  v-model="minimopormayor"
+                  v-model="producto.minimopormayor"
                   placeholder="1000"
                   :state="hasError('minimopormayor')"
                   aria-describedby="input-live-help errores-minimopormayor"
-                ></b-form-input>
+                />
                 <b-form-invalid-feedback id="errores-minimopormayor">{{error('minimopormayor')}}</b-form-invalid-feedback>
               </div>
             </b-col>
@@ -99,36 +99,26 @@
 import { mapGetters } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
 import getErrors from '../../mixins';
+import { defaultProducto } from '../../defaults'
 
 export default {
-  name: 'FormProducto',
+  name: 'NuevoProducto',
   mixins: [getErrors],
-  mounted() {
-    var id = parseInt(this.$route.params.id) || 0;
-    this.$store.dispatch('productos/fetch', id);
-  },
   computed: {
-    ...mapFields('productos', [
-      'producto.id',
-      'producto.nombre',
-      'producto.valormayor',
-      'producto.valordetal',
-      'producto.minimopormayor'
-    ]),
     ...mapGetters({
-      producto: 'productos/producto',
       errores: 'productos/errores',
       sent: 'productos/sent',
       saving: 'productos/saving'
     })
   },
+  data() {
+    return {
+      producto: { ...defaultProducto }
+    }
+  },
   methods: {
     save: function () {
-      if (this.producto.id && this.producto.id > 0) {
-        this.$store.dispatch('productos/update', this.producto);
-      } else {
-        this.$store.dispatch('productos/save', this.producto);
-      }
+      this.$store.dispatch('productos/save', this.producto)
     },
 
   }

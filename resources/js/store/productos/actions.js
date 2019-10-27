@@ -1,34 +1,32 @@
 let actions = {
-  fetchAll({ commit, state }) {
+  fetchAll({ commit }) {
     commit('LOADING', true)
-    if (state.productos.length === 0 || _.sample([true, false, false])) {
-      axios.get('/api/productos')
-        .then(res => {
-          commit('FETCH_ALL', res.data)
-        }).catch(err => {
-          console.log(err)
-        }).finally(() => commit('LOADING', false))
-    } else commit('LOADING', false)
+    axios.get('/api/productos')
+      .then(res => {
+        commit('FETCH_ALL', res.data)
+      }).catch(err => {
+        console.log(err)
+      }).finally(() => commit('LOADING', false))
+
   },
   fetch({ commit }, id) {
-    if (id && id > 0) {
-      axios.get(`/api/productos/${id}`).then(res => {
-        commit('FETCH', res.data);
-      })
-    }
+    commit('LOADING', true)
+    axios.get(`/api/productos/${id}`).then(res => {
+      commit('FETCH', res.data);
+    }).finally(() => commit('LOADING', false))
+
   },
   save({ commit }, producto) {
     commit('SAVING', true);
     axios.post('/api/productos', producto).then(res => {
       $.notify(res.data.mensaje, "success");
-      commit('CREATE', res.data.producto)
+      commit('CREATE')
     }).catch(err => {
       let errores = err.response;
       if (errores && errores.status === 422) {
         $.notify("Errores de validación.", "warn");
         commit('ERROR', errores.data.errors);
       } else {
-        console.log(err)
         $.notify("Error desconocido.");
       }
     }).finally(() => commit('SAVING', false));

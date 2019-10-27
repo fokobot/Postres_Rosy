@@ -13,12 +13,12 @@ class ProductoController extends Controller
     public function index()
     {
       $productos = Producto::all();
-      return response()->json(ProductoResource::collection($productos));
+      return response()->json($productos);
     }
 
     public function show(Producto $producto)
     {
-      return response()->json(new ProductoResource($producto));
+      return response()->json($producto);
     }
 
     public function store(SaveProductoRequest $request)
@@ -30,20 +30,17 @@ class ProductoController extends Controller
       $producto->minimopormayor    = $request->minimopormayor;
       $producto->save();
       return response()->json([
-        'producto'  => $producto,
         'mensaje'   => 'Producto creado con éxito.'
       ], Response::HTTP_OK);
     }
 
     public function update(SaveProductoRequest $request, Producto $producto)
     {
-      $producto->nombre            = $request->nombre;
       $producto->valordetal        = $request->valordetal;
       $producto->valormayor        = $request->valormayor;
       $producto->minimopormayor    = $request->minimopormayor;
       $producto->save();
       return response()->json([
-        'producto'  => $producto,
         'mensaje'   => 'Producto editado con éxito.'
       ], Response::HTTP_OK);
     }

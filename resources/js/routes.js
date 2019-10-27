@@ -60,14 +60,14 @@ const routes = [
     component: () => import("./views/Productos/ListaProductos")
   },
   {
-    path: "/productos/new",
+    path: "/productos/nuevo",
     name: "nuevo-producto",
-    component: () => import("./views/Productos/FormProducto")
+    component: () => import("./views/Productos/NuevoProducto")
   },
   {
-    path: "/productos/:id/edit",
+    path: "/productos/:producto/editar",
     name: "editar-producto",
-    component: () => import("./views/Productos/FormProducto")
+    component: () => import("./views/Productos/EditarProducto")
   },
   {
     path: "/proveedores",
