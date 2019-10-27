@@ -37,52 +37,52 @@ const routes = [
   {
     path: "/gastos",
     name: "gastos",
-    component: () => import("./components/ListaGastos")
+    component: () => import("./views/Gastos/ListaGastos")
   },
   {
     path: "/gastos/new",
     name: "nuevo-gasto",
-    component: () => import("./components/FormGasto")
+    component: () => import("./views/Gastos/FormGasto")
   },
   {
     path: "/gastos/:id",
     name: "mostrar-gasto",
-    component: () => import("./components/ShowGasto")
+    component: () => import("./views/Gastos/ShowGasto")
   },
   {
     path: "/gastos/:id/edit",
     name: "editar-gasto",
-    component: () => import("./components/FormGasto")
+    component: () => import("./views/Gastos/FormGasto")
   },
   {
     path: "/productos",
     name: "productos",
-    component: () => import("./components/Productos")
+    component: () => import("./views/Productos/ListaProductos")
   },
   {
-    path: "/productos/new",
+    path: "/productos/nuevo",
     name: "nuevo-producto",
-    component: () => import("./components/FormProducto")
+    component: () => import("./views/Productos/NuevoProducto")
   },
   {
-    path: "/productos/:id/edit",
+    path: "/productos/:producto/editar",
     name: "editar-producto",
-    component: () => import("./components/FormProducto")
+    component: () => import("./views/Productos/EditarProducto")
   },
   {
     path: "/proveedores",
     name: "proveedores",
-    component: () => import("./components/Proveedores")
+    component: () => import("./views/Proveedores/ListaProveedores")
   },
   {
     path: "/proveedores/new",
     name: "nuevo-proveedor",
-    component: () => import("./components/FormProveedor")
+    component: () => import("./views/Proveedores/FormProveedor")
   },
   {
     path: "/proveedores/:id/edit",
     name: "editar-proveedor",
-    component: () => import("./components/FormProveedor")
+    component: () => import("./views/Proveedores/FormProveedor")
   },
   {
     path: "/clientes",

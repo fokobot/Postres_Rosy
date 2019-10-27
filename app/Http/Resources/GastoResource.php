@@ -18,10 +18,10 @@ class GastoResource extends JsonResource
             'id'           => $this->id,
             'proveedor_id' => $this->proveedor_id,
             'proveedor'    => new ProveedorResource($this->proveedor),
-            'usuario'      => new UserResource($this->empleado),
+            'usuario'      => new UserResource($this->usuario),
             'fecha'        => $this->fecha,
             'total'        => $this->valor_total,
-            'estado'       => $this->estado_gasto_id,
+            'estado'       => $this->estado,
             'productos'    => ProductoGastoResource::collection($this->productos)
         ];
     }

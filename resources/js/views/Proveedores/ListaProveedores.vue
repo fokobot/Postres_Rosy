@@ -17,8 +17,8 @@
           <th>Edad RC</th>
           <th>Opciones</th>
         </thead>
-        <tbody>
-          <tr v-for="proveedor in proveedores" :key="proveedor.id">
+        <tbody v-if="!loading">
+          <tr v-for="(proveedor, index) in proveedores" :key="proveedor.id">
             <td>{{proveedor.razon_social}}</td>
             <td>{{proveedor.telefono}}</td>
             <td>{{proveedor.direccion}}</td>
@@ -26,18 +26,19 @@
             <td>{{proveedor.email}}</td>
             <td>{{proveedor.edad_rc}}</td>
             <td>
-              <router-link
+              <!-- <router-link
                 class="btn btn-sm btn-success"
                 :to="{name: 'editar-proveedor', params: {id: proveedor.id}}"
               >
                 <i class="fa fa-edit"></i>
-              </router-link>
-              <button class="btn btn-sm btn-danger" href="#" @click="eliminar(proveedor)">
+              </router-link> -->
+              <button class="btn btn-sm btn-danger" href="#" @click="eliminar(index)">
                 <i class="fa fa-trash"></i>
               </button>
             </td>
           </tr>
         </tbody>
+        <FilaCargando :cols="7" v-else/>
       </table>
     </div>
   </div>
@@ -45,20 +46,23 @@
 
 <script>
 import { mapGetters } from "vuex";
+import FilaCargando from '../../components/FilaCargando';
 
 export default {
   name: "Proveedores",
+  components: {FilaCargando},
   mounted() {
     this.$store.dispatch("proveedores/fetchAll");
   },
   computed: mapGetters({
-    proveedores: "proveedores/proveedores"
+    proveedores: "proveedores/proveedores",
+    loading    : "proveedores/loading",
   }),
   methods: {
-    eliminar(cliente) {
+    eliminar(index) {
       bootbox.confirm("¿Realmente desea eliminar este proveedor?", result => {
         if (!result) return;
-        this.$store.dispatch("proveedores/delete", cliente);
+        this.$store.dispatch("proveedores/delete", index);
       });
     }
   }

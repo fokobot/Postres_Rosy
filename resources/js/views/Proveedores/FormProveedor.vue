@@ -51,13 +51,15 @@
           </b-col>
           <div class="form-group col-md-4">
             <label for="ciudad">Ciudad</label>
-            <v-select
-              id="ciudades"
-              :options="ciudades"
-              label="nombre"
-              v-model="ciudad"
-              :reduce="ciudad => ciudad.id"
-            ></v-select>
+            <b-form-select id="ciudad" text-field="nombre" value-field="id"
+               :options="ciudades"
+                v-model="ciudad"
+                :state="hasError('ciudad')">
+                <template v-slot:first>
+                  <option :value="null">-- Seleccione la ciudad --</option>
+                </template>
+              </b-form-select>
+              <b-form-invalid-feedback id="errores-ciudad">{{error('ciudad')}}</b-form-invalid-feedback>
           </div>
           <div class="form-group has-default col-md-4">
             <label for="direccion">Dirección</label>
@@ -66,7 +68,7 @@
               v-model="direccion"
               placeholder="Dirección"
               :state="hasError('direccion')"
-            ></b-form-input>
+            />
             <b-form-invalid-feedback id="errores-direccion">{{error('direccion')}}</b-form-invalid-feedback>
           </div>
         </div>
@@ -127,7 +129,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { mapFields } from "vuex-map-fields";
-import getErrors from "../mixins";
+import getErrors from "../../mixins";
 
 export default {
   name: "FormProveedor",
@@ -139,7 +141,8 @@ export default {
   },
   computed: {
     ciudades(){
-      console.log('hi')
+      // let newCiudadID = this.departamento ? this.departamento.ciudades[0].id : 0;
+      // Vue.set(this.proveedor, 'ciudad', newCiudadID);
       if(this.departamento) return this.departamento.ciudades;
       return [];
     },
@@ -148,7 +151,6 @@ export default {
       'proveedor.razon_social',
       'proveedor.gerente',
       'proveedor.direccion',
-      'proveedor.departamento',
       'proveedor.ciudad',
       'proveedor.telefono',
       'proveedor.edad_rc',
@@ -161,6 +163,11 @@ export default {
       saving: 'proveedores/saving',
       sent: 'proveedores/sent'
     })
+  },
+  data() {
+    return{
+      departamento: null,
+    }
   },
   methods: {
     save: function() {

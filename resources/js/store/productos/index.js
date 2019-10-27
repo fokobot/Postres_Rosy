@@ -1,32 +1,33 @@
 import actions from './actions';
 import mutations from './mutations';
-import {getField} from 'vuex-map-fields';
 
 const moduloProductos = {
   state: {
     productos: [],
-    producto: {},
     errores: [],
     saving: false,
-    sent: null
+    sent: null,
+    loading: false,
   },
   getters: {
-    producto: state => {
-        return state.producto
-    },
     productos: state => {
-        return state.productos;
+      return state.productos;
+    },
+    getProductoByID: (state) => (id) => {
+      return {... state.productos.find(item => item.id == id)}
     },
     saving: state => {
-        return state.saving
+      return state.saving
     },
     errores: state => {
-        return state.errores
+      return state.errores
     },
     sent: state => {
-        return state.sent
+      return state.sent
     },
-    getField
+    loading: state => {
+      return state.loading
+    },
   },
   actions,
   mutations

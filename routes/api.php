@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('tipos_de_documento', 'API\TipoDeDocumentoController@index');
 Route::get('estados_civiles', 'API\EstadoCivilController@index');
+Route::get('estados_gasto', 'API\EstadoGastoController@index');
 Route::get('productos', 'API\ProductoController@index');
 Route::delete('productos/{producto}', 'API\ProductoController@destroy');
 
@@ -30,7 +31,7 @@ Route::group(['prefix' => 'clientes'], function() {
 	Route::delete('/{cliente}', 'API\ClienteController@destroy');
 });
 
-Route::group(['prefix' => 'gastos'], function() {
+Route::middleware('auth:api')->prefix('gastos')->group(function() {
 	Route::get('/', 'API\GastoController@index');
 	Route::get('/estados', 'API\EstadoGastoController@index');
 	Route::post('/', 'API\GastoController@store');
@@ -39,7 +40,7 @@ Route::group(['prefix' => 'gastos'], function() {
 	Route::delete('/{gasto}', 'API\GastoController@destroy');
 });
 
-Route::group(['prefix' => 'productos'], function() {
+Route::middleware('auth:api')->prefix('productos')->group(function() {
 	Route::get('/', 'API\ProductoController@index');
 	Route::post('/', 'API\ProductoController@store');
 	Route::get('/{producto}', 'API\ProductoController@show');

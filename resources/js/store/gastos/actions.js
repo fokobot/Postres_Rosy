@@ -1,42 +1,28 @@
 let actions = {
-  fetchAll({ commit }) {
+  fetchAll({ commit, state }) {
     commit('LOADING', true)
-    axios.get('/api/productos')
-      .then(res => {
-        commit('FETCH_ALL', res.data)
-      }).catch(err => {
-        console.log(err)
-      }).finally(() => commit('LOADING', false))
-
+    if (state.gastos.length == 0 || _.sample([true, false])) {
+      axios.get('/api/gastos')
+        .then(res => {
+          commit('FETCH_ALL', res.data)
+          commit('LOADING', false)
+        }).catch(err => {
+          console.log(err)
+        })
+    } else commit('LOADING', false)
   },
   fetch({ commit }, id) {
-    commit('LOADING', true)
-    axios.get(`/api/productos/${id}`).then(res => {
-      commit('FETCH', res.data);
-    }).finally(() => commit('LOADING', false))
-
+    if (id && id > 0) {
+      axios.get(`/api/gastos/${id}`).then(res => {
+        commit('FETCH', res.data);
+      })
+    }
   },
-  save({ commit }, producto) {
+  save({ commit }, gasto) {
     commit('SAVING', true);
-    axios.post('/api/productos', producto).then(res => {
+    axios.post('/api/gastos', gasto).then(res => {
       $.notify(res.data.mensaje, "success");
-      commit('CREATE')
-    }).catch(err => {
-      let errores = err.response;
-      if (errores && errores.status === 422) {
-        $.notify("Errores de validación.", "warn");
-        commit('ERROR', errores.data.errors);
-      } else {
-        $.notify("Error desconocido.");
-      }
-    }).finally(() => commit('SAVING', false));
-  },
-  update({ commit }, producto) {
-    producto['_method'] = 'put';
-    commit('SAVING', true);
-    axios.post(`/api/productos/${producto.id}/edit`, producto).then(res => {
-      $.notify(res.data.mensaje, "success");
-      commit('UPDATE', producto)
+      commit('CREATE', res.data.gasto)
     }).catch(err => {
       let errores = err.response;
       if (errores && errores.status === 422) {
@@ -46,13 +32,34 @@ let actions = {
         console.log(err)
         $.notify("Error desconocido.");
       }
-    }).finally(() => commit('SAVING', false));
+    }).finally(() => {
+      commit('SAVING', false);
+    });
   },
-  delete({ commit }, producto) {
-    axios.delete(`/api/productos/${producto.id}`)
+  update({ commit }, gasto) {
+    gasto['_method'] = 'put';
+    commit('SAVING', true);
+    axios.post(`/api/gastos/${gasto.id}/edit`, gasto).then(res => {
+      $.notify(res.data.mensaje, "success");
+      commit('UPDATE', gasto)
+    }).catch(err => {
+      let errores = err.response;
+      if (errores && errores.status === 422) {
+        $.notify("Errores de validación.", "warn");
+        commit('ERROR', errores.data.errors);
+      } else {
+        console.log(err)
+        $.notify("Error desconocido.");
+      }
+    }).finally(() => {
+      commit('SAVING', false);
+    });
+  },
+  delete({ commit, state }, index) {
+    axios.delete(`/api/gastos/${state.gastos[index].id}`)
       .then(res => {
         $.notify(res.data.mensaje, 'success');
-        commit('DELETE', producto);
+        commit('DELETE', index);
       }).catch(err => {
         if (err.response && err.response.status === 422) {
           $.notify(err.response.data.mensaje, 'warn')
