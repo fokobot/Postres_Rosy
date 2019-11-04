@@ -2,7 +2,7 @@
   <div class="card mb-4">
     <div class="card-header">
       Lista de Proveedores
-      <router-link class="btn btn-sm btn-primary float-right" to="/proveedores/new">
+      <router-link class="btn btn-sm btn-primary float-right" :to="{name:'nuevo-proveedor'}">
         <i class="fa fa-plus"></i> Nuevo Proveedor
       </router-link>
     </div>
@@ -31,14 +31,14 @@
                 :to="{name: 'editar-proveedor', params: {id: proveedor.id}}"
               >
                 <i class="fa fa-edit"></i>
-              </router-link> -->
-              <button class="btn btn-sm btn-danger" href="#" @click="eliminar(index)">
+              </router-link>-->
+              <!-- <button class="btn btn-sm btn-danger" href="#" @click="eliminar(index)">
                 <i class="fa fa-trash"></i>
-              </button>
+              </button>-->
             </td>
           </tr>
         </tbody>
-        <FilaCargando :cols="7" v-else/>
+        <FilaCargando :cols="7" v-else />
       </table>
     </div>
   </div>
@@ -49,14 +49,14 @@ import { mapGetters } from "vuex";
 import FilaCargando from '../../components/FilaCargando';
 
 export default {
-  name: "Proveedores",
-  components: {FilaCargando},
+  name: "ListaProveedores",
+  components: { FilaCargando },
   mounted() {
     this.$store.dispatch("proveedores/fetchAll");
   },
   computed: mapGetters({
     proveedores: "proveedores/proveedores",
-    loading    : "proveedores/loading",
+    loading: "proveedores/loading",
   }),
   methods: {
     eliminar(index) {

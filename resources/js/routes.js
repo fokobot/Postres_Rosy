@@ -7,17 +7,17 @@ const routes = [
   {
     path: "/ventas/new",
     name: "nueva-venta",
-    component: () => import("./components/FormVenta")
+    component: () => import("./views/Ventas/FormVenta")
   },
   {
     path: "/ventas",
     name: "ventas",
-    component: () => import("./components/ListaVentas")
+    component: () => import("./views/Ventas/ListaVentas")
   },
   {
     path: "/ventas/:id",
     name: "mostrar-venta",
-    component: () => import("./components/ShowVenta")
+    component: () => import("./views/Ventas/ShowVenta")
   },
   {
     path: "/trabajos",

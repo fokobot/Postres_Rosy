@@ -7,6 +7,7 @@ use App\Http\Requests\SaveProveedorRequest;
 use App\Http\Resources\ProveedorResource;
 use App\Proveedor;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class ProveedorController extends Controller
 {

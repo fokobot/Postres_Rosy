@@ -19,7 +19,7 @@ class CreateVentasTable extends Migration
             $table->string('direccion', 40)->nullable();
             $table->unsignedInteger('cliente_id');
             $table->unsignedInteger('vendedor_id');
-            $table->double('valor_total', 8, 2)->default(0.0);
+            $table->double('valor_total', 12, 2)->default(0.0);
             $table->unsignedInteger('estado_venta_id');
             $table->softDeletes();
             $table->timestamps();

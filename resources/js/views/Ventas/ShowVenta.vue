@@ -17,7 +17,7 @@
             </tr>
             <tr>
               <th>Nombre</th>
-              <td>{{venta.vendedor.nombre}} {{venta.vendedor.apellidos}}</td>
+              <td>{{venta.vendedor.persona.nombre}} {{venta.vendedor.persona.apellidos}}</td>
             </tr>
             <tr>
               <th>E-mail</th>
@@ -30,15 +30,15 @@
           <table class="table">
             <tr>
               <th>Nombre</th>
-              <td>{{venta.cliente.nombre}} {{venta.cliente.apellidos}}</td>
+              <td>{{venta.cliente.persona.nombre}} {{venta.cliente.persona.apellidos}}</td>
             </tr>
             <tr>
               <th>Telefono</th>
-              <td>{{venta.cliente.telefono}}</td>
+              <td>{{venta.cliente.persona.telefono}}</td>
             </tr>
             <tr>
               <th>Dirección</th>
-              <td>Barrio {{venta.cliente.barrio}}. {{venta.cliente.direccion}}</td>
+              <td>Barrio {{venta.cliente.persona.barrio}}. {{venta.cliente.persona.direccion}}</td>
             </tr>
           </table>
         </div>

@@ -29,7 +29,8 @@ class SaveVentaRequest extends FormRequest
             'productos.*.cantidad'  => 'numeric|min:0',
             'cliente'               => 'exists:clientes,id',
             'fecha'                 => 'required|date',
-            'direccion'             => 'required|max:40'
+            'direccion'             => 'required|max:40',
+            'estado'                => 'exists:estados_venta,id'
         ];
 
     }
