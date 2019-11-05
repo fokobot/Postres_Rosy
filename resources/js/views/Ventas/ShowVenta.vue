@@ -97,12 +97,16 @@ export default {
   components: {
     "detalle-venta": ShowDetalleVenta
   },
-  mounted() {
-    this.$store.dispatch("ventas/fetch", this.$route.params.id);
+  created() {
+    this.$store.dispatch("ventas/fetch", this.$route.params.id).then(() => this.loading = false);
+  },
+  data() {
+    return {
+      loading: true
+    }
   },
   computed: mapGetters({
     venta: "ventas/venta",
-    loading: "ventas/loading"
   })
 };
 </script>

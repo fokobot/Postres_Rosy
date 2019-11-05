@@ -19,7 +19,7 @@
           <th>Estado</th>
           <th>Opciones</th>
         </thead>
-        <tbody>
+        <tbody v-if="!loading">
           <tr v-for="venta in ventas" :key="venta.id">
             <td>{{venta.id | zerofill}}</td>
             <td>{{venta.cliente.persona.nombre}} {{venta.cliente.persona.apellidos}}</td>
@@ -37,22 +37,30 @@
               </router-link>
               <!-- <button class="btn btn-sm btn-danger" @click="eliminar(venta)">
                 <i class="fa fa-trash"></i>
-              </button> -->
+              </button>-->
             </td>
           </tr>
         </tbody>
+        <FilaCargando :cols="7" v-else />
       </table>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
+import FilaCargando from '../../components/FilaCargando'
 
 export default {
   name: 'ListaVentas',
-  mounted() {
-    this.$store.dispatch('ventas/fetchAll');
+  components: { FilaCargando },
+  created() {
+    this.$store.dispatch('ventas/fetchAll').then(() => this.loading = false);
+  },
+  data() {
+    return {
+      loading: true
+    }
   },
   computed: mapGetters({
     ventas: 'ventas/ventas',

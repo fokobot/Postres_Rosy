@@ -1,6 +1,6 @@
 import actions from './actions';
 import mutations from './mutations';
-import {getField} from 'vuex-map-fields';
+import { getField } from 'vuex-map-fields';
 
 const moduloVentas = {
   state: {
@@ -9,29 +9,25 @@ const moduloVentas = {
     errores: [],
     saving: false,
     sent: null,
-    loading: true,
   },
   getters: {
     venta: state => {
-        return state.venta
+      return state.venta
     },
     ventas: state => {
-        return state.ventas;
+      return state.ventas;
     },
     estados: state => {
       return state.estados
     },
     saving: state => {
-        return state.saving
+      return state.saving
     },
     errores: state => {
-        return state.errores
+      return state.errores
     },
     sent: state => {
-        return state.sent
-    },
-    loading: state => {
-      return state.loading
+      return state.sent
     },
     getField
   },
