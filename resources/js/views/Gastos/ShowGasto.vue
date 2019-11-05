@@ -17,12 +17,12 @@
                   <th colspan="2">
                     <h4 class="sub-header">
                       Usuario
-                      <router-link
+                      <!-- <router-link
                         class="btn btn-primary btn-sm float-right"
                         :to="{name:'ver-empleado', params:{empleado: gasto.usuario.id}}"
                       >
                         <i class="fa fa-eye"></i>
-                      </router-link>
+                      </router-link> -->
                     </h4>
                   </th>
                 </tr>
