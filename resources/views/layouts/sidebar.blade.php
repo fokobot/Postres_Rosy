@@ -54,6 +54,16 @@
       <span>Gastos</span>
     </a>
   </li>
+
+  @can('menu', App\Empleado::class)
+  <li class="nav-item">
+    <a class="nav-link" href="/#/empleados">
+      <i class="fas fa-fw fa-id-badge"></i>
+      <span>Empleados</span>
+    </a>
+  </li>
+  @endcan
+
   <!-- Divider -->
   <hr class="sidebar-divider">
 

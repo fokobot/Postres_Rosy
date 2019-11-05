@@ -18,7 +18,8 @@ class EmpleadoResource extends JsonResource
             'id'           => $this->id,
             'conyuge'      => $this->conyuge,
             'estado_civil' => $this->estado_civil,
-            'persona'      => new PersonaResource($this->persona)
+            'persona'      => new PersonaResource($this->persona),
+            'email'        => $this->persona->usuario->email
         ];
     }
 }

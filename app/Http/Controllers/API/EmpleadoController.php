@@ -15,17 +15,20 @@ class EmpleadoController extends Controller
 {
   public function index()
   {
+    $this->authorize('viewAny', Empleado::class);
     $empleados = Empleado::all();
     return response()->json(EmpleadoResource::collection($empleados));
   }
 
   public function show(Empleado $empleado)
   {
+    $this->authorize('viewAny', Empleado::class);
     return response()->json(new EmpleadoResource($empleado));
   }
 
   public function store(SaveEmpleadoRequest $request)
   {
+    $this->authorize('viewAny', Empleado::class);
     DB::beginTransaction();
     try {
       // -- persona -- //
@@ -49,7 +52,7 @@ class EmpleadoController extends Controller
       $empleado->save();
       // -- usuario -- //
       $usuario           = new User;
-      $usuario->nombre   = $persona->nombre . ' ' . $persona->apellidos;   
+      $usuario->nombre   = $persona->nombre . ' ' . $persona->apellidos;
       $usuario->email    = $request->usuario['email'];
       $usuario->password = \bcrypt($request->usuario['password']);
       $usuario->persona()->associate($persona);
@@ -66,6 +69,7 @@ class EmpleadoController extends Controller
 
   public function update(SaveEmpleadoRequest $request, Empleado $empleado)
   {
+    $this->authorize('viewAny', Empleado::class);
     $empleado->tipo_de_documento_id    = $request->tipo_de_documento_id;
     $empleado->documento               = $request->documento;
     $empleado->nombres                 = $request->nombres;
@@ -80,6 +84,7 @@ class EmpleadoController extends Controller
 
   public function destroy(Empleado $empleado)
   {
+    $this->authorize('viewAny', Empleado::class);
     $empleado->delete();
     $mensaje = 'Empleado eliminado con éxito.';
     $status = Response::HTTP_OK;

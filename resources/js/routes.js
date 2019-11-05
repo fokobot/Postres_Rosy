@@ -110,6 +110,11 @@ const routes = [
     component: () => import("./views/Empleados/FormEmpleado")
   },
   {
+    path: '/empleados/:empleado',
+    name: 'ver-empleado',
+    component: () => import('./views/Empleados/VerEmpleado')
+  },
+  {
     path: "/empleados/:id/edit",
     name: "editar-empleado",
     component: () => import("./views/Empleados/FormEmpleado")

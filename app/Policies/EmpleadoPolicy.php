@@ -9,12 +9,17 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class EmpleadoPolicy
 {
     use HandlesAuthorization;
-    
+
     public function before($user, $ability)
     {
-        if ($user->admin() || $user->system()) {
-            return true;
+        if ($user->isAdmin() || $user->isSystem()) {
+           return true;
         }
+    }
+
+    public function menu($user)
+    {
+        return false; //($user->isAdmin() || $user->isSystem());
     }
 
     /**
@@ -25,7 +30,7 @@ class EmpleadoPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return false;
     }
 
     /**
@@ -37,7 +42,7 @@ class EmpleadoPolicy
      */
     public function view(User $user, Empleado $empleado)
     {
-        return true;
+        return false;
     }
 
     /**
@@ -48,7 +53,7 @@ class EmpleadoPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return false;
     }
 
     /**
@@ -60,7 +65,7 @@ class EmpleadoPolicy
      */
     public function update(User $user, Empleado $empleado)
     {
-        return true;
+        return false;
     }
 
     /**
@@ -72,7 +77,7 @@ class EmpleadoPolicy
      */
     public function delete(User $user, Empleado $empleado)
     {
-        return true;
+        return false;
     }
 
     /**
@@ -84,7 +89,7 @@ class EmpleadoPolicy
      */
     public function restore(User $user, Empleado $empleado)
     {
-        return true;
+        return false;
     }
 
     /**
@@ -96,6 +101,6 @@ class EmpleadoPolicy
      */
     public function forceDelete(User $user, Empleado $empleado)
     {
-        return true;
+        return false;
     }
 }

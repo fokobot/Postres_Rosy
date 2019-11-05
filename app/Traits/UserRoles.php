@@ -73,4 +73,14 @@ trait UserRoles
 			$this->load('roles');
 		}
 	}
+
+	public function isAdmin()
+	{
+		return $this->hasRole('admin');
+	}
+
+	public function isSystem()
+	{
+		return $this->hasRole('system');
+	}
 }
