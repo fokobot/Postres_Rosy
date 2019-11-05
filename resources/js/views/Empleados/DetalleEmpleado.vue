@@ -1,7 +1,7 @@
 <template>
   <b-row>
 		<b-col>
-    <table class="table table-responsive table-borderless">
+    <table class="table table-responsive-sm table-bordered">
       <thead>
         <th colspan="2">Información del Empleado</th>
       </thead>
@@ -35,7 +35,7 @@
     </table>
 		</b-col>
 		<b-col>
-			<table class="table table-borderless table-responsive">
+			<table class="table table-bordered table-responsive-sm">
 				<thead>
 					<th colspan="2">Información de Contacto</th>
 				</thead>

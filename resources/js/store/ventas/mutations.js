@@ -27,7 +27,6 @@ let mutations = {
     Vue.set(state, 'estados', data.estados);
   },
   FETCH(state, venta){
-    Vue.set(state, 'loading', false);
     Vue.set(state, 'sent', null);
     Vue.set(state, 'venta', venta);
   },
