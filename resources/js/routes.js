@@ -86,13 +86,18 @@ const routes = [
   },
   {
     path: "/clientes",
-    name: "clientes",
+    name: "lista-clientes",
     component: () => import("./views/Clientes/ListaClientes.vue")
   },
   {
     path: "/clientes/new",
     name: "nuevo-cliente",
     component: () => import("./views/Clientes/FormCliente.vue")
+  },
+  {
+    path: '/clientes/:cliente',
+    name: 'ver-cliente',
+    component: () => import('./views/Clientes/VerCliente.vue')
   },
   {
     path: "/clientes/:id/edit",

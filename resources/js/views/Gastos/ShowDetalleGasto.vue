@@ -21,18 +21,24 @@
         </tr>
       </tbody>
       <tfoot>
-      <tr class="table-active">
-        <td><b>Total: </b></td>
-        <td colspan="2"></td>
-        <td><strong><u>$ {{total | currency}}</u></strong></td>
-      </tr>
-    </tfoot>
-  </table>
-</div>
+        <tr class="table-active">
+          <td>
+            <b>Total:</b>
+          </td>
+          <td colspan="2"></td>
+          <td>
+            <strong>
+              <u>$ {{total | currency}}</u>
+            </strong>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 </template>
 
 <script>
-  export default {
-    props: ['productos', 'total'], 
-  }
+export default {
+  props: ['productos', 'total'],
+}
 </script>

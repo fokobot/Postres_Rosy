@@ -2,7 +2,7 @@
   <div class="card mb-4">
     <div class="card-header">
       Lista de Clientes
-      <router-link class="btn btn-sm btn-primary float-right" to="/clientes/new">
+      <router-link class="btn btn-sm btn-primary float-right" :to="{name:'lista-clientes'}">
         <i class="fa fa-plus"></i> Nuevo Cliente
       </router-link>
     </div>
@@ -26,11 +26,12 @@
             <td>{{cliente.persona.telefono}}</td>
             <td>{{cliente.persona.fecha_de_nacimiento}}</td>
             <td>
-              <!-- <router-link 
-              class="btn btn-sm btn-success" 
-              :to="{name: 'editar-cliente', params: {id: cliente.id}}">
-              <i class="fa fa-edit" ></i>
-              </router-link>-->
+              <router-link
+                class="btn btn-sm btn-primary"
+                :to="{name: 'ver-cliente', params:{cliente:cliente.id}}"
+              >
+                <i class="fa fa-eye"></i>
+              </router-link>
               <button class="btn btn-sm btn-danger" href="#" @click="eliminar(index)">
                 <i class="fa fa-trash"></i>
               </button>
