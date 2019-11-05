@@ -18,6 +18,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import DetalleEmpleado from './DetalleEmpleado'
+
 export default {
   name: 'VerEmpleado',
   components: { DetalleEmpleado },

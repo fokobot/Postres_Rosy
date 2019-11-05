@@ -80,6 +80,14 @@ Route::middleware('auth:api')->prefix('ventas')->group(function () {
 	Route::delete('/{venta}', 'API\VentaController@destroy');
 });
 
+// --------------------------------------------------------------- //
+// ------------------------- v e n t a s ------------------------- //
+// --------------------------------------------------------------- //
+Route::middleware('auth:api')->prefix('reportes')->group(function () {
+	Route::get('/ventas/diario', 'API\ReporteController@ventasDiario');
+	Route::get('/gastos/diario', 'API\ReporteController@gastosDiario');
+});
+
 /******************************************************/
 Route::middleware('auth:api')->prefix('departamentos')->group(function () {
 	Route::get('/', 'API\DepartamentoController@index');
