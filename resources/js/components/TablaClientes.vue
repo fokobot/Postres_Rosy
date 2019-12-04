@@ -10,7 +10,7 @@
       <th>Opciones</th>
     </thead>
     <tbody v-if="!loading">
-      <tr v-for="cliente in clientes" :key="cliente.id">
+      <tr v-for="(cliente, index) in clientes" :key="cliente.id">
         <td>{{cliente.persona.nombre}}</td>
         <td>{{cliente.persona.apellidos}}</td>
         <td>{{cliente.persona.direccion}}</td>
@@ -44,11 +44,19 @@ export default {
     clientes: {
       type: Array,
       required: true
-		}, 
-		loading: {
-			type: Boolean,
-			default: false
-		}
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    eliminar(cliente) {
+      bootbox.confirm("¿Realmente desea eliminar este cliente?", result => {
+        if (!result) return;
+        this.$store.dispatch('clientes/delete', cliente);
+      });
+    }
   }
 }
 </script>

@@ -19,7 +19,7 @@ import TablaClientes from '../../components/TablaClientes';
 export default {
   name: 'Clientes',
   components: { TablaClientes },
-  mounted() {
+  created() {
     if (this.clientes.length === 0) {
       this.$store.dispatch('clientes/fetchAll');
     }
@@ -28,13 +28,5 @@ export default {
     clientes: 'clientes/clientes',
     loading: 'clientes/loading'
   }),
-  methods: {
-    eliminar(cliente) {
-      bootbox.confirm("¿Realmente desea eliminar este cliente?", result => {
-        if (!result) return;
-        this.$store.dispatch('clientes/delete', cliente);
-      });
-    }
-  }
 }
 </script>
